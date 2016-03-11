@@ -9,12 +9,22 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Mountaineer-Mixpanel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Mountaineer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
 		<key>Pods-MountaineerTests-Firebase.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-MountaineerTests-Mixpanel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -29,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-MountaineerUITests-Mixpanel.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-MountaineerUITests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -37,32 +52,47 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>06DA92D52244BB582B8EF0C0</key>
+		<key>1397B6E79AE9EE51F56A25B5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>0CE7F481D8AFBA731305FCAB</key>
+		<key>6B8DF01BA2304B602D8076E0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5C0C0BFC6270C55E72EDB297</key>
+		<key>BB455F8A265D6ED7DBD3C91D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>84699C3587DEDA8E88FF2E89</key>
+		<key>C7E49193E12BD1D9A091988E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>87453A9CF292AE2C0AB51D99</key>
+		<key>D1F9A66635CA691496164513</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E731982387BF234B6FD2C97D</key>
+		<key>D265F670BC89DF80C543CC4B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DE0A4440BE1731759B4C2115</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>DE23473D378ED07EEC87C4CB</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EFCC2DC08AD38B536B119D13</key>
 		<dict>
 			<key>primary</key>
 			<true/>

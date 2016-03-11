@@ -4,13 +4,16 @@ use_frameworks!
 
 target 'Mountaineer' do
 pod 'Firebase', '>= 2.5.0'
+pod 'Mixpanel'
 end
 
 target 'MountaineerTests' do
 pod 'Firebase', '>= 2.5.0'
+pod 'Mixpanel'
 end
 
 target 'MountaineerUITests' do
 pod 'Firebase', '>= 2.5.0'
+pod 'Mixpanel'
 end
 

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0CE7F481D8AFBA731305FCAB"
+               BlueprintIdentifier = "D265F670BC89DF80C543CC4B"
                BuildableName = "Pods_MountaineerUITests.framework"
                BlueprintName = "Pods-MountaineerUITests"
                ReferencedContainer = "container:Pods.xcodeproj">
