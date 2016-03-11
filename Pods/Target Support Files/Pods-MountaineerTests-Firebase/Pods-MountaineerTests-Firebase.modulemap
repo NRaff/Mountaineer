@@ -1,0 +1,6 @@
+framework module Firebase {
+  umbrella header "Pods-MountaineerTests-Firebase-umbrella.h"
+
+  export *
+  module * { export * }
+}

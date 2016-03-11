@@ -1,0 +1,6 @@
+framework module Pods_Mountaineer {
+  umbrella header "Pods-Mountaineer-umbrella.h"
+
+  export *
+  module * { export * }
+}
