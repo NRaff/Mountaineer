@@ -1,0 +1,6 @@
+framework module FirebaseUI {
+  umbrella header "Pods-MountaineerTests-FirebaseUI-umbrella.h"
+
+  export *
+  module * { export * }
+}

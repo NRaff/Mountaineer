@@ -8,9 +8,12 @@
 
 import UIKit
 import Mixpanel
+import Firebase
+import FirebaseUI
 
 class SettingsViewController: UIViewController {
 
+    let usersRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
     var metric: Bool = false
     
@@ -38,11 +41,26 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if Session.measureSwitch {
-            measureSwitch.selectedSegmentIndex = 0
-        }
-        else { measureSwitch.selectedSegmentIndex = 1 }
-        
+        usersRef.queryOrderedByChild("\(usersRef.authData.uid)/sessionUnits").observeEventType(.ChildAdded, withBlock: { snapshot in
+            if let sessionUnits = snapshot.value["sessionUnits"] as? Bool {
+                if sessionUnits
+                {
+                    self.measureSwitch.selectedSegmentIndex = 0
+                    print("metric is selected")
+                }
+                else
+                {
+                    self.measureSwitch.selectedSegmentIndex = 1
+                    print("imperial is selected")
+                }
+            }
+        })
+//        
+//        if Session.measureSwitch {
+//            measureSwitch.selectedSegmentIndex = 0
+//        }
+//        else { measureSwitch.selectedSegmentIndex = 1 }
+//        
         settingsNavBar.setTitleVerticalPositionAdjustment(-13, forBarMetrics: .Default)
 
         // Do any additional setup after loading the view.
@@ -61,7 +79,7 @@ class SettingsViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        Session.measureSwitch = metric
+        usersRef.setValue(metric, forKeyPath: "\(usersRef.authData.uid)/sessionUnits")
         print(metric)
     }
 

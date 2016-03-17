@@ -1,15 +1,19 @@
 PODS:
   - Firebase (2.5.1)
+  - FirebaseUI/Core (0.3.2):
+    - Firebase (~> 2.2)
   - Mixpanel (2.9.4):
     - Mixpanel/Mixpanel (= 2.9.4)
   - Mixpanel/Mixpanel (2.9.4)
 
 DEPENDENCIES:
   - Firebase (>= 2.5.0)
+  - FirebaseUI/Core (~> 0.3)
   - Mixpanel
 
 SPEC CHECKSUMS:
   Firebase: 3565ea88b830f28f2c77ecc524622bc71a20d085
+  FirebaseUI: 95621dce04f0313495c86e1fba503254e0ec48b1
   Mixpanel: 80d2ca9bb38ae91c1044d738e80fe448377ac89f
 
 COCOAPODS: 0.37.2

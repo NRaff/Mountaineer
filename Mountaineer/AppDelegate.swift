@@ -1,22 +1,44 @@
 //
 //  AppDelegate.swift
-//  Mountaineer
+//  SkiBum
 //
-//  Created by Nick Raff on 3/10/16.
-//  Copyright © 2016 Nick Raff. All rights reserved.
+//  Created by Nick Raff on 7/22/15.
+//  Copyright (c) 2015 Nick Raff. All rights reserved.
 //
 
 import UIKit
+import CoreLocation
+//import Realm
+//import RealmSwift
+import Mixpanel
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var locationManager: CLLocationManager?
 
+    //let realm = Realm()
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
-        return true
+        locationManager = CLLocationManager()
+        locationManager?.requestWhenInUseAuthorization()
+        
+        Mixpanel.sharedInstanceWithToken("2b92c56c2c74bf244dda6270eea2519d")
+        let mixpanel: Mixpanel = Mixpanel.sharedInstance()
+        mixpanel.track("App launched")
+        
+//        setSchemaVersion(9, Realm.defaultPath, { migration, oldSchemaVersion in
+//            // We haven’t migrated anything yet, so oldSchemaVersion == 0
+//            if oldSchemaVersion < 9 {
+//                // Nothing to do!
+//                // Realm will automatically detect new properties and removed properties
+//                // And will update the schema on disk automatically
+//            }
+//        })
+
+                return true
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -39,6 +61,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationWillTerminate(application: UIApplication) {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+//        let saving: NewSessionViewController
+//        saving = NewSessionViewController()
+//        if saving.isAddSession == true {
+//        saving.saveStuff()
+//        }
+        let mixpanel: Mixpanel = Mixpanel.sharedInstance()
+        mixpanel.track("App Terminated")
     }
 
 

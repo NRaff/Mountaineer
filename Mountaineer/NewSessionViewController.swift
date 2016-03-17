@@ -7,18 +7,23 @@
 //
 
 import UIKit
-import Realm
-import RealmSwift
+//import Realm
+//import RealmSwift
+import Firebase
 import CoreLocation
 import Mixpanel
 
 class NewSessionViewController: UIViewController {
 
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
+    //let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
+    let settingsRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
     
     var locationInfo = LocationHelper()
     var isAddSession = true
     var currentSession: Session?
+    var sessionUnits: Bool?
+    var thisSessionUnits: Bool?
     
     var statsTimer: NSTimer?
     var sessionDuration: NSTimer?
@@ -32,12 +37,11 @@ class NewSessionViewController: UIViewController {
     
     var backImageID: Int = 0
     
-    let settings = SettingsViewController()
+//    let settings = SettingsViewController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         nameTrek_tf.delegate = self
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -72,6 +76,21 @@ class NewSessionViewController: UIViewController {
             
         //otherwise hide the editable fields and display the recorded topspeed and peak altitude
         else{
+            //set the settings variables based on the selected sessions firebase
+            settingsRef.queryOrderedByChild("\(settingsRef.authData.uid)/sessionUnits").observeEventType(.ChildAdded, withBlock: { snapshot in
+                if let units = snapshot.value["sessionUnits"] as? Bool {
+                    self.sessionUnits = units
+                    print("\(snapshot.key) was \(units)")
+                }
+            })
+            //set the variable thisSessionUnits to the firebase setting (must have already set the selected sessionID)
+            settingsRef.queryOrderedByChild("\(settingsRef.authData.uid)/sessions/\(settingID)/thisSessionUnits").observeEventType(.ChildAdded, withBlock: { snapshot in
+                if let units = snapshot.value["thisSessionUnits"] as? Bool {
+                    self.thisSessionUnits = units
+                    print("\(snapshot.key) was \(units)")
+                }
+            })
+            
             //hide and unhide things
             unhideNeeded()
             hideUnneeded()
@@ -192,7 +211,7 @@ class NewSessionViewController: UIViewController {
         
         }
         
-        //if the user forgot to give the session a nname then...
+        //if the user forgot to give the session a name then...
         else {
             //if the user didn't give the session a name, then give this error message
             let alert = UIAlertView()
@@ -278,39 +297,82 @@ extension NewSessionViewController {
         
         //if the user is creating a new session and it does have a name
         if isAddSession == true && cancel_btn.hidden == true {
+            //init all temp variables
+            var sessionID: String
+            var imageID: Int
+            var sessionTitle: String
+            var date: NSDate
+            
+            var eachSessionUnits: Bool
+            var topSpeed: Double
+            var peakAltitude: Double
+            var totalDistance: Double
+            var averageSpeed: Double
+            
+            var sessionTime: String
+            
             //create a new 'Session'
             currentSession = Session()
             //save the general identification of the session
-            currentSession?.imageID = backImageID
-            currentSession?.sessionTitle = nameTrek_tf.text
-            currentSession?.Date = NSDate()
+            let saveRef = settingsRef.childByAppendingPath("\(settingsRef.authData.uid)/sessions").childByAutoId()
+            sessionID = saveRef.key
+            imageID = backImageID
+            sessionTitle = nameTrek_tf.text!
+            date = NSDate()
+//            currentSession?.imageID = backImageID
+//            currentSession?.sessionTitle = nameTrek_tf.text!
+//            currentSession?.Date = NSDate()
             
             //if the user sets units as imperial then...
-            if Session.measureSwitch == false {
-                currentSession?.sessionMeasuredIn = false
-                currentSession?.topSpeed = locationInfo.getTopSpeed()
-                currentSession?.peakAltitude = locationInfo.getPeakAltitude()
-                currentSession?.totalDistance = locationInfo.getTotalDistance()
-                currentSession?.averageSpeed = locationInfo.getAverageSpeed()
+            if sessionUnits == false {
+                eachSessionUnits = false
+                topSpeed = locationInfo.getTopSpeed()
+                peakAltitude = locationInfo.getPeakAltitude()
+                totalDistance = locationInfo.getTotalDistance()
+                averageSpeed = locationInfo.getAverageSpeed()
             }
+            //if the user sets units as metric
+            else
+            {
+                eachSessionUnits = true
+                topSpeed = locationInfo.getTopSpeed()
+                peakAltitude = locationInfo.getPeakAltitude()
+                totalDistance = locationInfo.getTotalDistance()
+                averageSpeed = locationInfo.getAverageSpeed()
+            }
+            //set the sessionTime string to be the ending timer time
+            sessionTime = "TIME ADVENTURING: \(locationInfo.ventureTime)"
+            
+            //save it all to firebase
+            let savedSession = ["sessionID": sessionID, "thisSessionUnits": eachSessionUnits, "imageID": imageID, "sessionTitle": sessionTitle, "dateCreated": date, "topSpeed": topSpeed, "peakAltitude": peakAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime]
+            
+            saveRef.setValue(savedSession)
+            
+//            if Session.measureSwitch == false {
+//                currentSession?.sessionMeasuredIn = false
+//                currentSession?.topSpeed = locationInfo.getTopSpeed()
+//                currentSession?.peakAltitude = locationInfo.getPeakAltitude()
+//                currentSession?.totalDistance = locationInfo.getTotalDistance()
+//                currentSession?.averageSpeed = locationInfo.getAverageSpeed()
+//            }
             
             //if the user sets units as metric
-            else {
-                currentSession?.sessionMeasuredIn = true
-                currentSession?.topSpeed = locationInfo.getTopSpeed()
-                currentSession?.peakAltitude = locationInfo.getPeakAltitude()
-                currentSession?.totalDistance = locationInfo.getTotalDistance()
-                currentSession?.averageSpeed = locationInfo.getAverageSpeed()
-            }
+//            else {
+//                currentSession?.sessionMeasuredIn = true
+//                currentSession?.topSpeed = locationInfo.getTopSpeed()
+//                currentSession?.peakAltitude = locationInfo.getPeakAltitude()
+//                currentSession?.totalDistance = locationInfo.getTotalDistance()
+//                currentSession?.averageSpeed = locationInfo.getAverageSpeed()
+//            }
             
             //set the sessionTime string to be the ending timer time
-            currentSession?.sessionTime = "TIME ADVENTURING: " + locationInfo.ventureTime
+//            currentSession?.sessionTime = "TIME ADVENTURING: " + locationInfo.ventureTime
             
             //send it all to realm
-            let realm = Realm
-            realm.write() {
-                realm.add(self.currentSession!)
-            }
+//            let realm = Realm
+//            realm.write() {
+//                realm.add(self.currentSession!)
+//            }
         }
     }
     
@@ -320,11 +382,11 @@ extension NewSessionViewController {
         //if the session is NOT an old session...
         if isAddSession == true {
             //if units are imperial system...
-            if Session.measureSwitch == false {
+            if sessionUnits == false {
                 //if the CLLocation.Location is not nil
                 if locationInfo.locationManager.location != nil {
-                    if locationInfo.locationManager.location.altitude >= 0 {
-                        currentAltitude_lb.text = String(round(locationInfo.locationManager.location.altitude * imperialConvFt * 1000)/1000) + " ft"
+                    if locationInfo.locationManager.location!.altitude >= 0 {
+                        currentAltitude_lb.text = String(round(locationInfo.locationManager.location!.altitude * imperialConvFt * 1000)/1000) + " ft"
                     }
                     else{
                         currentAltitude_lb.text = "0.0 ft"
@@ -339,8 +401,8 @@ extension NewSessionViewController {
             }
             else {
                 if locationInfo.locationManager.location != nil {
-                    if locationInfo.locationManager.location.altitude >= 0 {
-                        currentAltitude_lb.text = String(round(locationInfo.locationManager.location.altitude * 100)/100) + " m"
+                    if locationInfo.locationManager.location!.altitude >= 0 {
+                        currentAltitude_lb.text = String(round(locationInfo.locationManager.location!.altitude * 100)/100) + " m"
                     }
                     else{
                         currentAltitude_lb.text = "0.0 m"
@@ -356,15 +418,16 @@ extension NewSessionViewController {
         }
         else {
             if locationInfo.locationManager.location != nil {
-                if currentSession!.sessionMeasuredIn == false {
-                    currentAltitude_lb.text = String(round(locationInfo.locationManager.location.altitude * imperialConvFt * 1000)/1000) + " ft"
+                
+                if thisSessionUnits == false {
+                    currentAltitude_lb.text = String(round(locationInfo.locationManager.location!.altitude * imperialConvFt * 1000)/1000) + " ft"
                 }
                 else {
-                   currentAltitude_lb.text = String(round(locationInfo.locationManager.location.altitude * 100)/100) + " m"
+                   currentAltitude_lb.text = String(round(locationInfo.locationManager.location!.altitude * 100)/100) + " m"
                 }
             }
             else {
-                if currentSession!.sessionMeasuredIn == false {
+                if thisSessionUnits == false {
                     currentAltitude_lb.text = "- - ft"
                 }
                 else {
@@ -377,7 +440,7 @@ extension NewSessionViewController {
     
     
     func getAverageSpeed(){
-        if Session.measureSwitch == false {
+        if sessionUnits == false {
         currentSpeed_lb.text = "\(locationInfo.getAverageSpeed()) mph"
         }
         else {

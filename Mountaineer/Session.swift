@@ -7,10 +7,12 @@
 //
 
 import Foundation
-import Realm
-import RealmSwift
+import Firebase
+import FirebaseUI
+//import Realm
+//import RealmSwift
 
-class Session : Object {
+class Session: Object{
     
     dynamic var sessionTitle: String = ""
     dynamic var Date = NSDate()

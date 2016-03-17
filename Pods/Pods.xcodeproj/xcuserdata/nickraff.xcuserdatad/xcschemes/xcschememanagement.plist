@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Mountaineer-FirebaseUI.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Mountaineer-Mixpanel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -20,6 +25,11 @@
 			<false/>
 		</dict>
 		<key>Pods-MountaineerTests-Firebase.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>Pods-MountaineerTests-FirebaseUI.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -39,6 +49,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-MountaineerUITests-FirebaseUI.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-MountaineerUITests-Mixpanel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,47 +67,62 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>1397B6E79AE9EE51F56A25B5</key>
+		<key>4CBC83DF96E7E0BB7F9FBD42</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>6B8DF01BA2304B602D8076E0</key>
+		<key>64401595E45E9F1DF139F3F5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>BB455F8A265D6ED7DBD3C91D</key>
+		<key>66FEAAAFAE59DCCA39EDCC41</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C7E49193E12BD1D9A091988E</key>
+		<key>6E484D17F574F5A8906127D9</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D1F9A66635CA691496164513</key>
+		<key>85AE758E09B45891320B6E64</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D265F670BC89DF80C543CC4B</key>
+		<key>A43007515899675594106EBE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DE0A4440BE1731759B4C2115</key>
+		<key>A9181C248F319EA54C9A5E7D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>DE23473D378ED07EEC87C4CB</key>
+		<key>C60F10ACC9F05F880FDC0C7C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EFCC2DC08AD38B536B119D13</key>
+		<key>C9749CE99512B26B56A9F3A8</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>D9D1FF9AABCEDA02E80051B0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>EC05C32F91C74C6114EA252B</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FA5EE9C03626E247AA57D397</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -12,6 +12,12 @@
 #define COCOAPODS_VERSION_MINOR_Firebase 5
 #define COCOAPODS_VERSION_PATCH_Firebase 1
 
+// FirebaseUI/Core
+#define COCOAPODS_POD_AVAILABLE_FirebaseUI_Core
+#define COCOAPODS_VERSION_MAJOR_FirebaseUI_Core 0
+#define COCOAPODS_VERSION_MINOR_FirebaseUI_Core 3
+#define COCOAPODS_VERSION_PATCH_FirebaseUI_Core 2
+
 // Mixpanel
 #define COCOAPODS_POD_AVAILABLE_Mixpanel
 #define COCOAPODS_VERSION_MAJOR_Mixpanel 2

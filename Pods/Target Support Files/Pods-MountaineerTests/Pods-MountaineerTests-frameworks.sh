@@ -49,9 +49,11 @@ code_sign() {
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework 'Firebase.framework'
+  install_framework 'FirebaseUI.framework'
   install_framework 'Mixpanel.framework'
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework 'Firebase.framework'
+  install_framework 'FirebaseUI.framework'
   install_framework 'Mixpanel.framework'
 fi

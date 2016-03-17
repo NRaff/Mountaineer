@@ -62,8 +62,8 @@ class LocationHelper: NSObject {
 extension LocationHelper {
     func getTopSpeed() -> Double {
         if locationManager.location != nil {
-            if locationManager.location.speed >= 0 {
-                newSpeed = locationManager.location.speed
+            if locationManager.location!.speed >= 0 {
+                newSpeed = locationManager.location!.speed
                 if maxSpeed != nil {
                     //find the maxSpeed
                     if newSpeed > maxSpeed {
@@ -105,8 +105,8 @@ extension LocationHelper {
 
     func getPeakAltitude() -> Double{
         if locationManager.location != nil {
-            if locationManager.location.altitude >= 0 {
-                newAltitude = locationManager.location.altitude
+            if locationManager.location!.altitude >= 0 {
+                newAltitude = locationManager.location!.altitude
                 if peakAltitude != nil {
                     if newAltitude > peakAltitude {
                         peakAltitude = newAltitude
@@ -151,7 +151,7 @@ extension LocationHelper {
             }
             else {
                 nextLocation = locationManager.location
-                totalDistance += nextLocation!.distanceFromLocation(startLocation)
+                totalDistance += nextLocation!.distanceFromLocation(startLocation!)
                 startLocation = nextLocation
                 if Session.measureSwitch == false {
                     finalDistance = round(totalDistance * imperialConvMi * 1000)/1000
@@ -172,8 +172,8 @@ extension LocationHelper {
     
     func getAverageSpeed() -> Double{
         if locationManager.location != nil {
-            if locationManager.location.speed >= 0 {
-                averageSpeedArray.append(locationManager.location.speed)
+            if locationManager.location!.speed >= 0 {
+                averageSpeedArray.append(locationManager.location!.speed)
             }
             else {
                 averageSpeedArray.append(0.0)
