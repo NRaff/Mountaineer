@@ -7,12 +7,17 @@
 //
 
 import UIKit
+//import Firebase
+//import FirebaseUI
 
 class SessionTableViewCell: UITableViewCell {
+    
+//    let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -21,24 +26,25 @@ class SessionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    @IBOutlet weak var SessionID: UILabel!
     @IBOutlet weak var randomImage: UIImageView!
     @IBOutlet weak var sessionName: UILabel!
     @IBOutlet weak var createdDate: UILabel!
     
-    static var dateFormatter: NSDateFormatter = {
-        var formatter = NSDateFormatter()
-        formatter.dateFormat = "MM-dd-yyy"
-        return formatter
-        }()
-    
-    var session: Session? {
-        didSet {
-            if let session = session, sessionName = sessionName, createdDate = createdDate {
-                self.sessionName.text = session.sessionTitle
-                self.createdDate.text = SessionTableViewCell.dateFormatter.stringFromDate(session.Date)
-                self.randomImage.image = UIImage(named:"cell_bg\(session.imageID)")
-            }
-        }
-    }
+//    static var dateFormatter: NSDateFormatter = {
+//        var formatter = NSDateFormatter()
+//        formatter.dateFormat = "MM-dd-yyy"
+//        return formatter
+//        }()
+//    
+//    var session: Firebase? {
+//        didSet {
+//            if let session = session, sessionName = sessionName, createdDate = createdDate {
+//                self.sessionName.text = session.sessionTitle
+//                self.createdDate.text = SessionTableViewCell.dateFormatter.stringFromDate(session.Date)
+//                self.randomImage.image = UIImage(named:"cell_bg\(session.imageID)")
+//            }
+//        }
+//    }
 
 }

@@ -5,12 +5,17 @@
 //  Created by Nick Raff on 7/24/15.
 //  Copyright (c) 2015 Nick Raff. All rights reserved.
 //
-//import UIKit
+import UIKit
 import Foundation
 import CoreLocation
+import Firebase
+import FirebaseUI
 
 
 class LocationHelper: NSObject {
+    
+    let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
+    var unitsSetting: Bool?
     
     let locationManager = CLLocationManager()
     var speed: CLLocationSpeed?
@@ -51,6 +56,16 @@ class LocationHelper: NSObject {
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             //locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
+            
+            RootRef.queryOrderedByChild("\(RootRef.authData.uid)").observeEventType(.ChildAdded, withBlock: { snapshot in
+                if let units = snapshot.value["sessionUnits"] as? Bool {
+                    self.unitsSetting = units
+                    print("\(snapshot.key) was \(units)")
+                }
+
+                
+            })
+            
         } else {
             print("Location services are not enabled");
         }
@@ -68,7 +83,7 @@ extension LocationHelper {
                     //find the maxSpeed
                     if newSpeed > maxSpeed {
                         maxSpeed = newSpeed
-                        if Session.measureSwitch == false {
+                        if unitsSetting == false {
                             finalTopSpeed = (round(maxSpeed! * imperialConvMPH * 100)/100)
                         }
                         else{
@@ -79,7 +94,7 @@ extension LocationHelper {
                 else {
                     //just display the most recently recorded speed
                     maxSpeed = newSpeed
-                    if Session.measureSwitch == false {
+                    if unitsSetting == false {
                         finalTopSpeed = (round(newSpeed * imperialConvMPH * 100)/100)
                     }
                     else {
@@ -110,7 +125,7 @@ extension LocationHelper {
                 if peakAltitude != nil {
                     if newAltitude > peakAltitude {
                         peakAltitude = newAltitude
-                        if Session.measureSwitch == false {
+                        if unitsSetting == false {
                            highAltitude = round(peakAltitude! * imperialConvFt * 100)/100
                         }
                         else {
@@ -120,7 +135,7 @@ extension LocationHelper {
                 }
                 else {
                     peakAltitude = newAltitude
-                    if Session.measureSwitch == false {
+                    if unitsSetting == false {
                         highAltitude = round(newAltitude * imperialConvFt * 100)/100
                     }
                     else {
@@ -142,7 +157,7 @@ extension LocationHelper {
         if locationManager.location != nil {
             if startLocation == nil {
                 startLocation = locationManager.location
-                if Session.measureSwitch == false {
+                if unitsSetting == false {
                     finalDistance = round(totalDistance * imperialConvMi * 1000)/1000
                 }
                 else {
@@ -153,7 +168,7 @@ extension LocationHelper {
                 nextLocation = locationManager.location
                 totalDistance += nextLocation!.distanceFromLocation(startLocation!)
                 startLocation = nextLocation
-                if Session.measureSwitch == false {
+                if unitsSetting == false {
                     finalDistance = round(totalDistance * imperialConvMi * 1000)/1000
                 }
                 else {
@@ -188,7 +203,7 @@ extension LocationHelper {
                 averageSpeed = Double(sumSpeeds)/Double(averageSpeedArray.count)
             }
             
-            if Session.measureSwitch == false {
+            if unitsSetting == false {
                 finalAveSpeed = round(averageSpeed * imperialConvMPH * 100)/100
             }
             else {
@@ -271,10 +286,10 @@ extension LocationHelper: CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         locationManager.stopUpdatingLocation()
         //removeLoadingView()
-        if ((error) != nil) {
-            print(error, terminator: "")
-            print("Nope you broke it")
-        }
+//        if error != nil {
+//            print(error, terminator: "")
+//            print("Nope you broke it")
+//        }
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {

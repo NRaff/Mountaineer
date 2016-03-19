@@ -21,9 +21,9 @@ class NewSessionViewController: UIViewController {
     
     var locationInfo = LocationHelper()
     var isAddSession = true
-    var currentSession: Session?
+//    var currentSession: Session?
     var sessionUnits: Bool?
-    var thisSessionUnits: Bool?
+
     
     var statsTimer: NSTimer?
     var sessionDuration: NSTimer?
@@ -36,6 +36,17 @@ class NewSessionViewController: UIViewController {
     var imperialConvFt = 3.28084
     
     var backImageID: Int = 0
+    
+    //old session vars
+    var sessionID: String?
+    var thisSessionUnits: Bool?
+    var OsessionTitle: String!
+    var OsessionTime: String!
+    var OimageID: Int!
+    var OtopSpeed: Double!
+    var OaverageSpeed: Double!
+    var OpeakAltitude: Double!
+    var OtotalDistance: Double!
     
 //    let settings = SettingsViewController()
     
@@ -77,17 +88,42 @@ class NewSessionViewController: UIViewController {
         //otherwise hide the editable fields and display the recorded topspeed and peak altitude
         else{
             //set the settings variables based on the selected sessions firebase
-            settingsRef.queryOrderedByChild("\(settingsRef.authData.uid)/sessionUnits").observeEventType(.ChildAdded, withBlock: { snapshot in
+            settingsRef.queryOrderedByChild("\(settingsRef.authData.uid)").observeEventType(.ChildAdded, withBlock: { snapshot in
                 if let units = snapshot.value["sessionUnits"] as? Bool {
                     self.sessionUnits = units
                     print("\(snapshot.key) was \(units)")
                 }
+                if let sId = snapshot.value["sessionID"] as? String {
+                    self.sessionID = sId
+                }
+                
             })
+            
             //set the variable thisSessionUnits to the firebase setting (must have already set the selected sessionID)
-            settingsRef.queryOrderedByChild("\(settingsRef.authData.uid)/sessions/\(settingID)/thisSessionUnits").observeEventType(.ChildAdded, withBlock: { snapshot in
+            settingsRef.queryOrderedByChild("\(settingsRef.authData.uid)/sessions/\(sessionID)").observeEventType(.ChildAdded, withBlock: { snapshot in
                 if let units = snapshot.value["thisSessionUnits"] as? Bool {
                     self.thisSessionUnits = units
-                    print("\(snapshot.key) was \(units)")
+                }
+                if let sTitle = snapshot.value["sessionTitle"] as? String {
+                    self.OsessionTitle = sTitle
+                }
+                if let sTime = snapshot.value["sessionTime"] as? String {
+                    self.OsessionTime = sTime
+                }
+                if let sImageID = snapshot.value["imageID"] as? Int {
+                    self.OimageID = sImageID
+                }
+                if let sTopSpeed = snapshot.value["topSpeed"] as? Double {
+                    self.OtopSpeed = sTopSpeed
+                }
+                if let sAverageSpeed = snapshot.value["averageSpeed"] as? Double {
+                    self.OaverageSpeed = sAverageSpeed
+                }
+                if let sPeakAltitude = snapshot.value["peakAltitude"] as? Double {
+                    self.OpeakAltitude = sPeakAltitude
+                }
+                if let sTotalDistance = snapshot.value["totalDistance"] as? Double {
+                    self.OtotalDistance = sTotalDistance
                 }
             })
             
@@ -97,25 +133,25 @@ class NewSessionViewController: UIViewController {
             end_btn.hidden = true
             
             //pull data from the old session to be displayed in the session view objects
-            titleLabel.text = currentSession!.sessionTitle
-            sessionTime.text  = currentSession!.sessionTime
+            titleLabel.text = OsessionTitle     //currentSession!.sessionTitle
+            sessionTime.text  = OsessionTime    //currentSession!.sessionTime
             //select the correct image
-            backImage.image = UIImage(named: "detailsbg\(currentSession!.imageID)")
+            backImage.image = UIImage(named: "detailsbg\(OimageID)")    //UIImage(named: "detailsbg\(currentSession!.imageID)")
             
             //if the current session units are set as imperial...
-            if currentSession!.sessionMeasuredIn == false {
-            topSpeed_lb.text = String(currentSession!.topSpeed) + " mph"
-            peakAltitude_lb.text = String(currentSession!.peakAltitude) + " ft"
-            totalDistance_lb.text = String(currentSession!.totalDistance) + " mi"
-            currentSpeed_lb.text = "\(currentSession!.averageSpeed) mph"
+            if sessionUnits == false {
+            topSpeed_lb.text = "\(OtopSpeed) mph"   //String(currentSession!.topSpeed) + " mph"
+            peakAltitude_lb.text = "\(OpeakAltitude) ft"    //String(currentSession!.peakAltitude) + " ft"
+            totalDistance_lb.text = "\(OtotalDistance) mi"  //String(currentSession!.totalDistance) + " mi"
+            currentSpeed_lb.text = "\(OaverageSpeed) mph"   //"\(currentSession!.averageSpeed) mph"
             }
                 
             //if the current session units are set as metric...
             else {
-                topSpeed_lb.text = String(currentSession!.topSpeed) + " kph"
-                peakAltitude_lb.text = String(currentSession!.peakAltitude) + " m"
-                totalDistance_lb.text = String(currentSession!.totalDistance) + " km"
-                currentSpeed_lb.text = "\(currentSession!.averageSpeed) kph"
+                topSpeed_lb.text = "\(OtopSpeed) kph"   //String(currentSession!.topSpeed) + " kph"
+                peakAltitude_lb.text = "\(OpeakAltitude) m"     //String(currentSession!.peakAltitude) + " m"
+                totalDistance_lb.text = "\(OtotalDistance) km"  //String(currentSession!.totalDistance) + " km"
+                currentSpeed_lb.text = "\(OaverageSpeed) kph"   //"\(currentSession!.averageSpeed) kph"
             }
             
             //track this event
@@ -312,7 +348,7 @@ extension NewSessionViewController {
             var sessionTime: String
             
             //create a new 'Session'
-            currentSession = Session()
+//            currentSession = Session()
             //save the general identification of the session
             let saveRef = settingsRef.childByAppendingPath("\(settingsRef.authData.uid)/sessions").childByAutoId()
             sessionID = saveRef.key

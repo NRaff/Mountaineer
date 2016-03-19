@@ -16,7 +16,7 @@ import Mixpanel
 
 class SessionsViewController: UIViewController {
     //create a firebase reference
-    let RootRef = Firebase(url: "https://mountaineer.firebaseio.com/sessions")
+    let RootRef = Firebase(url: "https://mountaineer.firebaseio.com")
     //create the firebase datasource
     var dataSource: FirebaseTableViewDataSource!
     
@@ -24,6 +24,7 @@ class SessionsViewController: UIViewController {
     var locationStuff = LocationHelper()
     var sessionName: String?
 //    var selectedSession: Session?
+    var addingSession: Bool = true
     
     override func viewDidLoad() {
         //give the firebase datasource its location
@@ -41,8 +42,9 @@ class SessionsViewController: UIViewController {
             let STVC: SessionTableViewCell = cell as! SessionTableViewCell
             
             let snapshot: FDataSnapshot = snap as! FDataSnapshot
-            STVC.sessionName.text = snapshot.value["SessionName"] as? String
-            STVC.createdDate.text = snapshot.value["Date"] as? String
+            STVC.sessionName.text = snapshot.value["sessionTitle"] as? String
+            STVC.createdDate.text = snapshot.value["sessionDate"] as? String
+            STVC.SessionID.text = snapshot.value["sessionID"] as? String
             
         }
         
@@ -92,18 +94,9 @@ class SessionsViewController: UIViewController {
             //I think this step might be unnecessary because with the global variable in firebase I'll just query everything based on that, actually keep the steps but set a variable in NewSessionViewController equal to the sessionID
             let sessionViewController = segue.destinationViewController as! NewSessionViewController
             //if the sessionID is not nill then isAddSession = true and set a variable in the NewSessionViewController = sessionID
-            if let sessionName = sessionName {
-                //set the variable in the sessionViewController to the global variable value
-            }
             
+            sessionViewController.isAddSession = self.addingSession
             
-            if let selectedSession = selectedSession {
-                sessionViewController.currentSession = selectedSession
-                sessionViewController.isAddSession = false
-            }
-            else {
-                print("session is nil")
-            }
         }
         if (segue.identifier == "settings") {
             mixpanel.track("Settings", properties: ["Options": "Opened"])
@@ -154,18 +147,22 @@ class SessionsViewController: UIViewController {
 
 extension SessionsViewController: UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let ref = Firebase(url: "https://mountaineer.firebaseio.com")
+        let ref = Firebase(url: "https://mountaineer.firebaseio.com/users/\(RootRef.authData.uid)")
         //get the selected cell as a SessionTableViewCell
         let cellSession = sessionsTableView.cellForRowAtIndexPath(indexPath)! as! SessionTableViewCell
         //check that the cellSession.sessionName is not nil
-        if let sessionName = cellSession.sessionName.text {
+        if let sessionID = cellSession.SessionID.text {
             //if sessionName is not nil then set the global variable in firebase (currentSession) to the sessionName - should be sessionID in future
-            ref.childByAppendingPath("currentSession").setValue(sessionName)
+            let sessionID = sessionID
+            let selectedSession = ["sessionID": sessionID]
+            ref.setValue(selectedSession)
         }
         //track event in mixpanel
         mixpanel.track("Old Session", properties: ["Viewing?": "Yes"])
         //perform the segue (be sure to add functionality into the view did load method to load up the correct session
         self.performSegueWithIdentifier("showNewSession", sender: self)
+        
+        self.addingSession = false
         
     }
     
