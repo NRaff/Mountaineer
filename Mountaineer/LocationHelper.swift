@@ -15,7 +15,7 @@ import FirebaseUI
 class LocationHelper: NSObject {
     
     let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
-    var unitsSetting: Bool?
+    var unitsSetting: Bool = true
     
     let locationManager = CLLocationManager()
     var speed: CLLocationSpeed?

@@ -18,8 +18,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var locationManager: CLLocationManager?
 
-    //let realm = Realm()
-
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
         locationManager = CLLocationManager()
@@ -29,14 +27,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
         mixpanel.track("App launched")
         
-//        setSchemaVersion(9, Realm.defaultPath, { migration, oldSchemaVersion in
-//            // We haven’t migrated anything yet, so oldSchemaVersion == 0
-//            if oldSchemaVersion < 9 {
-//                // Nothing to do!
-//                // Realm will automatically detect new properties and removed properties
-//                // And will update the schema on disk automatically
-//            }
-//        })
+        print("finished launching app")
 
                 return true
     }
