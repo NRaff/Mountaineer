@@ -10,8 +10,6 @@ import UIKit
 import CoreLocation
 import Firebase
 import FirebaseUI
-//import Realm
-//import RealmSwift
 import Mixpanel
 
 class SessionsViewController: UIViewController {
@@ -19,16 +17,16 @@ class SessionsViewController: UIViewController {
     let RootRef = Firebase(url: "https://mountaineer.firebaseio.com")
     //create the firebase datasource
     var dataSource: FirebaseTableViewDataSource!
-    
     var mixpanel: Mixpanel!
     var locationStuff = LocationHelper()
     var sessionName: String?
-//    var selectedSession: Session?
     var addingSession: Bool = true
     
     override func viewDidLoad() {
+        
+        
         //give the firebase datasource its location
-        dataSource = FirebaseTableViewDataSource(ref: RootRef, prototypeReuseIdentifier: "sessionCell", view: self.sessionsTableView)
+        dataSource = FirebaseTableViewDataSource(ref: RootRef, cellClass: SessionTableViewCell.self, cellReuseIdentifier: "sessionCell", view: self.sessionsTableView)
         
         mixpanel = Mixpanel.sharedInstance()
         newShredView.hidden = false
@@ -42,14 +40,12 @@ class SessionsViewController: UIViewController {
             let STVC: SessionTableViewCell = cell as! SessionTableViewCell
             
             let snapshot: FDataSnapshot = snap as! FDataSnapshot
+            if snapshot.value["SessionTitle"] as? String != nil {
             STVC.sessionName.text = snapshot.value["sessionTitle"] as? String
             STVC.createdDate.text = snapshot.value["sessionDate"] as? String
             STVC.SessionID.text = snapshot.value["sessionID"] as? String
-            
+            }
         }
-        
-//        sessions = realm.objects(Session).sorted("Date", ascending: false)
-
         
         myNavBar.setTitleVerticalPositionAdjustment(-8, forBarMetrics: .Default)
     }
@@ -57,18 +53,13 @@ class SessionsViewController: UIViewController {
     override func viewDidDisappear(animated: Bool) {
         newShredView.hidden = true
     }
-    
-//    override func viewWillAppear(animated: Bool) {
-//    let realm = Realm
-//    sessions = realm.objects(Session).sorted("Date", ascending: false)
-//        
-//    }
+
     
     @IBOutlet weak var newShredView: UIView!
     @IBOutlet weak var myNavBar: UINavigationBar!
     
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
-//        let realm = Realm
+        
         if let identifier = segue.identifier {
             switch identifier {
             case "BackAndSave":
@@ -80,8 +71,6 @@ class SessionsViewController: UIViewController {
                 mixpanel.track("Add Session Started", properties: ["Recording": "End without data/saving"])
             }
             
-//            sessions = realm.objects(Session).sorted("Date", ascending: false) //2
-            //println("whats happening?")
         }
     }
     
@@ -110,13 +99,6 @@ class SessionsViewController: UIViewController {
     }
     
     @IBOutlet weak var sessionsTableView: UITableView!
-    
-//    var sessions: Results<Session>! {
-//        didSet {
-//            // Whenever notes update, update the table view
-//            sessionsTableView?.reloadData()
-//        }
-//    }
  
 }
 

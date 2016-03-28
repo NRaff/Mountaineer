@@ -532,6 +532,7 @@
                         <outlet property="fullNameText" destination="DvE-Gi-Xva" id="GfQ-dB-JAj"/>
                         <outlet property="homeMountainText" destination="0Z2-NU-brZ" id="FFo-2d-D3K"/>
                         <outlet property="passwordText" destination="8B6-G1-mPf" id="a74-eu-6PK"/>
+                        <segue destination="JEt-qx-qbK" kind="show" identifier="createAccountToAllSessionsSegue" id="Hq1-gH-poM"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nZS-y2-Gw3" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1137,6 +1138,7 @@
         <image name="viewLoadedPlus" width="120" height="119"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="Hq1-gH-poM"/>
         <segue reference="aIy-rZ-vXD"/>
     </inferredMetricsTieBreakers>
 </document>

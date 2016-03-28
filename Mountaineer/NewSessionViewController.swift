@@ -337,7 +337,7 @@ extension NewSessionViewController {
             var sessionID: String
             var imageID: Int
             var sessionTitle: String
-            var date: NSDate
+            var date: String
             
             var eachSessionUnits: Bool
             var topSpeed: Double
@@ -354,7 +354,7 @@ extension NewSessionViewController {
             sessionID = saveRef.key
             imageID = backImageID
             sessionTitle = nameTrek_tf.text!
-            date = NSDate()
+            date = "\(NSDate())"
 //            currentSession?.imageID = backImageID
 //            currentSession?.sessionTitle = nameTrek_tf.text!
 //            currentSession?.Date = NSDate()

@@ -48,17 +48,34 @@ class CreateAccountViewController: UIViewController {
                         {
                             let uid = result["uid"] as? String
                             print("Successfully created user account with uid: \(uid!)")
+                            self.rootRef.authUser(email, password: password) { (error, authData) -> Void in
+                                if error != nil
+                                {
+                                    print("There was an error while logging in")
+                                }
+                                else
+                                {
+                                    print("successfully logged in")
+                                    let newUser = ["fullName": fullName!, "email": email!, "homeMountain": homeMountain!]
+                                    
+                                    let usersRef = self.rootRef.childByAppendingPath("users/\(self.rootRef.authData.uid)")
+                                    
+                                    usersRef.setValue(newUser)
+                                    
+                                    self.performSegueWithIdentifier("createAccountToAllSessionsSegue", sender: nil)
+                                }
+                            }
                         }
                 })
                 
-                var newUser = ["fullName": fullName!, "email": email!, "homeMountain": homeMountain!]
-                
-                if let usersRef = rootRef.childByAppendingPath("users/\(rootRef.authData.uid)") {
-                    usersRef.setValue(newUser)
-                }
-                else{
-                    print("usersRef was nil")
-                }
+//                var newUser = ["fullName": fullName!, "email": email!, "homeMountain": homeMountain!]
+//                
+//                if let usersRef = rootRef.childByAppendingPath("users/\(rootRef.authData.uid)") {
+//                    usersRef.setValue(newUser)
+//                }
+//                else{
+//                    print("usersRef was nil")
+//                }
 
         }
         else
