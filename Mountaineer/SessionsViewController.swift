@@ -26,7 +26,7 @@ class SessionsViewController: UIViewController {
         
         
         //give the firebase datasource its location
-        dataSource = FirebaseTableViewDataSource(ref: RootRef, cellClass: SessionTableViewCell.self, cellReuseIdentifier: "sessionCell", view: self.sessionsTableView)
+        dataSource = FirebaseTableViewDataSource(ref: RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions"), cellClass: SessionTableViewCell.self, cellReuseIdentifier: "sessionCell", view: self.sessionsTableView)
         
         mixpanel = Mixpanel.sharedInstance()
         newShredView.hidden = false
@@ -40,11 +40,13 @@ class SessionsViewController: UIViewController {
             let STVC: SessionTableViewCell = cell as! SessionTableViewCell
             
             let snapshot: FDataSnapshot = snap as! FDataSnapshot
-            if snapshot.value["SessionTitle"] as? String != nil {
-            STVC.sessionName.text = snapshot.value["sessionTitle"] as? String
-            STVC.createdDate.text = snapshot.value["sessionDate"] as? String
-            STVC.SessionID.text = snapshot.value["sessionID"] as? String
-            }
+            print(snapshot.value.objectForKey("sessionTitle")!)
+            STVC.textLabel?.text = snapshot.value.objectForKey("sessionTitle") as? String
+            
+            STVC.sessionName?.text = snapshot.value.objectForKey("sessionTitle") as? String
+            STVC.createdDate?.text = snapshot.value.objectForKey("dateCreated") as? String
+            STVC.SessionID?.text = snapshot.key
+            
         }
         
         myNavBar.setTitleVerticalPositionAdjustment(-8, forBarMetrics: .Default)

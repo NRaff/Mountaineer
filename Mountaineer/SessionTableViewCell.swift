@@ -11,15 +11,13 @@ import UIKit
 //import FirebaseUI
 
 class SessionTableViewCell: UITableViewCell {
-    
-//    let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
 
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
         
     }
-
+    
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
 
