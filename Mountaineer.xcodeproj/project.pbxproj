@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		793DFED61CBCCEF8003EC7FA /* SessionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793DFED51CBCCEF8003EC7FA /* SessionClass.swift */; };
 		796F54431C9F47A400A85613 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796F54421C9F47A400A85613 /* LoginViewController.swift */; };
 		796F54451C9F47BE00A85613 /* CreateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796F54441C9F47BE00A85613 /* CreateAccountViewController.swift */; };
 		79AD7D001C925EBA0069B58C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7CFF1C925EBA0069B58C /* ViewController.swift */; };
@@ -48,6 +49,7 @@
 /* Begin PBXFileReference section */
 		20784A8C35C8162E9318A5D4 /* Pods-MountaineerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerUITests/Pods-MountaineerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6F72CF205B99D2852D75C49B /* Pods-MountaineerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerTests/Pods-MountaineerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		793DFED51CBCCEF8003EC7FA /* SessionClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionClass.swift; sourceTree = "<group>"; };
 		796F54421C9F47A400A85613 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		796F54441C9F47BE00A85613 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
 		79AD7CFA1C925EBA0069B58C /* Mountaineer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Mountaineer.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -156,6 +158,7 @@
 			isa = PBXGroup;
 			children = (
 				79AD7D371C9264C30069B58C /* Main.storyboard */,
+				793DFED51CBCCEF8003EC7FA /* SessionClass.swift */,
 				79AD7D3D1C9371320069B58C /* Comments_For_Rebuild.swift */,
 				79AD7D3B1C936F590069B58C /* AppDelegate.swift */,
 				79AD7CFF1C925EBA0069B58C /* ViewController.swift */,
@@ -461,6 +464,7 @@
 				79AD7D341C9263310069B58C /* SessionsViewController.swift in Sources */,
 				79AD7D3C1C936F590069B58C /* AppDelegate.swift in Sources */,
 				79AD7D311C9263310069B58C /* LocationHelper.swift in Sources */,
+				793DFED61CBCCEF8003EC7FA /* SessionClass.swift in Sources */,
 				79AD7D001C925EBA0069B58C /* ViewController.swift in Sources */,
 				79AD7D321C9263310069B58C /* NewSessionViewController.swift in Sources */,
 				796F54431C9F47A400A85613 /* LoginViewController.swift in Sources */,

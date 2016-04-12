@@ -26,31 +26,54 @@ class SessionsViewController: UIViewController {
         
         
         //give the firebase datasource its location
-        dataSource = FirebaseTableViewDataSource(ref: RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions"), cellClass: SessionTableViewCell.self, cellReuseIdentifier: "sessionCell", view: self.sessionsTableView)
+//        dataSource = FirebaseTableViewDataSource(ref: RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions"), cellClass: SessionTableViewCell.self, cellReuseIdentifier: "sessionCell", view: self.sessionsTableView)
+        
+//        dataSource = FirebaseTableViewDataSource(ref: RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions"), prototypeReuseIdentifier: "sessionCell", view: self.sessionsTableView)
+        
+//        dataSource = FirebaseTableViewDataSource(ref: RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions"), modelClass: SessionTableViewCell.self, prototypeReuseIdentifier: "sessionCell", view: sessionsTableView)
+        
+        self.dataSource = FirebaseTableViewDataSource(ref: RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions"), cellClass: SessionTableViewCell.self, cellReuseIdentifier: "sessionCell", view: self.sessionsTableView)
+        
+//        dataSource = FirebaseTableViewDataSource(ref: RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions"), prototypeReuseIdentifier: "sessionCell", view: sessionsTableView)
+        
+        
+        self.dataSource.populateCellWithBlock {(cell, snap: NSObject) -> Void in
+            // Populate cell as you see fit, like as below
+            let STVC: SessionTableViewCell = cell as! SessionTableViewCell
+            let snapshot: FDataSnapshot = snap as! FDataSnapshot
+            
+            STVC.textLabel!.font = UIFont(name: "SF-UI-Display-Bold.otf", size: 18)
+            STVC.textLabel!.text = snapshot.value.objectForKey("sessionTitle") as? String
+//            STVC.detailTextLabel!.text = snapshot.value.objectForKey("dateCreated") as? String
+            STVC.imageView!.sendSubviewToBack(STVC.imageView!)
+            STVC.imageView!.image = UIImage(named:"cell_bg\(snapshot.value.objectForKey("imageID")!)")
+            
+            
+            STVC.sessionName?.text = snapshot.value.objectForKey("sessionTitle") as? String
+//            STVC.createdDate?.text = snapshot.value.objectForKey("dateCreated") as? String
+//            STVC.SessionID?.text = snapshot.key
+//            STVC.randomImage?.image = UIImage(named:"cell_bg\(snapshot.value.objectForKey("imageID"))")
+        }
+        
+        self.sessionsTableView.dataSource = self.dataSource
         
         mixpanel = Mixpanel.sharedInstance()
         newShredView.hidden = false
-//        let realm = Realm
         super.viewDidLoad()
         sessionsTableView.dataSource = dataSource
         sessionsTableView.delegate = self
-        
-        self.dataSource.populateCellWithBlock { (cell, snap) -> Void in
-            // Populate cell as you see fit, like as below
-            let STVC: SessionTableViewCell = cell as! SessionTableViewCell
-            
-            let snapshot: FDataSnapshot = snap as! FDataSnapshot
-            print(snapshot.value.objectForKey("sessionTitle")!)
-            STVC.textLabel?.text = snapshot.value.objectForKey("sessionTitle") as? String
-            
-            STVC.sessionName?.text = snapshot.value.objectForKey("sessionTitle") as? String
-            STVC.createdDate?.text = snapshot.value.objectForKey("dateCreated") as? String
-            STVC.SessionID?.text = snapshot.key
-            
-        }
-        
         myNavBar.setTitleVerticalPositionAdjustment(-8, forBarMetrics: .Default)
+
     }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        sessionsTableView.reloadData()
+    }
+    
+//    override func viewWillAppear(animated: Bool) {
+//      sessionsTableView.reloadData()  
+//    }
     
     override func viewDidDisappear(animated: Bool) {
         newShredView.hidden = true

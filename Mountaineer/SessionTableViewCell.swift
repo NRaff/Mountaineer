@@ -24,10 +24,25 @@ class SessionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
     
+    override init(style: UITableViewCellStyle, reuseIdentifier: String?) {
+        super.init(style: style, reuseIdentifier: reuseIdentifier)
+        
+        SessionID = UILabel()
+        randomImage = UIImageView()
+        sessionName = UILabel()
+        createdDate = UILabel()
+    
+    }
+
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     @IBOutlet weak var SessionID: UILabel!
     @IBOutlet weak var randomImage: UIImageView!
     @IBOutlet weak var sessionName: UILabel!
     @IBOutlet weak var createdDate: UILabel!
+    
     
 //    static var dateFormatter: NSDateFormatter = {
 //        var formatter = NSDateFormatter()
