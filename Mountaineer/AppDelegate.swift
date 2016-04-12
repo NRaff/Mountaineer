@@ -11,12 +11,18 @@ import CoreLocation
 //import Realm
 //import RealmSwift
 import Mixpanel
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     var locationManager: CLLocationManager?
+    
+    override init() {
+        super.init()
+        Firebase.defaultConfig().persistenceEnabled = true
+    }
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
