@@ -16,8 +16,7 @@ import Mixpanel
 class NewSessionViewController: UIViewController {
 
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
-    //let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
-    let settingsRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
+    let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
     
     var locationInfo = LocationHelper()
     var isAddSession = true
@@ -63,6 +62,10 @@ class NewSessionViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         locationInfo.startedLocation()
         
+        RootRef.observeSingleEventOfType(.Value, withBlock: { (snap: FDataSnapshot!) -> Void in
+            self.isAddSession = snap.value["isAddSession"] as! Bool
+        })
+        
         //if user is adding a session then display the add fields
         if isAddSession == true {
             
@@ -88,19 +91,19 @@ class NewSessionViewController: UIViewController {
         //otherwise hide the editable fields and display the recorded topspeed and peak altitude
         else{
             //set the settings variables based on the selected sessions firebase
-            settingsRef.queryOrderedByChild("\(settingsRef.authData.uid)").observeEventType(.ChildAdded, withBlock: { snapshot in
-                if let units = snapshot.value["sessionUnits"] as? Bool {
-                    self.sessionUnits = units
-                    print("\(snapshot.key) was \(units)")
-                }
-                if let sId = snapshot.value["sessionID"] as? String {
+            RootRef.queryOrderedByChild("\(RootRef.authData.uid)").observeEventType(.ChildAdded, withBlock: { snapshot in
+//                if let units = snapshot.value["sessionUnits"] as? Bool {
+//                    self.sessionUnits = units
+//                    print("\(snapshot.key) was \(units)")
+//                }
+                if let sId = snapshot.value["selectedSessionID"] as? String {
                     self.sessionID = sId
                 }
                 
             })
             
             //set the variable thisSessionUnits to the firebase setting (must have already set the selected sessionID)
-            settingsRef.queryOrderedByChild("\(settingsRef.authData.uid)/sessions/\(sessionID)").observeEventType(.ChildAdded, withBlock: { snapshot in
+            RootRef.queryOrderedByChild("\(RootRef.authData.uid)/sessions/\(sessionID)").observeEventType(.ChildAdded, withBlock: { snapshot in
                 if let units = snapshot.value["thisSessionUnits"] as? Bool {
                     self.thisSessionUnits = units
                 }
@@ -350,7 +353,7 @@ extension NewSessionViewController {
             //create a new 'Session'
 //            currentSession = Session()
             //save the general identification of the session
-            let saveRef = settingsRef.childByAppendingPath("\(settingsRef.authData.uid)/sessions").childByAutoId()
+            let saveRef = RootRef.childByAppendingPath("\(RootRef.authData.uid)/sessions").childByAutoId()
             sessionID = saveRef.key
             imageID = backImageID
             sessionTitle = nameTrek_tf.text!

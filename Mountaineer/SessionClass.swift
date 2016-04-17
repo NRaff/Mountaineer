@@ -20,6 +20,7 @@ struct Session {
     let topSpeed: Double!
     let peakAltitude: Double!
     let totalDistance: Double!
+    let ref: Firebase?
     
     
     init(sessionID: String = "", sessionTitle: String, sessionTime: String, thisSessionUnits: Bool, averageSpeed: Double, dateCreated: String, imageID: Int, topSpeed: Double, peakAltitude: Double, totalDistance: Double){
@@ -33,6 +34,7 @@ struct Session {
         self.topSpeed = topSpeed
         self.peakAltitude = peakAltitude
         self.totalDistance = totalDistance
+        self.ref = nil
     }
     
     init(snapshot: FDataSnapshot) {
@@ -46,6 +48,7 @@ struct Session {
         topSpeed = snapshot.value["topSpeed"] as! Double
         peakAltitude = snapshot.value["peakAltitude"] as! Double
         totalDistance = snapshot.value["totalDistance"] as! Double
+        ref = snapshot.ref
     }
     
     func toAnyObject() -> AnyObject {
