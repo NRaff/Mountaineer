@@ -201,6 +201,10 @@
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="JEt-qx-qbK" id="4aA-Fe-kjM"/>
+                                    <outlet property="delegate" destination="JEt-qx-qbK" id="qcq-3r-h21"/>
+                                </connections>
                             </tableView>
                             <navigationBar contentMode="scaleToFill" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="VD6-PM-KUL">
                                 <rect key="frame" x="0.0" y="20" width="600" height="70"/>
