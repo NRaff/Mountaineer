@@ -153,26 +153,10 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MIK-9e-8tL">
-                                                    <rect key="frame" x="43" y="52" width="513" height="21"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="21" id="c0Y-tn-ep7"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="6"/>
-                                                    <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="c0Y-tn-ep7"/>
-                                                        </mask>
-                                                    </variation>
-                                                </label>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstAttribute="trailing" secondItem="a8a-rI-CeJ" secondAttribute="trailing" id="Doa-4e-Bp9"/>
                                                 <constraint firstAttribute="trailing" secondItem="a8a-rI-CeJ" secondAttribute="trailing" id="HvC-9d-cGE"/>
-                                                <constraint firstItem="MIK-9e-8tL" firstAttribute="centerX" secondItem="a8a-rI-CeJ" secondAttribute="centerX" id="I6e-1u-XPO"/>
-                                                <constraint firstItem="MIK-9e-8tL" firstAttribute="centerY" secondItem="a8a-rI-CeJ" secondAttribute="centerY" id="Jy8-K8-xzs"/>
                                                 <constraint firstItem="Vmg-EN-GLX" firstAttribute="leading" secondItem="jaQ-GB-i9f" secondAttribute="leadingMargin" constant="22" id="K5Q-cN-LJq"/>
                                                 <constraint firstItem="Vmg-EN-GLX" firstAttribute="top" secondItem="qHO-Mp-n59" secondAttribute="bottom" constant="10" id="K7j-AG-7Ds"/>
                                                 <constraint firstItem="a8a-rI-CeJ" firstAttribute="top" secondItem="jaQ-GB-i9f" secondAttribute="top" constant="4" id="KX6-TK-sbA"/>
@@ -183,9 +167,7 @@
                                                 <constraint firstItem="a8a-rI-CeJ" firstAttribute="top" secondItem="jaQ-GB-i9f" secondAttribute="top" id="Yst-La-Peq"/>
                                                 <constraint firstAttribute="bottom" secondItem="a8a-rI-CeJ" secondAttribute="bottom" id="ase-7a-vNj"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="Vmg-EN-GLX" secondAttribute="bottom" constant="25" id="dg1-Zj-DPy"/>
-                                                <constraint firstItem="MIK-9e-8tL" firstAttribute="leading" secondItem="jaQ-GB-i9f" secondAttribute="leadingMargin" constant="35" id="eGx-nn-nHA"/>
                                                 <constraint firstItem="qHO-Mp-n59" firstAttribute="leading" secondItem="jaQ-GB-i9f" secondAttribute="leadingMargin" constant="18" id="rca-7S-v0h"/>
-                                                <constraint firstItem="MIK-9e-8tL" firstAttribute="top" secondItem="jaQ-GB-i9f" secondAttribute="topMargin" constant="44" id="tKt-rt-Of0"/>
                                                 <constraint firstAttribute="bottom" secondItem="a8a-rI-CeJ" secondAttribute="bottom" constant="4" id="ufh-zv-Il1"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="a8a-rI-CeJ" secondAttribute="bottom" constant="1" id="vX3-ly-v48"/>
                                             </constraints>
@@ -202,7 +184,6 @@
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                         <connections>
-                                            <outlet property="SessionID" destination="MIK-9e-8tL" id="sv9-Vw-0QY"/>
                                             <outlet property="createdDate" destination="Vmg-EN-GLX" id="d54-RX-YP3"/>
                                             <outlet property="randomImage" destination="a8a-rI-CeJ" id="M4S-1e-XWf"/>
                                             <outlet property="sessionName" destination="qHO-Mp-n59" id="5yY-j1-sv9"/>

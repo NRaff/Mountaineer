@@ -54,7 +54,7 @@ class LocationHelper: NSObject {
         if (CLLocationManager.locationServicesEnabled()) {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
-            //locationManager.requestWhenInUseAuthorization()
+            locationManager.requestWhenInUseAuthorization()
             locationManager.startUpdatingLocation()
             
             RootRef.queryOrderedByChild("\(RootRef.authData.uid)").observeEventType(.ChildAdded, withBlock: { snapshot in
@@ -62,8 +62,6 @@ class LocationHelper: NSObject {
                     self.unitsSetting = units
                     print("\(snapshot.key) was \(units)")
                 }
-
-                
             })
             
         } else {
@@ -295,7 +293,7 @@ extension LocationHelper: CLLocationManagerDelegate {
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locationArray = locations as NSArray
         let locationObj = locationArray.lastObject as! CLLocation
-        var coord = locationObj.coordinate
+        //var coord = locationObj.coordinate
         
          speed = locationObj.speed
          timeStamp = locationObj.timestamp

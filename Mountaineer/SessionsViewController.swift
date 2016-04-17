@@ -24,6 +24,7 @@ class SessionsViewController: UIViewController {
     var addingSession: Bool = true
     var sessions = [Session]()
     var selectedSession: Session?
+    var sessionUnits:Bool = false
     
     override func viewDidLoad() {
         mixpanel = Mixpanel.sharedInstance()
@@ -39,7 +40,7 @@ class SessionsViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         let tableRef = RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions")
-        tableRef.observeEventType(.Value, withBlock: { snapshot in
+        tableRef.queryOrderedByChild("dateCreated").observeEventType(.Value, withBlock: { snapshot in
             
             // 2
             var newSessions = [Session]()
@@ -93,6 +94,7 @@ class SessionsViewController: UIViewController {
             //if the sessionID is not nill then isAddSession = true and set a variable in the NewSessionViewController = sessionID
             
             sessionViewController.isAddSession = self.addingSession
+            sessionViewController.sessionUnits = self.sessionUnits
             sessionViewController.currentSession = self.selectedSession
             
         }
@@ -110,29 +112,6 @@ class SessionsViewController: UIViewController {
     @IBOutlet weak var sessionsTableView: UITableView!
  
 }
-
-//extension SessionsViewController: UITableViewDataSource {
-//    
-//    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-//        let cell = sessionsTableView.dequeueReusableCellWithIdentifier("sessionCell", forIndexPath: indexPath) as! SessionTableViewCell //1
-//        
-//        let row = indexPath.row
-//        let session = sessions[row] as Session
-//
-//        return cell
-//    }
-//    
-//    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        if sessions.count < 1 {
-//          newShredView.hidden = false
-//        }
-//        else {
-//          newShredView.hidden = true
-//        }
-//        return Int(sessions.count ?? 0)
-//    }
-//    
-//}
 
 extension SessionsViewController: UITableViewDelegate {
 
@@ -152,9 +131,10 @@ extension SessionsViewController: UITableViewDelegate {
         let cell = sessionsTableView.dequeueReusableCellWithIdentifier("sessionCell") as! SessionTableViewCell!
         let anotherSession = sessions[indexPath.row]
         
-        cell.SessionID.text = anotherSession.sessionID
+
         cell.sessionName.text = anotherSession.sessionTitle
         cell.createdDate.text = anotherSession.dateCreated
+        cell.randomImage.image = UIImage(named: "cell_bg\(anotherSession.imageID)")
         
         return cell
     }
@@ -174,16 +154,6 @@ extension SessionsViewController: UITableViewDelegate {
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-//        let ref = Firebase(url: "https://mountaineer.firebaseio.com/users/\(RootRef.authData.uid)")
-//        //get the selected cell as a SessionTableViewCell
-//        let cell = sessionsTableView.cellForRowAtIndexPath(indexPath) as! SessionTableViewCell!
-        //check that the cellSession.sessionName is not nil
-
-//            let sessionID = cell.SessionID.text
-//            let selectedSession = ["selectedSessionID": sessionID!, "isAddSession": "false"]
-//            print(selectedSession)
-//            ref.updateChildValues(selectedSession)
-            //ref.setValue(selectedSession)
         
         selectedSession = sessions[indexPath.row]
         addingSession = false

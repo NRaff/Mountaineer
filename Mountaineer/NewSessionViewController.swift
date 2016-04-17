@@ -19,7 +19,7 @@ class NewSessionViewController: UIViewController {
     var locationInfo = LocationHelper()
     var isAddSession = true
     var currentSession: Session?
-    var sessionUnits: Bool?
+    var sessionUnits: Bool = false
     
     var selectedSession: String?
 
@@ -36,20 +36,23 @@ class NewSessionViewController: UIViewController {
     
     var backImageID: Int = 0
     
+    let formatter = NSDateFormatter()
+    
     //old session vars
     var sessionID: String?
     var thisSessionUnits: Bool?
-    var OsessionTitle: String!
-    var OsessionTime: String!
-    var OimageID: Int!
-    var OtopSpeed: Double!
-    var OaverageSpeed: Double!
-    var OpeakAltitude: Double!
-    var OtotalDistance: Double!
+//    var OsessionTitle: String!
+//    var OsessionTime: String!
+//    var OimageID: Int!
+//    var OtopSpeed: Double!
+//    var OaverageSpeed: Double!
+//    var OpeakAltitude: Double!
+//    var OtotalDistance: Double!
     
 //    let settings = SettingsViewController()
     
     override func viewDidLoad() {
+        formatter.dateStyle = NSDateFormatterStyle.FullStyle
         super.viewDidLoad()
         nameTrek_tf.delegate = self
     }
@@ -61,6 +64,9 @@ class NewSessionViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         locationInfo.startedLocation()
+        RootRef.childByAppendingPath(RootRef.authData.uid).observeSingleEventOfType(.Value, withBlock: { snapshot in
+            self.sessionUnits = snapshot.value["sessionUnits"] as! Bool
+        })
         
         //if user is adding a session then display the add fields
         if isAddSession == true {
@@ -100,7 +106,7 @@ class NewSessionViewController: UIViewController {
             
             //if the current session units are set as imperial...
             if sessionUnits == false {
-            topSpeed_lb.text = "\(OtopSpeed) mph"   //String(currentSession!.topSpeed) + " mph"
+            topSpeed_lb.text = String(currentSession!.topSpeed) + " mph"
             peakAltitude_lb.text = String(currentSession!.peakAltitude) + " ft"
             totalDistance_lb.text = String(currentSession!.totalDistance) + " mi"
             currentSpeed_lb.text = "\(currentSession!.averageSpeed) mph"
@@ -314,7 +320,7 @@ extension NewSessionViewController {
             sessionID = saveRef.key
             imageID = backImageID
             sessionTitle = nameTrek_tf.text!
-            date = "\(NSDate())"
+            date = formatter.stringFromDate(NSDate())
 //            currentSession?.imageID = backImageID
 //            currentSession?.sessionTitle = nameTrek_tf.text!
 //            currentSession?.Date = NSDate()

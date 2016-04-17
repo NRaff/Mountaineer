@@ -79,7 +79,9 @@ class SettingsViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        usersRef.setValue(metric, forKeyPath: "\(usersRef.authData.uid)/sessionUnits")
+        let NewSession = SessionsViewController()
+        NewSession.sessionUnits = metric
+        usersRef.childByAppendingPath("\(usersRef.authData.uid)").updateChildValues(["sessionUnits": metric])
         print(metric)
     }
 

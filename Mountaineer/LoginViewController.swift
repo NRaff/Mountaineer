@@ -17,11 +17,21 @@ class LoginViewController: UIViewController {
     
     @IBOutlet weak var passwordText: UITextField!
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        rootRef.observeAuthEventWithBlock { (authData) -> Void in
+            // 2
+            if authData != nil {
+                // 3
+                self.performSegueWithIdentifier("loggedInAllSessionsSegue", sender: nil)
+            }
+        }
     }
 
     override func didReceiveMemoryWarning() {

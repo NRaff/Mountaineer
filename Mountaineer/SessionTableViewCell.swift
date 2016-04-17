@@ -25,8 +25,6 @@ class SessionTableViewCell: UITableViewCell {
     }
 
     
-
-    @IBOutlet weak var SessionID: UILabel!
     @IBOutlet weak var randomImage: UIImageView!
     @IBOutlet weak var sessionName: UILabel!
     @IBOutlet weak var createdDate: UILabel!
