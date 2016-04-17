@@ -23,6 +23,7 @@ class SessionsViewController: UIViewController {
     var sessionName: String?
     var addingSession: Bool = true
     var sessions = [Session]()
+    var selectedSession: Session?
     
     override func viewDidLoad() {
         mixpanel = Mixpanel.sharedInstance()
@@ -92,6 +93,7 @@ class SessionsViewController: UIViewController {
             //if the sessionID is not nill then isAddSession = true and set a variable in the NewSessionViewController = sessionID
             
             sessionViewController.isAddSession = self.addingSession
+            sessionViewController.currentSession = self.selectedSession
             
         }
         if (segue.identifier == "settings") {
@@ -172,16 +174,19 @@ extension SessionsViewController: UITableViewDelegate {
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let ref = Firebase(url: "https://mountaineer.firebaseio.com/users/\(RootRef.authData.uid)")
-        //get the selected cell as a SessionTableViewCell
-        let cell = sessionsTableView.cellForRowAtIndexPath(indexPath) as! SessionTableViewCell!
+//        let ref = Firebase(url: "https://mountaineer.firebaseio.com/users/\(RootRef.authData.uid)")
+//        //get the selected cell as a SessionTableViewCell
+//        let cell = sessionsTableView.cellForRowAtIndexPath(indexPath) as! SessionTableViewCell!
         //check that the cellSession.sessionName is not nil
 
-            let sessionID = cell.SessionID.text
-            let selectedSession = ["selectedSessionID": sessionID!, "isAddSession": "false"]
-            print(selectedSession)
-            ref.updateChildValues(selectedSession)
+//            let sessionID = cell.SessionID.text
+//            let selectedSession = ["selectedSessionID": sessionID!, "isAddSession": "false"]
+//            print(selectedSession)
+//            ref.updateChildValues(selectedSession)
             //ref.setValue(selectedSession)
+        
+        selectedSession = sessions[indexPath.row]
+        addingSession = false
         
         //track event in mixpanel
         mixpanel.track("Old Session", properties: ["Viewing?": "Yes"])

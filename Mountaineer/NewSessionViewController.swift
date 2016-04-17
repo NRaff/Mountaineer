@@ -7,8 +7,6 @@
 //
 
 import UIKit
-//import Realm
-//import RealmSwift
 import Firebase
 import CoreLocation
 import Mixpanel
@@ -20,8 +18,10 @@ class NewSessionViewController: UIViewController {
     
     var locationInfo = LocationHelper()
     var isAddSession = true
-//    var currentSession: Session?
+    var currentSession: Session?
     var sessionUnits: Bool?
+    
+    var selectedSession: String?
 
     
     var statsTimer: NSTimer?
@@ -62,10 +62,6 @@ class NewSessionViewController: UIViewController {
     override func viewWillAppear(animated: Bool) {
         locationInfo.startedLocation()
         
-        RootRef.observeSingleEventOfType(.Value, withBlock: { (snap: FDataSnapshot!) -> Void in
-            self.isAddSession = snap.value["isAddSession"] as! Bool
-        })
-        
         //if user is adding a session then display the add fields
         if isAddSession == true {
             
@@ -90,45 +86,6 @@ class NewSessionViewController: UIViewController {
             
         //otherwise hide the editable fields and display the recorded topspeed and peak altitude
         else{
-            //set the settings variables based on the selected sessions firebase
-            RootRef.queryOrderedByChild("\(RootRef.authData.uid)").observeEventType(.ChildAdded, withBlock: { snapshot in
-//                if let units = snapshot.value["sessionUnits"] as? Bool {
-//                    self.sessionUnits = units
-//                    print("\(snapshot.key) was \(units)")
-//                }
-                if let sId = snapshot.value["selectedSessionID"] as? String {
-                    self.sessionID = sId
-                }
-                
-            })
-            
-            //set the variable thisSessionUnits to the firebase setting (must have already set the selected sessionID)
-            RootRef.queryOrderedByChild("\(RootRef.authData.uid)/sessions/\(sessionID)").observeEventType(.ChildAdded, withBlock: { snapshot in
-                if let units = snapshot.value["thisSessionUnits"] as? Bool {
-                    self.thisSessionUnits = units
-                }
-                if let sTitle = snapshot.value["sessionTitle"] as? String {
-                    self.OsessionTitle = sTitle
-                }
-                if let sTime = snapshot.value["sessionTime"] as? String {
-                    self.OsessionTime = sTime
-                }
-                if let sImageID = snapshot.value["imageID"] as? Int {
-                    self.OimageID = sImageID
-                }
-                if let sTopSpeed = snapshot.value["topSpeed"] as? Double {
-                    self.OtopSpeed = sTopSpeed
-                }
-                if let sAverageSpeed = snapshot.value["averageSpeed"] as? Double {
-                    self.OaverageSpeed = sAverageSpeed
-                }
-                if let sPeakAltitude = snapshot.value["peakAltitude"] as? Double {
-                    self.OpeakAltitude = sPeakAltitude
-                }
-                if let sTotalDistance = snapshot.value["totalDistance"] as? Double {
-                    self.OtotalDistance = sTotalDistance
-                }
-            })
             
             //hide and unhide things
             unhideNeeded()
@@ -136,25 +93,25 @@ class NewSessionViewController: UIViewController {
             end_btn.hidden = true
             
             //pull data from the old session to be displayed in the session view objects
-            titleLabel.text = OsessionTitle     //currentSession!.sessionTitle
-            sessionTime.text  = OsessionTime    //currentSession!.sessionTime
+            titleLabel.text = currentSession!.sessionTitle
+            sessionTime.text  = currentSession!.sessionTime
             //select the correct image
-            backImage.image = UIImage(named: "detailsbg\(OimageID)")    //UIImage(named: "detailsbg\(currentSession!.imageID)")
+            backImage.image = UIImage(named: "detailsbg\(currentSession!.imageID)")
             
             //if the current session units are set as imperial...
             if sessionUnits == false {
             topSpeed_lb.text = "\(OtopSpeed) mph"   //String(currentSession!.topSpeed) + " mph"
-            peakAltitude_lb.text = "\(OpeakAltitude) ft"    //String(currentSession!.peakAltitude) + " ft"
-            totalDistance_lb.text = "\(OtotalDistance) mi"  //String(currentSession!.totalDistance) + " mi"
-            currentSpeed_lb.text = "\(OaverageSpeed) mph"   //"\(currentSession!.averageSpeed) mph"
+            peakAltitude_lb.text = String(currentSession!.peakAltitude) + " ft"
+            totalDistance_lb.text = String(currentSession!.totalDistance) + " mi"
+            currentSpeed_lb.text = "\(currentSession!.averageSpeed) mph"
             }
                 
             //if the current session units are set as metric...
             else {
-                topSpeed_lb.text = "\(OtopSpeed) kph"   //String(currentSession!.topSpeed) + " kph"
-                peakAltitude_lb.text = "\(OpeakAltitude) m"     //String(currentSession!.peakAltitude) + " m"
-                totalDistance_lb.text = "\(OtotalDistance) km"  //String(currentSession!.totalDistance) + " km"
-                currentSpeed_lb.text = "\(OaverageSpeed) kph"   //"\(currentSession!.averageSpeed) kph"
+                topSpeed_lb.text = String(currentSession!.topSpeed) + " kph"
+                peakAltitude_lb.text = String(currentSession!.peakAltitude) + " m"
+                totalDistance_lb.text = String(currentSession!.totalDistance) + " km"
+                currentSpeed_lb.text = "\(currentSession!.averageSpeed) kph"
             }
             
             //track this event
@@ -386,32 +343,7 @@ extension NewSessionViewController {
             let savedSession = ["sessionID": sessionID, "thisSessionUnits": eachSessionUnits, "imageID": imageID, "sessionTitle": sessionTitle, "dateCreated": date, "topSpeed": topSpeed, "peakAltitude": peakAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime]
             
             saveRef.setValue(savedSession)
-            
-//            if Session.measureSwitch == false {
-//                currentSession?.sessionMeasuredIn = false
-//                currentSession?.topSpeed = locationInfo.getTopSpeed()
-//                currentSession?.peakAltitude = locationInfo.getPeakAltitude()
-//                currentSession?.totalDistance = locationInfo.getTotalDistance()
-//                currentSession?.averageSpeed = locationInfo.getAverageSpeed()
-//            }
-            
-            //if the user sets units as metric
-//            else {
-//                currentSession?.sessionMeasuredIn = true
-//                currentSession?.topSpeed = locationInfo.getTopSpeed()
-//                currentSession?.peakAltitude = locationInfo.getPeakAltitude()
-//                currentSession?.totalDistance = locationInfo.getTotalDistance()
-//                currentSession?.averageSpeed = locationInfo.getAverageSpeed()
-//            }
-            
-            //set the sessionTime string to be the ending timer time
-//            currentSession?.sessionTime = "TIME ADVENTURING: " + locationInfo.ventureTime
-            
-            //send it all to realm
-//            let realm = Realm
-//            realm.write() {
-//                realm.add(self.currentSession!)
-//            }
+
         }
     }
     
