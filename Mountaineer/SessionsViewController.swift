@@ -26,6 +26,8 @@ class SessionsViewController: UIViewController {
     var selectedSession: Session?
     var sessionUnits:Bool = false
     
+    var segueIdentifier = ""
+    
     override func viewDidLoad() {
         mixpanel = Mixpanel.sharedInstance()
         newShredView.hidden = false
@@ -33,10 +35,6 @@ class SessionsViewController: UIViewController {
 
         myNavBar.setTitleVerticalPositionAdjustment(-8, forBarMetrics: .Default)
     }
-    
-//    override func viewDidAppear(animated: Bool) {
-//        super.viewDidAppear(animated)
-//    }
     
     override func viewWillAppear(animated: Bool) {
         let tableRef = RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions")
@@ -62,7 +60,16 @@ class SessionsViewController: UIViewController {
     override func viewDidDisappear(animated: Bool) {
         newShredView.hidden = true
     }
-
+    
+//    override func canPerformUnwindSegueAction(action: Selector, fromViewController: UIViewController, withSender sender: AnyObject) -> Bool {
+//        if segueIdentifier == "goBack" {
+//            return true
+//        }
+//        else {
+//            return false
+//        }
+//    }
+    
     
     @IBOutlet weak var newShredView: UIView!
     @IBOutlet weak var myNavBar: UINavigationBar!
@@ -131,7 +138,6 @@ extension SessionsViewController: UITableViewDelegate {
         let cell = sessionsTableView.dequeueReusableCellWithIdentifier("sessionCell") as! SessionTableViewCell!
         let anotherSession = sessions[indexPath.row]
         
-
         cell.sessionName.text = anotherSession.sessionTitle
         cell.createdDate.text = anotherSession.dateCreated
         cell.randomImage.image = UIImage(named: "cell_bg\(anotherSession.imageID)")
@@ -164,14 +170,5 @@ extension SessionsViewController: UITableViewDelegate {
         self.performSegueWithIdentifier("showNewSession", sender: self)
         
     }
-//
-//    // 3
-//    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-//        return true
-//    }
-//    
-//    // 4
-//    
-
 
 }

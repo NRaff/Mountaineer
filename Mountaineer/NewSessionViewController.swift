@@ -38,10 +38,6 @@ class NewSessionViewController: UIViewController {
     
     let formatter = NSDateFormatter()
     
-    //old session vars
-    var sessionID: String?
-    var thisSessionUnits: Bool?
-    
     override func viewDidLoad() {
         formatter.dateStyle = NSDateFormatterStyle.FullStyle
         formatter.timeStyle = .ShortStyle

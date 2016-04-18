@@ -8,3 +8,4 @@
 
 //import Foundation
 //All NStimers that get various statistics should optionally update to firebase on the second rather than only locally. However, the user should have the option to turn off the constant updates (battery draining and Data heavy) If constant update is not turned on then the app should only push to firebase on crash, session end, or every 5 minutes?
+//Logout segue isn't an unwind segue so its throwing a weird window hirerachy error and it'll mess up memory stuff...not sure how to do this correctly but working for now.

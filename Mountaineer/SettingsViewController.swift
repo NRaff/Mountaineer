@@ -12,7 +12,7 @@ import Firebase
 import FirebaseUI
 
 class SettingsViewController: UIViewController {
-
+    let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
     let usersRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
     var metric: Bool = false
@@ -22,6 +22,11 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var settingsNavBar: UINavigationBar!
     
     @IBOutlet weak var doneItem: UIBarButtonItem!
+    
+    @IBAction func logout_btn(sender: AnyObject) {
+        RootRef.unauth()
+        performSegueWithIdentifier("loggedOut", sender: nil)
+    }
     
     @IBAction func measureSwitchEvent(sender: AnyObject) {
         if measureSwitch.selectedSegmentIndex == 0 {
@@ -41,6 +46,7 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         usersRef.queryOrderedByChild("\(usersRef.authData.uid)/sessionUnits").observeEventType(.ChildAdded, withBlock: { snapshot in
             if let sessionUnits = snapshot.value["sessionUnits"] as? Bool {
                 if sessionUnits
@@ -79,10 +85,20 @@ class SettingsViewController: UIViewController {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
-        let NewSession = SessionsViewController()
-        NewSession.sessionUnits = metric
-        usersRef.childByAppendingPath("\(usersRef.authData.uid)").updateChildValues(["sessionUnits": metric])
-        print(metric)
+        let sessionsController = SessionsViewController()
+        if segue.identifier == "goBack" {
+            sessionsController.segueIdentifier = "goBack"
+            let NewSession = SessionsViewController()
+            NewSession.sessionUnits = metric
+            usersRef.childByAppendingPath("\(usersRef.authData.uid)").updateChildValues(["sessionUnits": metric])
+            print(metric)
+            
+        }
+        else {
+            sessionsController.segueIdentifier = "logoutSegue"
+            print("logged out")
+        }
+
     }
 
 }

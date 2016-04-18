@@ -230,7 +230,6 @@ extension LocationHelper {
             minutes = 0
             hours++
         }
-        print(adventureTime())
         return adventureTime()
     }
     

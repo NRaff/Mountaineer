@@ -33,8 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
         mixpanel.track("App launched")
         
-        print("finished launching app")
-
                 return true
     }
 
