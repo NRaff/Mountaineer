@@ -40,7 +40,7 @@ class SessionsViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         let tableRef = RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions")
-        tableRef.queryOrderedByChild("dateCreated").observeEventType(.Value, withBlock: { snapshot in
+        tableRef.queryOrderedByKey().observeEventType(.Value, withBlock: { snapshot in
             
             // 2
             var newSessions = [Session]()

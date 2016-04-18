@@ -51,18 +51,18 @@ class LocationHelper: NSObject {
     var finalAveSpeed: Double = 0.0
     
     func startedLocation(){
+        
+        RootRef.childByAppendingPath("users/\(RootRef.authData.uid)").observeSingleEventOfType(.Value, withBlock: { snapshot in
+            self.unitsSetting = snapshot.value["sessionUnits"] as! Bool
+        })
+        
         if (CLLocationManager.locationServicesEnabled()) {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
+            locationManager.allowsBackgroundLocationUpdates = true
             locationManager.startUpdatingLocation()
             
-            RootRef.queryOrderedByChild("\(RootRef.authData.uid)").observeEventType(.ChildAdded, withBlock: { snapshot in
-                if let units = snapshot.value["sessionUnits"] as? Bool {
-                    self.unitsSetting = units
-                    print("\(snapshot.key) was \(units)")
-                }
-            })
             
         } else {
             print("Location services are not enabled");
@@ -230,6 +230,7 @@ extension LocationHelper {
             minutes = 0
             hours++
         }
+        print(adventureTime())
         return adventureTime()
     }
     

@@ -41,18 +41,10 @@ class NewSessionViewController: UIViewController {
     //old session vars
     var sessionID: String?
     var thisSessionUnits: Bool?
-//    var OsessionTitle: String!
-//    var OsessionTime: String!
-//    var OimageID: Int!
-//    var OtopSpeed: Double!
-//    var OaverageSpeed: Double!
-//    var OpeakAltitude: Double!
-//    var OtotalDistance: Double!
-    
-//    let settings = SettingsViewController()
     
     override func viewDidLoad() {
         formatter.dateStyle = NSDateFormatterStyle.FullStyle
+        formatter.timeStyle = .ShortStyle
         super.viewDidLoad()
         nameTrek_tf.delegate = self
     }
@@ -312,18 +304,14 @@ extension NewSessionViewController {
             var averageSpeed: Double
             
             var sessionTime: String
-            
-            //create a new 'Session'
-//            currentSession = Session()
+
             //save the general identification of the session
             let saveRef = RootRef.childByAppendingPath("\(RootRef.authData.uid)/sessions").childByAutoId()
+
             sessionID = saveRef.key
             imageID = backImageID
             sessionTitle = nameTrek_tf.text!
             date = formatter.stringFromDate(NSDate())
-//            currentSession?.imageID = backImageID
-//            currentSession?.sessionTitle = nameTrek_tf.text!
-//            currentSession?.Date = NSDate()
             
             //if the user sets units as imperial then...
             if sessionUnits == false {
@@ -396,7 +384,7 @@ extension NewSessionViewController {
         else {
             if locationInfo.locationManager.location != nil {
                 
-                if thisSessionUnits == false {
+                if sessionUnits == false {
                     currentAltitude_lb.text = String(round(locationInfo.locationManager.location!.altitude * imperialConvFt * 1000)/1000) + " ft"
                 }
                 else {
@@ -404,7 +392,7 @@ extension NewSessionViewController {
                 }
             }
             else {
-                if thisSessionUnits == false {
+                if sessionUnits == false {
                     currentAltitude_lb.text = "- - ft"
                 }
                 else {
