@@ -24,6 +24,9 @@
             <string>SFUIDisplay-Light</string>
             <string>SFUIDisplay-Light</string>
             <string>SFUIDisplay-Light</string>
+            <string>SFUIDisplay-Light</string>
+            <string>SFUIDisplay-Light</string>
+            <string>SFUIDisplay-Light</string>
         </mutableArray>
         <mutableArray key="SF-UI-Display-Regular.otf">
             <string>SFUIDisplay-Regular</string>
@@ -48,14 +51,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="firstMountian" translatesAutoresizingMaskIntoConstraints="NO" id="wg3-d7-BHA">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p4h-Q3-Mgd">
-                                <rect key="frame" x="279" y="121" width="42" height="21"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <rect key="frame" x="280" y="202" width="40" height="21"/>
+                                <fontDescription key="fontDescription" name="SFUIDisplay-Light" family="SF UI Display" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="IZF-fr-oUO">
-                                <rect key="frame" x="147" y="166" width="307" height="30"/>
+                                <rect key="frame" x="147" y="247" width="307" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="307" id="FgI-39-UVl"/>
                                 </constraints>
@@ -63,20 +69,26 @@
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ypC-i4-k9k">
-                                <rect key="frame" x="147" y="219" width="307" height="30"/>
+                                <rect key="frame" x="147" y="300" width="307" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="l76-kZ-X7M">
-                                <rect key="frame" x="283" y="270" width="38" height="30"/>
-                                <state key="normal" title="Login"/>
+                                <rect key="frame" x="285" y="351" width="35" height="30"/>
+                                <fontDescription key="fontDescription" name="SFUIDisplay-Light" family="SF UI Display" pointSize="15"/>
+                                <state key="normal" title="Login">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="login_btn:" destination="3jZ-Vl-UjA" eventType="touchUpInside" id="fyw-uj-x8S"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Max-rR-TY0">
-                                <rect key="frame" x="249" y="308" width="107" height="30"/>
-                                <state key="normal" title="Create Account"/>
+                                <rect key="frame" x="253" y="389" width="99" height="30"/>
+                                <fontDescription key="fontDescription" name="SFUIDisplay-Light" family="SF UI Display" pointSize="15"/>
+                                <state key="normal" title="Create Account">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
                                 <connections>
                                     <action selector="createAccount_btn:" destination="3jZ-Vl-UjA" eventType="touchUpInside" id="JdT-pk-dxn"/>
                                 </connections>
@@ -92,8 +104,12 @@
                             <constraint firstItem="l76-kZ-X7M" firstAttribute="trailing" secondItem="p4h-Q3-Mgd" secondAttribute="trailing" id="Get-4B-gui"/>
                             <constraint firstItem="IZF-fr-oUO" firstAttribute="top" secondItem="p4h-Q3-Mgd" secondAttribute="bottom" constant="24" id="H47-En-vyg"/>
                             <constraint firstItem="IZF-fr-oUO" firstAttribute="trailing" secondItem="ypC-i4-k9k" secondAttribute="trailing" id="Lq0-Mq-MIK"/>
+                            <constraint firstItem="wg3-d7-BHA" firstAttribute="bottom" secondItem="c0k-Pn-9yJ" secondAttribute="top" id="ORg-9i-Jy2"/>
+                            <constraint firstItem="wg3-d7-BHA" firstAttribute="centerX" secondItem="p4h-Q3-Mgd" secondAttribute="centerX" id="TvV-7G-UgJ"/>
+                            <constraint firstItem="wg3-d7-BHA" firstAttribute="leading" secondItem="2sB-4l-u8d" secondAttribute="leading" id="Uhu-Q3-hq0"/>
                             <constraint firstItem="IZF-fr-oUO" firstAttribute="leading" secondItem="ypC-i4-k9k" secondAttribute="leading" id="WLB-4G-zoD"/>
-                            <constraint firstItem="p4h-Q3-Mgd" firstAttribute="top" secondItem="WHb-U6-8le" secondAttribute="bottom" constant="101" id="a3y-uF-Jys"/>
+                            <constraint firstItem="p4h-Q3-Mgd" firstAttribute="top" secondItem="WHb-U6-8le" secondAttribute="bottom" constant="182" id="a3y-uF-Jys"/>
+                            <constraint firstItem="wg3-d7-BHA" firstAttribute="top" secondItem="2sB-4l-u8d" secondAttribute="top" id="hgk-bm-9LJ"/>
                             <constraint firstItem="l76-kZ-X7M" firstAttribute="top" secondItem="ypC-i4-k9k" secondAttribute="bottom" constant="21" id="sCv-D2-pZv"/>
                         </constraints>
                     </view>
@@ -1146,6 +1162,7 @@
         <image name="backGroundImage" width="563" height="1001"/>
         <image name="check" width="23" height="23"/>
         <image name="currentAltitude" width="42" height="56"/>
+        <image name="firstMountian" width="960" height="600"/>
         <image name="peakAltitude" width="70" height="62"/>
         <image name="settings" width="26" height="25"/>
         <image name="totalDistance" width="51" height="81"/>
