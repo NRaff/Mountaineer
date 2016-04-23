@@ -51,7 +51,7 @@ class LoginViewController: UIViewController {
                 else
                 {
                     print("successfully logged in")
-                    self.performSegueWithIdentifier("loggedInAllSessionsSegue", sender: nil)
+                    //self.performSegueWithIdentifier("loggedInAllSessionsSegue", sender: nil)
                 }
             }
         }
@@ -67,13 +67,28 @@ class LoginViewController: UIViewController {
         print("create account segue was performed")
     }
     
+
+    
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
             if let identifier = segue.identifier {
                 if identifier == "cancelledCreateAccountSegue" {
                     print("unwind to login screen without creating an account")
                 }
+                else
+                {
+                    print("logoutSegue performed")
+                }
+            }
+
+        }
+    
+    @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
+        if let identifier = segue.identifier {
+            if identifier == "logoutSegue" {
+                print("logoutSegue performed")
             }
         }
+    }
 
  
    /* // MARK: - Navigation

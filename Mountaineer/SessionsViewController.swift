@@ -17,7 +17,7 @@ class SessionsViewController: UIViewController {
     let RootRef = Firebase(url: "https://mountaineer.firebaseio.com")
     
     //create the firebase datasource
-    var dataSource: FirebaseTableViewDataSource!
+    //var dataSource: FirebaseTableViewDataSource!
     var mixpanel: Mixpanel!
     var locationStuff = LocationHelper()
     var sessionName: String?
@@ -26,7 +26,7 @@ class SessionsViewController: UIViewController {
     var selectedSession: Session?
     var sessionUnits:Bool = false
     
-    var segueIdentifier = ""
+    var segueIdentifier = "goBack"
     
     override func viewDidLoad() {
         mixpanel = Mixpanel.sharedInstance()
@@ -37,28 +37,42 @@ class SessionsViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        let tableRef = RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions")
-        tableRef.queryOrderedByKey().observeEventType(.Value, withBlock: { snapshot in
-            
-            // 2
-            var newSessions = [Session]()
-            
-            // 3
-            for session in snapshot.children {
-                // 4
-                let anotherSession = Session(snapshot: session as! FDataSnapshot)
-                newSessions.append(anotherSession)
-            }
-            
-            // 5
-            self.sessions = newSessions
-            self.sessionsTableView.reloadData()
-        })
+        if segueIdentifier == "goBack" {
+            let tableRef = RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions")
+            tableRef.queryOrderedByKey().observeEventType(.Value, withBlock: { snapshot in
+                
+                // 2
+                var newSessions = [Session]()
+                
+                // 3
+                for session in snapshot.children {
+                    // 4
+                    let anotherSession = Session(snapshot: session as! FDataSnapshot)
+                    newSessions.append(anotherSession)
+                }
+                
+                // 5
+                self.sessions = newSessions
+                self.sessionsTableView.reloadData()
+            })
+        }
+        else
+        {
+            print("logoutSegue performed")
+        }
 
     }
     
     override func viewDidDisappear(animated: Bool) {
         newShredView.hidden = true
+    }
+    
+    @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
+        if let identifier = segue.identifier {
+            if identifier == "logoutSegue" {
+                print("logoutSegue performed")
+            }
+        }
     }
     
 //    override func canPerformUnwindSegueAction(action: Selector, fromViewController: UIViewController, withSender sender: AnyObject) -> Bool {

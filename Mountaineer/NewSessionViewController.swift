@@ -204,11 +204,13 @@ class NewSessionViewController: UIViewController {
         //if the user forgot to give the session a name then...
         else {
             //if the user didn't give the session a name, then give this error message
-            let alert = UIAlertView()
-            alert.title = "Oops!"
-            alert.message = "Make sure you've named your trip!"
-            alert.addButtonWithTitle("OK")
-            alert.show()
+            let alert = UIAlertController(title: "Oops!", message: "Make sure you've named your trip!", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: {(action: UIAlertAction!) in
+                print("oops message dismissed")
+            }))
+            
+            presentViewController(alert, animated: true, completion: nil)
+
             mixpanel.track("Add Session Started", properties: ["Recording": "Check Button - Needs Name"])
         }
 
@@ -261,11 +263,13 @@ extension NewSessionViewController: UITextFieldDelegate {
             
         else {
             //if the user didn't give the session a name, then give this error message
-            let alert = UIAlertView()
-            alert.title = "Oops!"
-            alert.message = "Make sure you've named your trip!"
-            alert.addButtonWithTitle("OK")
-            alert.show()
+            let alert = UIAlertController(title: "Oops!", message: "Make sure you've named your trip!", preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: {(action: UIAlertAction!) in
+                print("oops message dismissed")
+            }))
+            
+            presentViewController(alert, animated: true, completion: nil)
+            
             mixpanel.track("Add Session Started", properties: ["Recording": "Keyboard 'GO' - Needs Name"])
         }
         return true

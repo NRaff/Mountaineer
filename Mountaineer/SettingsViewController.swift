@@ -24,8 +24,7 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var doneItem: UIBarButtonItem!
     
     @IBAction func logout_btn(sender: AnyObject) {
-        RootRef.unauth()
-        performSegueWithIdentifier("loggedOut", sender: nil)
+        //performSegueWithIdentifier("logoutSegue", sender: nil)
     }
     
     @IBAction func measureSwitchEvent(sender: AnyObject) {
@@ -96,6 +95,7 @@ class SettingsViewController: UIViewController {
         }
         else {
             sessionsController.segueIdentifier = "logoutSegue"
+            RootRef.unauth()
             print("logged out")
         }
 

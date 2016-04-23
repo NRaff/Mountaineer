@@ -428,7 +428,7 @@
                                         </state>
                                         <connections>
                                             <action selector="logout_btn:" destination="Emo-d1-rVZ" eventType="touchUpInside" id="tYJ-8Y-40s"/>
-                                            <segue destination="3jZ-Vl-UjA" kind="presentation" identifier="loggedOut" id="BAI-7T-xSc"/>
+                                            <segue destination="kEG-1s-opF" kind="unwind" identifier="logoutSegue" unwindAction="unwindToLoginViewController:" id="Wv0-Cz-BSs"/>
                                         </connections>
                                     </button>
                                 </subviews>
