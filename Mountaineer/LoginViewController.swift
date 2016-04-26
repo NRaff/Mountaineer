@@ -31,6 +31,10 @@ class LoginViewController: UIViewController {
                 // 3
                 self.performSegueWithIdentifier("loggedInAllSessionsSegue", sender: nil)
             }
+            else {
+                self.emailText.text = ""
+                self.passwordText.text = ""
+            }
         }
     }
 
@@ -51,7 +55,6 @@ class LoginViewController: UIViewController {
                 else
                 {
                     print("successfully logged in")
-                    //self.performSegueWithIdentifier("loggedInAllSessionsSegue", sender: nil)
                 }
             }
         }
@@ -85,6 +88,7 @@ class LoginViewController: UIViewController {
     @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
         if let identifier = segue.identifier {
             if identifier == "logoutSegue" {
+                rootRef.unauth()
                 print("logoutSegue performed")
             }
         }

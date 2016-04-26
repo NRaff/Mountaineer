@@ -37,7 +37,7 @@ class SessionsViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        if segueIdentifier == "goBack" {
+        if RootRef.authData != nil {
             let tableRef = RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions")
             tableRef.queryOrderedByKey().observeEventType(.Value, withBlock: { snapshot in
                 
@@ -67,13 +67,13 @@ class SessionsViewController: UIViewController {
         newShredView.hidden = true
     }
     
-    @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
-        if let identifier = segue.identifier {
-            if identifier == "logoutSegue" {
-                print("logoutSegue performed")
-            }
-        }
-    }
+//    @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
+//        if let identifier = segue.identifier {
+//            if identifier == "logoutSegue" {
+//                print("logoutSegue performed")
+//            }
+//        }
+//    }
     
 //    override func canPerformUnwindSegueAction(action: Selector, fromViewController: UIViewController, withSender sender: AnyObject) -> Bool {
 //        if segueIdentifier == "goBack" {

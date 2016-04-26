@@ -95,8 +95,7 @@ class SettingsViewController: UIViewController {
         }
         else {
             sessionsController.segueIdentifier = "logoutSegue"
-            RootRef.unauth()
-            print("logged out")
+            print("logged out segue")
         }
 
     }
