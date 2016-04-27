@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3jZ-Vl-UjA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3jZ-Vl-UjA">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -93,9 +93,22 @@
                                     <action selector="createAccount_btn:" destination="3jZ-Vl-UjA" eventType="touchUpInside" id="JdT-pk-dxn"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rA5-40-bPR">
+                                <rect key="frame" x="225" y="435" width="151" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="151" id="Lqp-Zq-qYx"/>
+                                </constraints>
+                                <state key="normal" title="Log In with Google">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginWithGoogle_btn:" destination="3jZ-Vl-UjA" eventType="touchUpInside" id="wdL-un-Caj"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="rA5-40-bPR" firstAttribute="centerX" secondItem="ypC-i4-k9k" secondAttribute="centerX" id="1Sp-4m-6q9"/>
                             <constraint firstItem="p4h-Q3-Mgd" firstAttribute="centerX" secondItem="IZF-fr-oUO" secondAttribute="centerX" id="2gV-5i-AtO"/>
                             <constraint firstItem="ypC-i4-k9k" firstAttribute="top" secondItem="IZF-fr-oUO" secondAttribute="bottom" constant="23" id="A8d-7R-sv6"/>
                             <constraint firstItem="Max-rR-TY0" firstAttribute="top" secondItem="l76-kZ-X7M" secondAttribute="bottom" constant="8" symbolic="YES" id="BN6-Sy-wkW"/>
@@ -110,11 +123,13 @@
                             <constraint firstItem="IZF-fr-oUO" firstAttribute="leading" secondItem="ypC-i4-k9k" secondAttribute="leading" id="WLB-4G-zoD"/>
                             <constraint firstItem="p4h-Q3-Mgd" firstAttribute="top" secondItem="WHb-U6-8le" secondAttribute="bottom" constant="182" id="a3y-uF-Jys"/>
                             <constraint firstItem="wg3-d7-BHA" firstAttribute="top" secondItem="2sB-4l-u8d" secondAttribute="top" id="hgk-bm-9LJ"/>
+                            <constraint firstItem="rA5-40-bPR" firstAttribute="top" secondItem="Max-rR-TY0" secondAttribute="bottom" constant="16" id="ibi-Mc-mWT"/>
                             <constraint firstItem="l76-kZ-X7M" firstAttribute="top" secondItem="ypC-i4-k9k" secondAttribute="bottom" constant="21" id="sCv-D2-pZv"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="emailText" destination="IZF-fr-oUO" id="OHz-tr-ghK"/>
+                        <outlet property="loginGoogle_btn" destination="rA5-40-bPR" id="U11-Gh-aB6"/>
                         <outlet property="passwordText" destination="ypC-i4-k9k" id="Rj8-fG-frA"/>
                         <segue destination="pa9-vV-hzb" kind="show" identifier="createAccountSegue" id="e5p-mi-xON"/>
                         <segue destination="JEt-qx-qbK" kind="presentation" identifier="loggedInAllSessionsSegue" id="Klw-Vp-Czl"/>

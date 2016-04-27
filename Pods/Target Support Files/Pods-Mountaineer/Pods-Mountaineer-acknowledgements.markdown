@@ -211,6 +211,38 @@ https://www.firebase.com/terms/terms-of-service.html
    limitations under the License.
 
 
+## Google
+
+Copyright 2015 Google Inc.
+
+## GoogleAppUtilities
+
+Copyright 2015 Google Inc.
+
+## GoogleAuthUtilities
+
+Copyright 2015 Google Inc.
+
+## GoogleInterchangeUtilities
+
+Copyright 2015 Google Inc.
+
+## GoogleNetworkingUtilities
+
+Copyright 2015 Google Inc.
+
+## GoogleSignIn
+
+Copyright 2015 Google Inc. All Rights Reserved.
+
+## GoogleSymbolUtilities
+
+Copyright 2015 Google Inc.
+
+## GoogleUtilities
+
+Copyright 2015 Google Inc.
+
 ## Mixpanel
 
 Copyright 2013 Mixpanel, Inc.

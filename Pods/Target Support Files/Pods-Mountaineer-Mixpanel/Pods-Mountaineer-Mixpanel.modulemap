@@ -1,6 +1,0 @@
-framework module Mixpanel {
-  umbrella header "Pods-Mountaineer-Mixpanel-umbrella.h"
-
-  export *
-  module * { export * }
-}

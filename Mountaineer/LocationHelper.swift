@@ -52,9 +52,11 @@ class LocationHelper: NSObject {
     
     func startedLocation(){
         
-        RootRef.childByAppendingPath("users/\(RootRef.authData.uid)").observeSingleEventOfType(.Value, withBlock: { snapshot in
-            self.unitsSetting = snapshot.value["sessionUnits"] as! Bool
-        })
+//        RootRef.childByAppendingPath("users/\(RootRef.authData.uid)").observeSingleEventOfType(.Value, withBlock: { snapshot in
+//            if snapshot.value["sessionUnits"] != nil {
+//            self.unitsSetting = snapshot.value["sessionUnits"] as! Bool
+//            }
+//        })
         
         if (CLLocationManager.locationServicesEnabled()) {
             locationManager.delegate = self

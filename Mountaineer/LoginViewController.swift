@@ -8,9 +8,8 @@
 
 import UIKit
 import Firebase
-import FirebaseUI
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
     let rootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
     
     @IBOutlet weak var emailText: UITextField!
@@ -19,7 +18,14 @@ class LoginViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+//        ref = Firebase(url: "https://<YOUR-FIREBASE-APP>.firebaseio.com/")
+        
+        // Setup delegates
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
+        // Attempt to sign in silently, this will succeed if
+        // the user has recently been authenticated
+        GIDSignIn.sharedInstance().signInSilently()
         // Do any additional setup after loading the view.
     }
     
@@ -70,6 +76,10 @@ class LoginViewController: UIViewController {
         print("create account segue was performed")
     }
     
+    @IBOutlet weak var loginGoogle_btn: UIButton!
+    @IBAction func loginWithGoogle_btn(sender: AnyObject) {
+       authenticateWithGoogle(loginGoogle_btn)
+    }
 
     
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
@@ -108,4 +118,34 @@ class LoginViewController: UIViewController {
     }
 */
 
+    // MARK: - Google Stuff
+    
+    // Wire up to a button tap
+    func authenticateWithGoogle(sender: UIButton) {
+        GIDSignIn.sharedInstance().signIn()
+    }
+    func signOut() {
+        GIDSignIn.sharedInstance().signOut()
+        rootRef.unauth()
+    }
+    // Implement the required GIDSignInDelegate methods
+    func signIn(signIn: GIDSignIn!, didSignInForUser user: GIDGoogleUser!,
+        withError error: NSError!) {
+            if (error == nil) {
+                // Auth with Firebase
+                rootRef.authWithOAuthProvider("google", token: user.authentication.accessToken, withCompletionBlock: { (error, authData) in
+                    // User is logged in!
+                })
+            } else {
+                // Don't assert this error it is commonly returned as nil
+                print("\(error.localizedDescription)")
+            }
+    }
+    // Implement the required GIDSignInDelegate methods
+    // Unauth when disconnected from Google
+    func signIn(signIn: GIDSignIn!, didDisconnectWithUser user:GIDGoogleUser!,
+        withError error: NSError!) {
+            rootRef.unauth();
+    }
 }
+

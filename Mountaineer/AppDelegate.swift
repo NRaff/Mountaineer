@@ -33,7 +33,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let mixpanel: Mixpanel = Mixpanel.sharedInstance()
         mixpanel.track("App launched")
         
+        var configureError: NSError?
+        GGLContext.sharedInstance().configureWithError(&configureError)
+        assert(configureError == nil, "Error configuring Google services: \(configureError)")
+
+        
                 return true
+    }
+    
+    func application(application: UIApplication,
+        openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+            return GIDSignIn.sharedInstance().handleURL(url,
+                sourceApplication: sourceApplication,
+                annotation: annotation)
     }
 
     func applicationWillResignActive(application: UIApplication) {
