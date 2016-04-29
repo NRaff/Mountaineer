@@ -16,9 +16,17 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
     
     @IBOutlet weak var passwordText: UITextField!
     
+    @IBOutlet weak var nameText: UITextField!
+    
+    @IBOutlet weak var HomeMountianText: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-//        ref = Firebase(url: "https://<YOUR-FIREBASE-APP>.firebaseio.com/")
+        emailText.attributedPlaceholder = NSAttributedString(string:"EMAIL", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        passwordText.attributedPlaceholder = NSAttributedString(string: "PASSWORD", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+        nameText.attributedPlaceholder = NSAttributedString(string: "NAME", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+        HomeMountianText.attributedPlaceholder = NSAttributedString(string: "HOME MOUNTAIN", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+
         
         // Setup delegates
         GIDSignIn.sharedInstance().delegate = self
