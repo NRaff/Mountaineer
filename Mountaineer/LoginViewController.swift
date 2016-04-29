@@ -58,33 +58,60 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
     }
     
     @IBAction func login_btn(sender: AnyObject) {
-        let email = emailText.text
-        let password = passwordText.text
-        if email != "" && password != "" {
-            rootRef.authUser(email, password: password) { (error, authData) -> Void in
-                if error != nil
-                {
-                    print("There was an error while logging in")
-                }
-                else
-                {
-                    print("successfully logged in")
-                }
-            }
-        }
-        else
-        {
-            print("Need to enter login info")
-        }
-        
-    }
-
-    @IBAction func createAccount_btn(sender: AnyObject) {
         self.performSegueWithIdentifier("createAccountSegue", sender: nil)
         print("create account segue was performed")
     }
+
+    @IBAction func createAccount_btn(sender: AnyObject) {
+
+        if nameText.text != "" && emailText.text != "" && passwordText.text != "" && HomeMountianText.text != ""
+        {
+            let fullName = nameText.text
+            let email = emailText.text
+            let password = passwordText.text
+            let homeMountain = HomeMountianText.text
+            
+            rootRef.createUser(email, password: password, withValueCompletionBlock: { error, result in
+                if error != nil
+                {
+                    print("There was an error creating the account")
+                }
+                else
+                {
+                    let uid = result["uid"] as? String
+                    print("Successfully created user account with uid: \(uid!)")
+                    self.rootRef.authUser(email, password: password) { (error, authData) -> Void in
+                        if error != nil
+                        {
+                            print("There was an error while logging in \(error)")
+                        }
+                        else
+                        {
+                            print("successfully logged in")
+                            let newUser = ["fullName": fullName!, "email": email!, "homeMountain": homeMountain!]
+                            
+                            let usersRef = self.rootRef.childByAppendingPath("users/\(self.rootRef.authData.uid)")
+                            
+                            usersRef.setValue(newUser)
+                            
+                            self.performSegueWithIdentifier("createAccountToAllSessionsSegue", sender: nil)
+                        }
+                    }
+                }
+            })
+            
+        }
+            
+        else
+        {
+            //create alert presentation
+            print("A field was not filled out")
+        }
+        
+    }
     
     @IBOutlet weak var loginGoogle_btn: UIButton!
+    
     @IBAction func loginWithGoogle_btn(sender: AnyObject) {
        authenticateWithGoogle(loginGoogle_btn)
     }
