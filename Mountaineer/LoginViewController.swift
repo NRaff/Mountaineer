@@ -83,7 +83,14 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
                     self.rootRef.authUser(email, password: password) { (error, authData) -> Void in
                         if error != nil
                         {
+                            let creationErrorAlert = UIAlertController(title: "Uh oh...", message: "There was an error creating your account. Make sure you're connected and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+                            
+                            creationErrorAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+                                print("message dismissed")
+                            }))
+                            
                             print("There was an error while logging in \(error)")
+                            self.presentViewController(creationErrorAlert, animated: true, completion: nil)
                         }
                         else
                         {
@@ -105,6 +112,13 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
         else
         {
             //create alert presentation
+            let createUserAlert = UIAlertController(title: "Oops!", message: "There was an error creating your account. Check that all fields are filled out, then give it another shot.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            createUserAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+                print("message dismissed")
+            }))
+            
+            self.presentViewController(createUserAlert.self, animated: true, completion: nil)
             print("A field was not filled out")
         }
         
@@ -173,6 +187,12 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
                 })
             } else {
                 // Don't assert this error it is commonly returned as nil
+//                let googleErrorAlert = UIAlertController(title: "Uh oh...", message: "There was an error connecting with google. Make sure you're connected then try again.", preferredStyle: UIAlertControllerStyle.Alert)
+//                
+//                googleErrorAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+//                    print("message dismissed")
+//                }))
+                
                 print("\(error.localizedDescription)")
             }
     }

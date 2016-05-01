@@ -114,7 +114,6 @@ class NewSessionViewController: UIViewController {
 
        //update the different stats every second
        self.statsTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateCurrentStats", userInfo: nil, repeats: true)
-
 }
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {

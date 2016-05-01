@@ -125,7 +125,6 @@
                                 </state>
                                 <connections>
                                     <action selector="createAccount_btn:" destination="3jZ-Vl-UjA" eventType="touchUpInside" id="JdT-pk-dxn"/>
-                                    <segue destination="JEt-qx-qbK" kind="presentation" identifier="createAccountToAllSessionsSegue" id="xpY-El-fGZ"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rA5-40-bPR">
@@ -279,6 +278,7 @@
                         <outlet property="passwordText" destination="ypC-i4-k9k" id="Rj8-fG-frA"/>
                         <segue destination="pa9-vV-hzb" kind="show" identifier="createAccountSegue" id="e5p-mi-xON"/>
                         <segue destination="JEt-qx-qbK" kind="presentation" identifier="loggedInAllSessionsSegue" id="Klw-Vp-Czl"/>
+                        <segue destination="JEt-qx-qbK" kind="presentation" identifier="createAccountToAllSessionsSegue" id="T8A-yl-oZt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="f9F-62-gbA" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1384,7 +1384,7 @@
         <image name="viewLoadedPlus" width="120" height="119"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="qif-eM-CPv"/>
+        <segue reference="T8A-yl-oZt"/>
         <segue reference="vF8-Uo-TOb"/>
     </inferredMetricsTieBreakers>
 </document>

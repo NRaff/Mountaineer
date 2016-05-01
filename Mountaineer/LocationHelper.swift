@@ -223,14 +223,14 @@ extension LocationHelper {
     
 
     func tripDuration() -> String {
-        seconds++
+        seconds+1
         if seconds > 59 {
             seconds = 0
-            minutes++
+            minutes+1
         }
         if minutes > 59 {
             minutes = 0
-            hours++
+            hours+1
         }
         return adventureTime()
     }
