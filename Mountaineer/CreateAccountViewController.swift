@@ -22,6 +22,9 @@ class CreateAccountViewController: UIViewController {
         emailText.attributedPlaceholder = NSAttributedString(string:"EMAIL", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
         passwordText.attributedPlaceholder = NSAttributedString(string: "PASSWORD", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
         
+        emailText.delegate = self
+        passwordText.delegate = self
+        
         print("create account view loaded")
         // Do any additional setup after loading the view.
     }
@@ -32,7 +35,11 @@ class CreateAccountViewController: UIViewController {
     }
     
     @IBAction func createAccount_btn(sender: AnyObject) {
-        
+        self.loginToFirebase()
+    }
+
+
+    func loginToFirebase() {
         let email = emailText.text
         let password = passwordText.text
         if email != "" && password != "" {
@@ -43,18 +50,23 @@ class CreateAccountViewController: UIViewController {
                 }
                 else
                 {
+                    self.performSegueWithIdentifier("createAccountToAllSessionsSegue", sender: nil)
                     print("successfully logged in")
                 }
             }
         }
         else
         {
+            let createUserAlert = UIAlertController(title: "Oops!", message: "There was an error logging in. Check that all fields are filled out, then give it another shot.", preferredStyle: UIAlertControllerStyle.Alert)
+            
+            createUserAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+                print("message dismissed")
+            }))
+            
+            self.presentViewController(createUserAlert.self, animated: true, completion: nil)
             print("Need to enter login info")
         }
-
     }
-
-
     /*
     // MARK: - Navigation
 
@@ -66,3 +78,28 @@ class CreateAccountViewController: UIViewController {
     */
 
 }
+
+extension CreateAccountViewController: UITextFieldDelegate {
+    
+    //when the keyboard 'Go' button is tapped...
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        //        textField.resignFirstResponder()
+        if textField.returnKeyType == UIReturnKeyType.Next {
+            passwordText.becomeFirstResponder()
+        }
+        else
+        {
+            textField.resignFirstResponder()
+            self.loginToFirebase()
+        }
+        
+        return true
+    }
+    
+    //if a user taps outside the text field then hide the keyboard
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        emailText.resignFirstResponder()
+        passwordText.resignFirstResponder()
+    }
+}
+

@@ -26,8 +26,11 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
         passwordText.attributedPlaceholder = NSAttributedString(string: "PASSWORD", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
         nameText.attributedPlaceholder = NSAttributedString(string: "NAME", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
         HomeMountianText.attributedPlaceholder = NSAttributedString(string: "HOME MOUNTAIN", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-
         
+        emailText.delegate = self
+        passwordText.delegate = self
+        nameText.delegate = self
+        HomeMountianText.delegate = self
         // Setup delegates
         GIDSignIn.sharedInstance().delegate = self
         GIDSignIn.sharedInstance().uiDelegate = self
@@ -48,6 +51,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
             else {
                 self.emailText.text = ""
                 self.passwordText.text = ""
+                self.HomeMountianText.text = ""
+                self.nameText.text = ""
             }
         }
     }
@@ -63,7 +68,40 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
     }
 
     @IBAction func createAccount_btn(sender: AnyObject) {
+        self.createFirebaseAccount()
+    }
+    
+    @IBOutlet weak var loginGoogle_btn: UIButton!
+    
+    @IBAction func loginWithGoogle_btn(sender: AnyObject) {
+       authenticateWithGoogle(loginGoogle_btn)
+    }
 
+    
+    @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
+            if let identifier = segue.identifier {
+                if identifier == "cancelledCreateAccountSegue" {
+                    print("unwind to login screen without creating an account")
+                }
+                else
+                {
+                    print("logoutSegue performed")
+                }
+            }
+
+        }
+    
+    @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
+        if let identifier = segue.identifier {
+            if identifier == "logoutSegue" {
+                rootRef.unauth()
+                signOut()
+                print("logoutSegue performed")
+            }
+        }
+    }
+    
+    func createFirebaseAccount() {
         if nameText.text != "" && emailText.text != "" && passwordText.text != "" && HomeMountianText.text != ""
         {
             let fullName = nameText.text
@@ -101,7 +139,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
                             
                             usersRef.setValue(newUser)
                             
-                            self.performSegueWithIdentifier("createAccountToAllSessionsSegue", sender: nil)
+                            self.performSegueWithIdentifier("loggedInAllSessionsSegue", sender: nil)
                         }
                     }
                 }
@@ -121,36 +159,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
             self.presentViewController(createUserAlert.self, animated: true, completion: nil)
             print("A field was not filled out")
         }
-        
-    }
-    
-    @IBOutlet weak var loginGoogle_btn: UIButton!
-    
-    @IBAction func loginWithGoogle_btn(sender: AnyObject) {
-       authenticateWithGoogle(loginGoogle_btn)
-    }
 
-    
-    @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
-            if let identifier = segue.identifier {
-                if identifier == "cancelledCreateAccountSegue" {
-                    print("unwind to login screen without creating an account")
-                }
-                else
-                {
-                    print("logoutSegue performed")
-                }
-            }
-
-        }
-    
-    @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
-        if let identifier = segue.identifier {
-            if identifier == "logoutSegue" {
-                rootRef.unauth()
-                print("logoutSegue performed")
-            }
-        }
     }
 
  
@@ -186,13 +195,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
                     // User is logged in!
                 })
             } else {
-                // Don't assert this error it is commonly returned as nil
-//                let googleErrorAlert = UIAlertController(title: "Uh oh...", message: "There was an error connecting with google. Make sure you're connected then try again.", preferredStyle: UIAlertControllerStyle.Alert)
-//                
-//                googleErrorAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
-//                    print("message dismissed")
-//                }))
-                
                 print("\(error.localizedDescription)")
             }
     }
@@ -203,4 +205,40 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
             rootRef.unauth();
     }
 }
+
+extension LoginViewController: UITextFieldDelegate {
+    
+    //when the keyboard 'Go' button is tapped...
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+//        textField.resignFirstResponder()
+        if textField.returnKeyType == UIReturnKeyType.Next {
+            if textField == nameText {
+                emailText.becomeFirstResponder()
+            }
+            if textField == emailText {
+                passwordText.becomeFirstResponder()
+            }
+            if textField == passwordText {
+                HomeMountianText.becomeFirstResponder()
+            }
+        }
+        else
+        {
+            textField.resignFirstResponder()
+            self.createFirebaseAccount()
+        }
+        
+        return true
+    }
+    
+    //if a user taps outside the text field then hide the keyboard
+    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        nameText.resignFirstResponder()
+        emailText.resignFirstResponder()
+        passwordText.resignFirstResponder()
+        HomeMountianText.resignFirstResponder()
+        
+    }
+}
+
 
