@@ -24,26 +24,8 @@ class SessionTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    
     @IBOutlet weak var randomImage: UIImageView!
     @IBOutlet weak var sessionName: UILabel!
     @IBOutlet weak var createdDate: UILabel!
     
-    
-//    static var dateFormatter: NSDateFormatter = {
-//        var formatter = NSDateFormatter()
-//        formatter.dateFormat = "MM-dd-yyy"
-//        return formatter
-//        }()
-//    
-//    var session: Firebase? {
-//        didSet {
-//            if let session = session, sessionName = sessionName, createdDate = createdDate {
-//                self.sessionName.text = session.sessionTitle
-//                self.createdDate.text = SessionTableViewCell.dateFormatter.stringFromDate(session.Date)
-//                self.randomImage.image = UIImage(named:"cell_bg\(session.imageID)")
-//            }
-//        }
-//    }
-
 }

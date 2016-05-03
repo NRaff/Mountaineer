@@ -12,32 +12,57 @@ import CoreLocation
 import Mixpanel
 
 class NewSessionViewController: UIViewController {
-
+// MARK: - References
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
     let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
     
+// MARK: - Variables
     var locationInfo = LocationHelper()
     var isAddSession = true
     var currentSession: Session?
     var sessionUnits: Bool = false
-    
     var selectedSession: String?
-
-    
     var statsTimer: NSTimer?
     var sessionDuration: NSTimer?
     var aveVelocity: NSTimer?
-    
     var metricConversionKPH = 3.6
     var metricConversionKM = 0.001
     var imperialConvMPH = 2.23694
     var imperialConvMi = 0.000621371
     var imperialConvFt = 3.28084
-    
     var backImageID: Int = 0
-    
     let formatter = NSDateFormatter()
     
+// MARK: - IBOutlets
+    @IBOutlet weak var end_btn: UIButton!
+    
+    @IBOutlet weak var totalDistance_lb: UILabel!
+    
+    @IBOutlet weak var currentSpeed_lb: UILabel!
+    
+    @IBOutlet weak var topSpeed_lb: UILabel!
+    
+    @IBOutlet weak var currentAltitude_lb: UILabel!
+    
+    @IBOutlet weak var peakAltitude_lb: UILabel!
+    
+    @IBOutlet weak var sessionTime: UILabel!
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    
+    @IBOutlet weak var nameTrek_tf: UITextField!
+    
+    @IBOutlet weak var cancel_btn: UIButton!
+    
+    @IBOutlet weak var startNew_btn: UIButton!
+    
+    @IBOutlet weak var back_btn: UIButton!
+    
+    @IBOutlet weak var backImage: UIImageView!
+    
+    @IBOutlet weak var editView: UIView!
+    
+// MARK: - Base Functions
     override func viewDidLoad() {
         formatter.dateStyle = NSDateFormatterStyle.FullStyle
         formatter.timeStyle = .ShortStyle
@@ -56,120 +81,20 @@ class NewSessionViewController: UIViewController {
 //            self.sessionUnits = snapshot.value["sessionUnits"] as! Bool
 //        })
         
-        //if user is adding a session then display the add fields
-        if isAddSession == true {
-            
-            //choose a random image to display as the background
-            backImageID = Int(arc4random_uniform(8) + 1)
-            backImage.image = UIImage(named: "detailsbg\(backImageID)")
-            
-            //hide the current session display objects
-            back_btn.hidden = true
-            sessionTime.hidden = true
-            titleLabel.hidden = true
-            end_btn.hidden = true
-            
-            //color the text field placeholder text
-            nameTrek_tf.attributedPlaceholder = NSAttributedString(string:"NAME YOUR SESSION",
-                attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
-            
-            //track the event
-            mixpanel.track("Add Session Started", properties: ["Event": "Opened Scene"])
-            
+            //if user is adding a session then display the add fields
+            self.sessionAppear()
         }
-            
-        //otherwise hide the editable fields and display the recorded topspeed and peak altitude
-        else{
-            
-            //hide and unhide things
-            unhideNeeded()
-            hideUnneeded()
-            end_btn.hidden = true
-            
-            //pull data from the old session to be displayed in the session view objects
-            titleLabel.text = currentSession!.sessionTitle
-            sessionTime.text  = currentSession!.sessionTime
-            //select the correct image
-            backImage.image = UIImage(named: "detailsbg\(currentSession!.imageID)")
-            
-            //if the current session units are set as imperial...
-            if sessionUnits == false {
-            topSpeed_lb.text = String(currentSession!.topSpeed) + " mph"
-            peakAltitude_lb.text = String(currentSession!.peakAltitude) + " ft"
-            totalDistance_lb.text = String(currentSession!.totalDistance) + " mi"
-            currentSpeed_lb.text = "\(currentSession!.averageSpeed) mph"
-            }
-                
-            //if the current session units are set as metric...
-            else {
-                topSpeed_lb.text = String(currentSession!.topSpeed) + " kph"
-                peakAltitude_lb.text = String(currentSession!.peakAltitude) + " m"
-                totalDistance_lb.text = String(currentSession!.totalDistance) + " km"
-                currentSpeed_lb.text = "\(currentSession!.averageSpeed) kph"
-            }
-            
-            //track this event
-            mixpanel.track("Old Session", properties: ["Viewing?": "Opened Old Session"])
-        }
-
-       //update the different stats every second
-       self.statsTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "updateCurrentStats", userInfo: nil, repeats: true)
-}
 
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
     }
-
-    @IBOutlet weak var end_btn: UIButton!
-    @IBOutlet weak var totalDistance_lb: UILabel!
-    @IBOutlet weak var currentSpeed_lb: UILabel!
-    @IBOutlet weak var topSpeed_lb: UILabel!
-    @IBOutlet weak var currentAltitude_lb: UILabel!
-    @IBOutlet weak var peakAltitude_lb: UILabel!
-    @IBOutlet weak var sessionTime: UILabel!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var nameTrek_tf: UITextField!
-    @IBOutlet weak var cancel_btn: UIButton!
-    @IBOutlet weak var startNew_btn: UIButton!
-    @IBOutlet weak var back_btn: UIButton!
     
-    @IBOutlet weak var backImage: UIImageView!
-    @IBOutlet weak var editView: UIView!
-    
-    
-    func unhideNeeded(){
-       back_btn.hidden = false
-       titleLabel.hidden = false
-       sessionTime.hidden = false
-       end_btn.hidden = false
-    }
-    
-    func hideUnneeded(){
-        nameTrek_tf.hidden = true
-        cancel_btn.hidden = true
-        startNew_btn.hidden = true
-        editView.hidden = true
-    }
-    
-    
+// MARK: - IBActions
     @IBAction func backCancelButton(sender: AnyObject) {
         //if the user is creating a new session then show the alert with options:
         if isAddSession == true {
-        let cancelAlert = UIAlertController(title: "Cancel Session?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-        
-        cancelAlert.addAction(UIAlertAction(title: "Save & Exit", style: .Default, handler: { (action: UIAlertAction) in
-            //if save and exit is chosen then save the data, track the event, then go back to AllSessions
-            self.saveStuff()
-            self.mixpanel.track("Back/Cancel Alert", properties: ["Options": "Save Session (Alert)"])
-            self.performSegueWithIdentifier("segueToAlert", sender: nil)
-        }))
-        
-        cancelAlert.addAction(UIAlertAction(title: "Keep Shredding!", style: .Default, handler: { (action: UIAlertAction) in
-            //if 'keep shredding' is chosen then don't do anything and continue the session
-            self.mixpanel.track("Back/Cancel Alert", properties: ["Options": "Continue Session (Alert)"])
-            }))
-        //show the alert
-        presentViewController(cancelAlert, animated: true, completion: nil)
+            //show the alert
+            presentViewController(self.cancelAlert(), animated: true, completion: nil)
         }
             
         //if the user is viewing an old session then just segue back to the AllSessions view instead of pushing an alert
@@ -183,32 +108,27 @@ class NewSessionViewController: UIViewController {
         
         //if the user has given the session a name then...
         if nameTrek_tf.text != "" {
-        //track
-        mixpanel.track("Add Session Started", properties: ["Recording": "Check Button - OK"])
-        hideUnneeded()
-            
-        //start the timer that asks for the average speed every 5 seconds
-        aveVelocity = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "getAverageSpeed", userInfo: nil, repeats: true)
-            
-        //start the timer that adds updates the UI timer
-        sessionDuration = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tripDuration", userInfo: nil, repeats: true)
-        titleLabel.text = nameTrek_tf.text
-            
-        //hide the keyboard
-        nameTrek_tf.resignFirstResponder()
-        unhideNeeded()
-        
+            //track
+            mixpanel.track("Add Session Started", properties: ["Recording": "Check Button - OK"])
+            self.hideUnneeded()
+                
+            //start the timer that asks for the average speed every 5 seconds
+            self.aveVelocityTimer()
+                
+            //start the timer that adds updates the UI timer
+            self.startDurationTimer()
+       
+            //set the title text to the text field text
+            titleLabel.text = nameTrek_tf.text
+                
+            //hide the keyboard
+            nameTrek_tf.resignFirstResponder()
+            self.unhideNeeded()
         }
-        
         //if the user forgot to give the session a name then...
         else {
             //if the user didn't give the session a name, then give this error message
-            let alert = UIAlertController(title: "Oops!", message: "Make sure you've named your trip!", preferredStyle: UIAlertControllerStyle.Alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: {(action: UIAlertAction!) in
-                print("oops message dismissed")
-            }))
-            
-            presentViewController(alert, animated: true, completion: nil)
+            presentViewController(self.anotherAlert(), animated: true, completion: nil)
 
             mixpanel.track("Add Session Started", properties: ["Recording": "Check Button - Needs Name"])
         }
@@ -217,13 +137,12 @@ class NewSessionViewController: UIViewController {
     
     @IBAction func endButton(sender: AnyObject) {
         //when 'end' is clicked save all data and segue to AllSessions
-        saveStuff()
+        self.saveStuff()
         self.performSegueWithIdentifier("segueOnEnd", sender: nil)
         mixpanel.track("Back/Cancel Alert", properties: ["Options": "Saved with End"])
     }
     
-    // MARK: - Navigation
-
+// MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
@@ -242,6 +161,63 @@ class NewSessionViewController: UIViewController {
 
 }
 
+// MARK: - UIHelper Extension
+extension NewSessionViewController {
+    func cancelAlert() -> UIAlertController {
+        let cancelAlert = UIAlertController(title: "Cancel Session?", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+        
+        cancelAlert.addAction(UIAlertAction(title: "Save & Exit", style: .Default, handler: { (action: UIAlertAction) in
+            //if save and exit is chosen then save the data, track the event, then go back to AllSessions
+            self.saveStuff()
+            self.mixpanel.track("Back/Cancel Alert", properties: ["Options": "Save Session (Alert)"])
+            self.performSegueWithIdentifier("segueToAlert", sender: nil)
+        }))
+        
+        cancelAlert.addAction(UIAlertAction(title: "Keep Shredding!", style: .Default, handler: { (action: UIAlertAction) in
+            //if 'keep shredding' is chosen then don't do anything and continue the session
+            self.mixpanel.track("Back/Cancel Alert", properties: ["Options": "Continue Session (Alert)"])
+        }))
+        
+        return cancelAlert
+    }
+    
+    func anotherAlert() -> UIAlertController {
+        let alert = UIAlertController(title: "Oops!", message: "Make sure you've named your trip!", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: {(action: UIAlertAction!) in
+            print("oops message dismissed")
+        }))
+        
+        return alert
+    }
+    
+    func unhideNeeded(){
+       back_btn.hidden = false
+       titleLabel.hidden = false
+       sessionTime.hidden = false
+       end_btn.hidden = false
+    }
+    
+    func hideUnneeded(){
+        nameTrek_tf.hidden = true
+        cancel_btn.hidden = true
+        startNew_btn.hidden = true
+        editView.hidden = true
+    }
+    
+    func aveVelocityTimer() {
+    aveVelocity = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: #selector(NewSessionViewController.getAverageSpeed), userInfo: nil, repeats: true)
+    }
+    
+    func startDurationTimer() {
+    sessionDuration = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(NewSessionViewController.tripDuration), userInfo: nil, repeats: true)
+    }
+    
+    func startUpdateTimer() {
+    self.statsTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(NewSessionViewController.updateCurrentStats), userInfo: nil, repeats: true)
+    }
+}
+
+// MARK: - Text Field Delegate
 extension NewSessionViewController: UITextFieldDelegate {
     
     //when the keyboard 'Go' button is tapped...
@@ -252,9 +228,8 @@ extension NewSessionViewController: UITextFieldDelegate {
         if nameTrek_tf.text != "" {
             hideUnneeded()
             //start all the timers to update stats
-            aveVelocity = NSTimer.scheduledTimerWithTimeInterval(5, target: self, selector: "getAverageSpeed", userInfo: nil, repeats: true)
-            sessionDuration = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: "tripDuration", userInfo: nil, repeats: true)
-            titleLabel.text = nameTrek_tf.text
+            self.aveVelocityTimer()
+            self.startDurationTimer()
             nameTrek_tf.resignFirstResponder()
             unhideNeeded()
             mixpanel.track("Add Session Started", properties: ["Recording": "Keyboard 'GO' - OK"])
@@ -420,6 +395,67 @@ extension NewSessionViewController {
     }
     
     func tripDuration(){
-        sessionTime.text = "Adventure Time: \(locationInfo.tripDuration())"
+        sessionTime.text = "ADVENTURE TIME: \(locationInfo.tripDuration())"
+        print(locationInfo.tripDuration())
+    }
+    
+    func sessionAppear() {
+        if isAddSession == true {
+            
+            //choose a random image to display as the background
+            backImageID = Int(arc4random_uniform(8) + 1)
+            backImage.image = UIImage(named: "detailsbg\(backImageID)")
+            
+            //hide the current session display objects
+            back_btn.hidden = true
+            sessionTime.hidden = true
+            titleLabel.hidden = true
+            end_btn.hidden = true
+            
+            //color the text field placeholder text
+            nameTrek_tf.attributedPlaceholder = NSAttributedString(string:"NAME YOUR SESSION",
+                                                                   attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+            
+            //track the event
+            mixpanel.track("Add Session Started", properties: ["Event": "Opened Scene"])
+            
+        }
+            
+            //otherwise hide the editable fields and display the recorded topspeed and peak altitude
+        else{
+            
+            //hide and unhide things
+            unhideNeeded()
+            hideUnneeded()
+            end_btn.hidden = true
+            
+            //pull data from the old session to be displayed in the session view objects
+            titleLabel.text = currentSession!.sessionTitle
+            sessionTime.text  = currentSession!.sessionTime
+            //select the correct image
+            backImage.image = UIImage(named: "detailsbg\(currentSession!.imageID)")
+            
+            //if the current session units are set as imperial...
+            if sessionUnits == false {
+                topSpeed_lb.text = String(currentSession!.topSpeed) + " mph"
+                peakAltitude_lb.text = String(currentSession!.peakAltitude) + " ft"
+                totalDistance_lb.text = String(currentSession!.totalDistance) + " mi"
+                currentSpeed_lb.text = "\(currentSession!.averageSpeed) mph"
+            }
+                
+                //if the current session units are set as metric...
+            else {
+                topSpeed_lb.text = String(currentSession!.topSpeed) + " kph"
+                peakAltitude_lb.text = String(currentSession!.peakAltitude) + " m"
+                totalDistance_lb.text = String(currentSession!.totalDistance) + " km"
+                currentSpeed_lb.text = "\(currentSession!.averageSpeed) kph"
+            }
+            
+            //track this event
+            mixpanel.track("Old Session", properties: ["Viewing?": "Opened Old Session"])
+        }
+        
+        //update the different stats every second
+        self.startUpdateTimer()
     }
 }

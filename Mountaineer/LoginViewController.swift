@@ -10,8 +10,10 @@ import UIKit
 import Firebase
 
 class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
+// MARK: Firebase Root Ref
     let rootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
     
+// MARK: IBOutlets
     @IBOutlet weak var emailText: UITextField!
     
     @IBOutlet weak var passwordText: UITextField!
@@ -20,41 +22,20 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
     
     @IBOutlet weak var HomeMountianText: UITextField!
     
+    @IBOutlet weak var loginGoogle_btn: UIButton!
+    
+// MARK: Base Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        emailText.attributedPlaceholder = NSAttributedString(string:"EMAIL", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
-        passwordText.attributedPlaceholder = NSAttributedString(string: "PASSWORD", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-        nameText.attributedPlaceholder = NSAttributedString(string: "NAME", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-        HomeMountianText.attributedPlaceholder = NSAttributedString(string: "HOME MOUNTAIN", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-        
-        emailText.delegate = self
-        passwordText.delegate = self
-        nameText.delegate = self
-        HomeMountianText.delegate = self
-        // Setup delegates
-        GIDSignIn.sharedInstance().delegate = self
-        GIDSignIn.sharedInstance().uiDelegate = self
-        // Attempt to sign in silently, this will succeed if
-        // the user has recently been authenticated
+        self.placeHolderUI()
+        self.setDelegates()
+        // Attempt to sign in silently, this will succeed if the user has recently been authenticated
         GIDSignIn.sharedInstance().signInSilently()
-        // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        rootRef.observeAuthEventWithBlock { (authData) -> Void in
-            // 2
-            if authData != nil {
-                // 3
-                self.performSegueWithIdentifier("loggedInAllSessionsSegue", sender: nil)
-            }
-            else {
-                self.emailText.text = ""
-                self.passwordText.text = ""
-                self.HomeMountianText.text = ""
-                self.nameText.text = ""
-            }
-        }
+        self.checkLoginStatus()
     }
 
     override func didReceiveMemoryWarning() {
@@ -62,22 +43,20 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
         // Dispose of any resources that can be recreated.
     }
     
+// MARK: IBActions
     @IBAction func login_btn(sender: AnyObject) {
         self.performSegueWithIdentifier("createAccountSegue", sender: nil)
-        print("create account segue was performed")
     }
 
     @IBAction func createAccount_btn(sender: AnyObject) {
         self.createFirebaseAccount()
     }
-    
-    @IBOutlet weak var loginGoogle_btn: UIButton!
-    
+
     @IBAction func loginWithGoogle_btn(sender: AnyObject) {
        authenticateWithGoogle(loginGoogle_btn)
     }
 
-    
+// MARK: Unwind Segues
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
             if let identifier = segue.identifier {
                 if identifier == "cancelledCreateAccountSegue" {
@@ -101,6 +80,24 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
         }
     }
     
+
+}
+
+//MARK: - Firebase Helper Extension
+extension LoginViewController {
+    
+    func checkLoginStatus(){
+        rootRef.observeAuthEventWithBlock { (authData) -> Void in
+            
+            if authData != nil {
+                self.performSegueWithIdentifier("loggedInAllSessionsSegue", sender: nil)
+            }
+            else {
+                self.setFieldsBlank()
+            }
+        }
+    }
+    
     func createFirebaseAccount() {
         if nameText.text != "" && emailText.text != "" && passwordText.text != "" && HomeMountianText.text != ""
         {
@@ -113,6 +110,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
                 if error != nil
                 {
                     print("There was an error creating the account")
+                    self.presentViewController(self.creationErrorAlert(), animated: true, completion: nil)
                 }
                 else
                 {
@@ -121,14 +119,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
                     self.rootRef.authUser(email, password: password) { (error, authData) -> Void in
                         if error != nil
                         {
-                            let creationErrorAlert = UIAlertController(title: "Uh oh...", message: "There was an error creating your account. Make sure you're connected and try again.", preferredStyle: UIAlertControllerStyle.Alert)
-                            
-                            creationErrorAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
-                                print("message dismissed")
-                            }))
-                            
                             print("There was an error while logging in \(error)")
-                            self.presentViewController(creationErrorAlert, animated: true, completion: nil)
+                            self.presentViewController(self.creationErrorAlert(), animated: true, completion: nil)
                         }
                         else
                         {
@@ -150,33 +142,66 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
         else
         {
             //create alert presentation
-            let createUserAlert = UIAlertController(title: "Oops!", message: "There was an error creating your account. Check that all fields are filled out, then give it another shot.", preferredStyle: UIAlertControllerStyle.Alert)
             
-            createUserAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
-                print("message dismissed")
-            }))
             
-            self.presentViewController(createUserAlert.self, animated: true, completion: nil)
+            self.presentViewController(self.createUserAlert(), animated: true, completion: nil)
             print("A field was not filled out")
         }
-
+        
     }
+    
+}
 
- 
-   /* // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "loginToAllSessions"
-        {
-           
-        }
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+//MARK: - UIHelper Extension
+extension LoginViewController {
+    
+    func placeHolderUI() {
+        emailText.attributedPlaceholder = NSAttributedString(string:"EMAIL", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        passwordText.attributedPlaceholder = NSAttributedString(string: "PASSWORD", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+        nameText.attributedPlaceholder = NSAttributedString(string: "NAME", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+        HomeMountianText.attributedPlaceholder = NSAttributedString(string: "HOME MOUNTAIN", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
     }
-*/
+    
+    func setDelegates(){
+        emailText.delegate = self
+        passwordText.delegate = self
+        nameText.delegate = self
+        HomeMountianText.delegate = self
+        GIDSignIn.sharedInstance().delegate = self
+        GIDSignIn.sharedInstance().uiDelegate = self
+    }
+    
+    func setFieldsBlank(){
+        self.emailText.text = ""
+        self.passwordText.text = ""
+        self.HomeMountianText.text = ""
+        self.nameText.text = ""
+    }
+    
+    func createUserAlert() -> UIAlertController {
+        let createUserAlert = UIAlertController(title: "Oops!", message: "There was an error creating your account. Check that all fields are filled out, then give it another shot.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        createUserAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+            print("message dismissed")
+        }))
+        
+        return createUserAlert
+    }
+    
+    func creationErrorAlert() -> UIAlertController {
+        let creationErrorAlert = UIAlertController(title: "Uh oh...", message: "There was an error creating your account. Make sure you're connected and try again.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        creationErrorAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+            print("message dismissed")
+        }))
+        
+        return creationErrorAlert
+    }
+    
+}
 
-    // MARK: - Google Stuff
+// MARK: - Google Extension
+extension LoginViewController {
     
     // Wire up to a button tap
     func authenticateWithGoogle(sender: UIButton) {
@@ -204,8 +229,10 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
         withError error: NSError!) {
             rootRef.unauth();
     }
+    
 }
 
+// MARK: - Text Delegate Extension
 extension LoginViewController: UITextFieldDelegate {
     
     //when the keyboard 'Go' button is tapped...

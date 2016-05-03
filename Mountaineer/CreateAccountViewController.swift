@@ -15,18 +15,13 @@ class CreateAccountViewController: UIViewController {
 
     @IBOutlet weak var emailText: UITextField!
     @IBOutlet weak var passwordText: UITextField!
-//    @IBOutlet weak var homeMountainText: UITextField!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        emailText.attributedPlaceholder = NSAttributedString(string:"EMAIL", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
-        passwordText.attributedPlaceholder = NSAttributedString(string: "PASSWORD", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
-        
+        self.placeholderUI()
         emailText.delegate = self
         passwordText.delegate = self
-        
-        print("create account view loaded")
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -37,8 +32,39 @@ class CreateAccountViewController: UIViewController {
     @IBAction func createAccount_btn(sender: AnyObject) {
         self.loginToFirebase()
     }
+    
+}
 
+//MARK: - UIHelper Extension
+extension CreateAccountViewController {
+    
+    func placeholderUI() {
+        emailText.attributedPlaceholder = NSAttributedString(string:"EMAIL", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
+        passwordText.attributedPlaceholder = NSAttributedString(string: "PASSWORD", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+    }
+    
+    func createEnterInfoAlert() -> UIAlertController {
+        let createUserAlert = UIAlertController(title: "Oops!", message: "There was an error logging in. Check that all fields are filled out, then give it another shot.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        createUserAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+        }))
+        
+        return createUserAlert
+    }
+    
+    func createConnectionErrorAlert() -> UIAlertController {
+        let connectionAlert = UIAlertController(title: "Oops!", message: "There was an error logging in. Check that your email and password are correct, then try again. Also make sure that you are connected to the internet.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        connectionAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
+        }))
+        
+        return connectionAlert
+    }
+}
 
+//MARK: - Firebase Extension
+extension CreateAccountViewController {
+    
     func loginToFirebase() {
         let email = emailText.text
         let password = passwordText.text
@@ -46,6 +72,7 @@ class CreateAccountViewController: UIViewController {
             rootRef.authUser(email, password: password) { (error, authData) -> Void in
                 if error != nil
                 {
+                    self.presentViewController(self.createConnectionErrorAlert(), animated: true, completion: nil)
                     print("There was an error while logging in")
                 }
                 else
@@ -57,33 +84,17 @@ class CreateAccountViewController: UIViewController {
         }
         else
         {
-            let createUserAlert = UIAlertController(title: "Oops!", message: "There was an error logging in. Check that all fields are filled out, then give it another shot.", preferredStyle: UIAlertControllerStyle.Alert)
-            
-            createUserAlert.addAction(UIAlertAction(title: "Ok", style: .Default, handler: { (action: UIAlertAction) in
-                print("message dismissed")
-            }))
-            
-            self.presentViewController(createUserAlert.self, animated: true, completion: nil)
+            self.presentViewController(createEnterInfoAlert().self, animated: true, completion: nil)
             print("Need to enter login info")
         }
     }
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
 
+// MARK: - Text Field Delegate
 extension CreateAccountViewController: UITextFieldDelegate {
     
     //when the keyboard 'Go' button is tapped...
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        //        textField.resignFirstResponder()
         if textField.returnKeyType == UIReturnKeyType.Next {
             passwordText.becomeFirstResponder()
         }

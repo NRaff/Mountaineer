@@ -16,14 +16,13 @@
 		79AD7D1E1C925EBA0069B58C /* MountaineerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D1D1C925EBA0069B58C /* MountaineerUITests.swift */; };
 		79AD7D311C9263310069B58C /* LocationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D2B1C9263310069B58C /* LocationHelper.swift */; };
 		79AD7D321C9263310069B58C /* NewSessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D2C1C9263310069B58C /* NewSessionViewController.swift */; };
-		79AD7D331C9263310069B58C /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D2D1C9263310069B58C /* Session.swift */; };
 		79AD7D341C9263310069B58C /* SessionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D2E1C9263310069B58C /* SessionsViewController.swift */; };
 		79AD7D351C9263310069B58C /* SessionTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D2F1C9263310069B58C /* SessionTableViewCell.swift */; };
 		79AD7D361C9263310069B58C /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D301C9263310069B58C /* SettingsViewController.swift */; };
 		79AD7D381C9264C30069B58C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 79AD7D371C9264C30069B58C /* Main.storyboard */; };
 		79AD7D3A1C9266ED0069B58C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79AD7D391C9266ED0069B58C /* Images.xcassets */; };
 		79AD7D3C1C936F590069B58C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D3B1C936F590069B58C /* AppDelegate.swift */; };
-		79AD7D3E1C9371320069B58C /* Comments_For_Rebuild.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D3D1C9371320069B58C /* Comments_For_Rebuild.swift */; };
+		79DFCD7B1CD8481900A6C0DB /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFCD7A1CD8481900A6C0DB /* FirebaseHelper.swift */; };
 		A88289A92D5AB2C591D21141 /* Pods_MountaineerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B668806A79694206325D09F6 /* Pods_MountaineerUITests.framework */; };
 		D01180A8DDAD6E1A0973508A /* Pods_MountaineerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24F37C553FD6FBAE7810270 /* Pods_MountaineerTests.framework */; };
 		F320F48D6EBF40F3B4374E93 /* Pods_Mountaineer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C250AB471D1F5A610730D690 /* Pods_Mountaineer.framework */; };
@@ -65,14 +64,13 @@
 		79AD7D1F1C925EBA0069B58C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		79AD7D2B1C9263310069B58C /* LocationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationHelper.swift; sourceTree = "<group>"; };
 		79AD7D2C1C9263310069B58C /* NewSessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewSessionViewController.swift; sourceTree = "<group>"; };
-		79AD7D2D1C9263310069B58C /* Session.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		79AD7D2E1C9263310069B58C /* SessionsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionsViewController.swift; sourceTree = "<group>"; };
 		79AD7D2F1C9263310069B58C /* SessionTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionTableViewCell.swift; sourceTree = "<group>"; };
 		79AD7D301C9263310069B58C /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		79AD7D371C9264C30069B58C /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		79AD7D391C9266ED0069B58C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		79AD7D3B1C936F590069B58C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		79AD7D3D1C9371320069B58C /* Comments_For_Rebuild.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Comments_For_Rebuild.swift; sourceTree = "<group>"; };
+		79DFCD7A1CD8481900A6C0DB /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
 		9C9B3AF32D0391597A385B62 /* Pods-MountaineerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerTests/Pods-MountaineerTests.release.xcconfig"; sourceTree = "<group>"; };
 		AC628A0B45127C8EA84B49C9 /* Pods-MountaineerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerUITests/Pods-MountaineerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B668806A79694206325D09F6 /* Pods_MountaineerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MountaineerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -160,13 +158,12 @@
 			children = (
 				79AD7D371C9264C30069B58C /* Main.storyboard */,
 				793DFED51CBCCEF8003EC7FA /* SessionClass.swift */,
-				79AD7D3D1C9371320069B58C /* Comments_For_Rebuild.swift */,
 				79AD7D3B1C936F590069B58C /* AppDelegate.swift */,
 				796F53321CD07D5C00D60D02 /* Mountaineer-Bridging-Header.h */,
 				79AD7D2B1C9263310069B58C /* LocationHelper.swift */,
 				79AD7D2C1C9263310069B58C /* NewSessionViewController.swift */,
-				79AD7D2D1C9263310069B58C /* Session.swift */,
 				79AD7D2E1C9263310069B58C /* SessionsViewController.swift */,
+				79DFCD7A1CD8481900A6C0DB /* FirebaseHelper.swift */,
 				79AD7D2F1C9263310069B58C /* SessionTableViewCell.swift */,
 				79AD7D301C9263310069B58C /* SettingsViewController.swift */,
 				79AD7D391C9266ED0069B58C /* Images.xcassets */,
@@ -466,12 +463,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				79AD7D3E1C9371320069B58C /* Comments_For_Rebuild.swift in Sources */,
-				79AD7D331C9263310069B58C /* Session.swift in Sources */,
 				79AD7D351C9263310069B58C /* SessionTableViewCell.swift in Sources */,
 				796F54451C9F47BE00A85613 /* CreateAccountViewController.swift in Sources */,
 				79AD7D341C9263310069B58C /* SessionsViewController.swift in Sources */,
 				79AD7D3C1C936F590069B58C /* AppDelegate.swift in Sources */,
+				79DFCD7B1CD8481900A6C0DB /* FirebaseHelper.swift in Sources */,
 				79AD7D311C9263310069B58C /* LocationHelper.swift in Sources */,
 				793DFED61CBCCEF8003EC7FA /* SessionClass.swift in Sources */,
 				79AD7D321C9263310069B58C /* NewSessionViewController.swift in Sources */,

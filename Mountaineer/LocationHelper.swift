@@ -13,30 +13,22 @@ import FirebaseUI
 
 
 class LocationHelper: NSObject {
-    
+
+// MARK: - References
     let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
-    var unitsSetting: Bool = true
-    
     let locationManager = CLLocationManager()
+    
+    var timer = NSTimer()
+    var startTime = NSTimeInterval()
+
+// MARK: - Location Variables
     var speed: CLLocationSpeed?
     var altitude: CLLocationDistance?
     var timeStamp: NSDate?
     var startingLocation: CLLocation!
-    
-    var seconds: Int = 0
-    var minutes: Int = 0
-    var hours: Int = 0
-    var ventureTime: String = ""
-    var metricConversionKPH = 3.6
-    var metricConversionKM = 0.001
-    var imperialConvMPH = 2.23694
-    var imperialConvMi = 0.000621371
-    var imperialConvFt = 3.28084
-    
     var averageSpeedArray = [CLLocationSpeed]()
     var sumSpeeds: CLLocationSpeed = 0
     var averageSpeed: Double = 0
-    
     var newSpeed:CLLocationSpeed = 0
     var maxSpeed:CLLocationSpeed?
     var newAltitude: CLLocationDistance = 0
@@ -45,18 +37,36 @@ class LocationHelper: NSObject {
     var nextLocation: CLLocation?
     var totalDistance: CLLocationDistance = 0
     
+// MARK: - Time Variables
+    var seconds: Int = 0
+    var minutes: Int = 0
+    var hours: Int = 0
+    var ventureTime: String = ""
+    
+// MARK: - Unit Setting Variables
+    var unitsSetting: Bool = true
+    var metricConversionKPH = 3.6
+    var metricConversionKM = 0.001
+    var imperialConvMPH = 2.23694
+    var imperialConvMi = 0.000621371
+    var imperialConvFt = 3.28084
+
+// MARK: - Temporary Speed Variables
     var finalTopSpeed: Double = 0.0
     var highAltitude: Double = 0.0
     var finalDistance: Double = 0.0
     var finalAveSpeed: Double = 0.0
-    
+}
+
+// MARK: - All Functions
+extension LocationHelper {
     func startedLocation(){
         
-//        RootRef.childByAppendingPath("users/\(RootRef.authData.uid)").observeSingleEventOfType(.Value, withBlock: { snapshot in
-//            if snapshot.value["sessionUnits"] != nil {
-//            self.unitsSetting = snapshot.value["sessionUnits"] as! Bool
-//            }
-//        })
+        //        RootRef.childByAppendingPath("users/\(RootRef.authData.uid)").observeSingleEventOfType(.Value, withBlock: { snapshot in
+        //            if snapshot.value["sessionUnits"] != nil {
+        //            self.unitsSetting = snapshot.value["sessionUnits"] as! Bool
+        //            }
+        //        })
         
         if (CLLocationManager.locationServicesEnabled()) {
             locationManager.delegate = self
@@ -70,11 +80,7 @@ class LocationHelper: NSObject {
             print("Location services are not enabled");
         }
     }
-
-}
-
-//MARK: All statistics functions
-extension LocationHelper {
+    
     func getTopSpeed() -> Double {
         if locationManager.location != nil {
             if locationManager.location!.speed >= 0 {
@@ -223,14 +229,14 @@ extension LocationHelper {
     
 
     func tripDuration() -> String {
-        seconds+1
+        seconds += 1
         if seconds > 59 {
             seconds = 0
-            minutes+1
+            minutes += 1
         }
         if minutes > 59 {
             minutes = 0
-            hours+1
+            hours += 1
         }
         return adventureTime()
     }
@@ -277,33 +283,26 @@ extension LocationHelper {
         
         return ventureTime
     }
-    
 
 }
 
+// MARK: - Location Manager Delegate
 extension LocationHelper: CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
         locationManager.stopUpdatingLocation()
-        //removeLoadingView()
-//        if error != nil {
-//            print(error, terminator: "")
-//            print("Nope you broke it")
-//        }
+        //if error != nil {
+        //   print(error, terminator: "")
+        //   print("Nope you broke it")
+        // }
     }
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let locationArray = locations as NSArray
         let locationObj = locationArray.lastObject as! CLLocation
-        //var coord = locationObj.coordinate
-        
+
          speed = locationObj.speed
          timeStamp = locationObj.timestamp
          altitude = locationObj.altitude
-//        println(coord.latitude)
-//        println(coord.longitude)
-//        println(speed)
-//        println(altitude)
-//        println(timeStamp)
     }
 }

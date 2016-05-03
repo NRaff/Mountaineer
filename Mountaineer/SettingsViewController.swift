@@ -12,19 +12,22 @@ import Firebase
 import FirebaseUI
 
 class SettingsViewController: UIViewController {
+// MARK: Variables & References
     let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
     let usersRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
     var metric: Bool = false
-    
+
+// MARK: IBOutlets
     @IBOutlet weak var measureSwitch: UISegmentedControl!
     
     @IBOutlet weak var settingsNavBar: UINavigationBar!
     
     @IBOutlet weak var doneItem: UIBarButtonItem!
-    
+
+// MARK: IBActions
     @IBAction func logout_btn(sender: AnyObject) {
-        //performSegueWithIdentifier("logoutSegue", sender: nil)
+        
     }
     
     @IBAction func measureSwitchEvent(sender: AnyObject) {
@@ -43,6 +46,7 @@ class SettingsViewController: UIViewController {
         return UIStatusBarStyle.LightContent
     }
     
+// MARK: Base Functions
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -60,15 +64,8 @@ class SettingsViewController: UIViewController {
                 }
             }
         })
-//        
-//        if Session.measureSwitch {
-//            measureSwitch.selectedSegmentIndex = 0
-//        }
-//        else { measureSwitch.selectedSegmentIndex = 1 }
-//        
+       
         settingsNavBar.setTitleVerticalPositionAdjustment(-13, forBarMetrics: .Default)
-
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {
@@ -78,9 +75,7 @@ class SettingsViewController: UIViewController {
     
 
     
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
+// MARK: - Navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.

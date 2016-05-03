@@ -9,15 +9,12 @@
 import UIKit
 import CoreLocation
 import Firebase
-import FirebaseUI
 import Mixpanel
 
 class SessionsViewController: UIViewController {
-    //create a firebase reference
+// MARK: - Variables and References
     let RootRef = Firebase(url: "https://mountaineer.firebaseio.com")
-    
-    //create the firebase datasource
-    //var dataSource: FirebaseTableViewDataSource!
+
     var mixpanel: Mixpanel!
     var locationStuff = LocationHelper()
     var sessionName: String?
@@ -28,6 +25,13 @@ class SessionsViewController: UIViewController {
     
     var segueIdentifier = "goBack"
     
+// MARK: - IBOutlets
+    @IBOutlet weak var newShredView: UIView!
+    @IBOutlet weak var myNavBar: UINavigationBar!
+    @IBOutlet weak var sessionsTableView: UITableView!
+    
+    
+// MARK: - Base Functions
     override func viewDidLoad() {
         mixpanel = Mixpanel.sharedInstance()
         newShredView.hidden = false
@@ -37,57 +41,23 @@ class SessionsViewController: UIViewController {
     }
     
     override func viewWillAppear(animated: Bool) {
-        if RootRef.authData != nil {
-            let tableRef = RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions")
-            tableRef.queryOrderedByKey().observeEventType(.Value, withBlock: { snapshot in
-                
-                // 2
-                var newSessions = [Session]()
-                
-                // 3
-                for session in snapshot.children {
-                    // 4
-                    let anotherSession = Session(snapshot: session as! FDataSnapshot)
-                    newSessions.append(anotherSession)
-                }
-                
-                // 5
-                self.sessions = newSessions
-                self.sessionsTableView.reloadData()
-            })
-        }
-        else
-        {
-            print("logoutSegue performed")
-        }
-
+        self.updateTableView()
     }
     
     override func viewDidDisappear(animated: Bool) {
         newShredView.hidden = true
     }
     
-//    @IBAction func unwindToLoginViewController(segue: UIStoryboardSegue) {
-//        if let identifier = segue.identifier {
-//            if identifier == "logoutSegue" {
-//                print("logoutSegue performed")
-//            }
-//        }
-//    }
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
-//    override func canPerformUnwindSegueAction(action: Selector, fromViewController: UIViewController, withSender sender: AnyObject) -> Bool {
-//        if segueIdentifier == "goBack" {
-//            return true
-//        }
-//        else {
-//            return false
-//        }
-//    }
+    override func preferredStatusBarStyle() -> UIStatusBarStyle {
+        return UIStatusBarStyle.LightContent
+    }
     
-    
-    @IBOutlet weak var newShredView: UIView!
-    @IBOutlet weak var myNavBar: UINavigationBar!
-    
+// MARK: - Segue Stuff
     @IBAction func unwindToSegue(segue: UIStoryboardSegue) {
         
         if let identifier = segue.identifier {
@@ -103,40 +73,55 @@ class SessionsViewController: UIViewController {
             
         }
     }
-    
-    override func preferredStatusBarStyle() -> UIStatusBarStyle {
-        return UIStatusBarStyle.LightContent
-    }
-    
+
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "showNewSession") {
-            //I think this step might be unnecessary because with the global variable in firebase I'll just query everything based on that, actually keep the steps but set a variable in NewSessionViewController equal to the sessionID
-            let sessionViewController = segue.destinationViewController as! NewSessionViewController
-            //if the sessionID is not nill then isAddSession = true and set a variable in the NewSessionViewController = sessionID
             
+            let sessionViewController = segue.destinationViewController as! NewSessionViewController
             sessionViewController.isAddSession = self.addingSession
             sessionViewController.sessionUnits = self.sessionUnits
             sessionViewController.currentSession = self.selectedSession
             
         }
         if (segue.identifier == "settings") {
+            
             mixpanel.track("Settings", properties: ["Options": "Opened"])
+            
         }
     }
 
-    
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-    
-    @IBOutlet weak var sessionsTableView: UITableView!
- 
 }
 
-extension SessionsViewController: UITableViewDelegate {
+// MARK: - Firebase Helper Extension
+extension SessionsViewController {
+    func updateTableView() {
+        if RootRef.authData != nil {
+            let tableRef = RootRef.childByAppendingPath("users/\(RootRef.authData.uid)/sessions")
+            tableRef.queryOrderedByKey().observeEventType(.Value, withBlock: { snapshot in
 
-    // MARK: UITableView Delegate methods
+                var newSessions = [Session]()
+
+                for session in snapshot.children {
+                    
+                    let anotherSession = Session(snapshot: session as! FDataSnapshot)
+                    newSessions.append(anotherSession)
+                    
+                }
+                
+                self.sessions = newSessions
+                self.sessionsTableView.reloadData()
+                
+            })
+        }
+        else
+        {
+            print("logoutSegue performed")
+        }
+    }
+}
+
+// MARK: - Table View Delegate Extension
+extension SessionsViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if sessions.count < 1 {
@@ -180,7 +165,7 @@ extension SessionsViewController: UITableViewDelegate {
         
         //track event in mixpanel
         mixpanel.track("Old Session", properties: ["Viewing?": "Yes"])
-        //perform the segue (be sure to add functionality into the view did load method to load up the correct session
+
         self.performSegueWithIdentifier("showNewSession", sender: self)
         
     }
