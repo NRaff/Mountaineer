@@ -12,6 +12,7 @@ import Firebase
 class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDelegate {
 // MARK: Firebase Root Ref
     let rootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
+    let unitsSetting = false
     
 // MARK: IBOutlets
     @IBOutlet weak var emailText: UITextField!
@@ -125,7 +126,7 @@ extension LoginViewController {
                         else
                         {
                             print("successfully logged in")
-                            let newUser = ["fullName": fullName!, "email": email!, "homeMountain": homeMountain!]
+                            let newUser = ["fullName": fullName!, "email": email!, "homeMountain": homeMountain!, "sessionUnits": "false"]
                             
                             let usersRef = self.rootRef.childByAppendingPath("users/\(self.rootRef.authData.uid)")
                             
@@ -148,6 +149,16 @@ extension LoginViewController {
             print("A field was not filled out")
         }
         
+    }
+    
+    func googleSignIn() {
+    let settings = ["sessionUnits": self.unitsSetting]
+    let userName = rootRef.authData.providerData["displayName"]
+    let userInfo = ["sessionUnits": unitsSetting, "fullName": userName!]
+        
+    let usersRef = self.rootRef.childByAppendingPath("users/\(self.rootRef.authData.uid)")
+        
+    usersRef.setValue(userInfo)
     }
     
 }
@@ -206,6 +217,7 @@ extension LoginViewController {
     // Wire up to a button tap
     func authenticateWithGoogle(sender: UIButton) {
         GIDSignIn.sharedInstance().signIn()
+        
     }
     func signOut() {
         GIDSignIn.sharedInstance().signOut()
@@ -217,7 +229,8 @@ extension LoginViewController {
             if (error == nil) {
                 // Auth with Firebase
                 rootRef.authWithOAuthProvider("google", token: user.authentication.accessToken, withCompletionBlock: { (error, authData) in
-                    // User is logged in!
+                    // User is logged in
+                    self.googleSignIn()
                 })
             } else {
                 print("\(error.localizedDescription)")

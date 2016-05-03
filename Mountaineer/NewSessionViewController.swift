@@ -77,10 +77,9 @@ class NewSessionViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         locationInfo.startedLocation()
-//        RootRef.childByAppendingPath(RootRef.authData.uid).observeSingleEventOfType(.Value, withBlock: { snapshot in
-//            self.sessionUnits = snapshot.value["sessionUnits"] as! Bool
-//        })
-        
+        RootRef.childByAppendingPath(RootRef.authData.uid).observeSingleEventOfType(.Value, withBlock: { snapshot in
+            self.sessionUnits = snapshot.value["sessionUnits"] as! Bool
+        })
             //if user is adding a session then display the add fields
             self.sessionAppear()
         }
@@ -226,6 +225,7 @@ extension NewSessionViewController: UITextFieldDelegate {
         
         //if the text field is not blank then...
         if nameTrek_tf.text != "" {
+            titleLabel.text = nameTrek_tf.text
             hideUnneeded()
             //start all the timers to update stats
             self.aveVelocityTimer()
@@ -396,7 +396,6 @@ extension NewSessionViewController {
     
     func tripDuration(){
         sessionTime.text = "ADVENTURE TIME: \(locationInfo.tripDuration())"
-        print(locationInfo.tripDuration())
     }
     
     func sessionAppear() {
