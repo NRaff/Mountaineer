@@ -8,6 +8,7 @@
 
 import Foundation
 import Firebase
+import CoreLocation
 
 struct Session {
     let sessionID: String!
@@ -20,10 +21,14 @@ struct Session {
     let topSpeed: Double!
     let peakAltitude: Double!
     let totalDistance: Double!
+    let timeSeconds: Int!
+    let timeMinutes: Int!
+    let timeHours: Int!
+//    let averageSpeedArray: [CLLocationSpeed]!
     let ref: Firebase?
     
     
-    init(sessionID: String = "", sessionTitle: String, sessionTime: String, thisSessionUnits: Bool, averageSpeed: Double, dateCreated: String, imageID: Int, topSpeed: Double, peakAltitude: Double, totalDistance: Double){
+    init(sessionID: String = "", sessionTitle: String, sessionTime: String, thisSessionUnits: Bool, averageSpeed: Double, dateCreated: String, imageID: Int, topSpeed: Double, peakAltitude: Double, totalDistance: Double, timeSeconds: Int, timeMinutes: Int, timeHours: Int/*, averageSpeedArray: [CLLocationSpeed]*/){
         self.sessionID = sessionID
         self.sessionTitle = sessionTitle
         self.sessionTime = sessionTime
@@ -34,10 +39,14 @@ struct Session {
         self.topSpeed = topSpeed
         self.peakAltitude = peakAltitude
         self.totalDistance = totalDistance
+        self.timeSeconds = timeSeconds
+        self.timeMinutes = timeMinutes
+        self.timeHours = timeHours
+//        self.averageSpeedArray = averageSpeedArray
         self.ref = nil
     }
     
-    init(snapshot: FDataSnapshot) {
+    init(snapshot: FDataSnapshot!) {
         sessionID = snapshot.key
         sessionTitle = snapshot.value["sessionTitle"] as! String
         sessionTime = snapshot.value["sessionTime"] as! String
@@ -49,7 +58,13 @@ struct Session {
         peakAltitude = snapshot.value["peakAltitude"] as! Double
         totalDistance = snapshot.value["totalDistance"] as! Double
         ref = snapshot.ref
+        timeSeconds = snapshot.value["seconds"] as! Int
+        timeMinutes = snapshot.value["minutes"] as! Int
+        timeHours = snapshot.value["hours"] as! Int
+//        averageSpeedArray = snapshot.value["averageSpeedArray"] as! [CLLocationSpeed]
     }
+    
+    
     
     func toAnyObject() -> AnyObject {
         return [
@@ -62,7 +77,10 @@ struct Session {
             "imageID": imageID,
             "topSpeed": topSpeed,
             "peakAltitude": peakAltitude,
-            "totalDistance": totalDistance
+            "totalDistance": totalDistance,
+            "seconds": timeSeconds,
+            "minutes": timeMinutes,
+            "hours": timeHours
         ]
     }
     

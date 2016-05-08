@@ -152,13 +152,12 @@ extension LoginViewController {
     }
     
     func googleSignIn() {
-    let settings = ["sessionUnits": self.unitsSetting]
     let userName = rootRef.authData.providerData["displayName"]
-    let userInfo = ["sessionUnits": unitsSetting, "fullName": userName!]
+    let userEmail = rootRef.authData.providerData["email"]
+    let userInfo = ["sessionUnits": unitsSetting, "fullName": userName!, "email": userEmail!]
         
     let usersRef = self.rootRef.childByAppendingPath("users/\(self.rootRef.authData.uid)")
-        
-    usersRef.setValue(userInfo)
+    usersRef.updateChildValues(userInfo)
     }
     
 }

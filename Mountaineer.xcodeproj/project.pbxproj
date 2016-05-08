@@ -614,6 +614,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.AppRaft.Mountaineer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Mountaineer/Mountaineer-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -631,6 +632,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.AppRaft.Mountaineer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SHARED_PRECOMPS_DIR = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Mountaineer/Mountaineer-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 1;
 			};

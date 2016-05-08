@@ -305,10 +305,14 @@ extension NewSessionViewController {
                 averageSpeed = locationInfo.getAverageSpeed()
             }
             //set the sessionTime string to be the ending timer time
-            sessionTime = "TIME ADVENTURING: \(locationInfo.ventureTime)"
+            sessionTime = "TIME ADVENTURING: \(locationInfo.tripDuration().timeString)"
+            let sessionSeconds = locationInfo.tripDuration().seconds
+            let sessionMinutes = locationInfo.tripDuration().minutes
+            let sessionHours = locationInfo.tripDuration().hours
+            let averageSpeedArray = locationInfo.averageSpeedArray
             
             //save it all to firebase
-            let savedSession = ["sessionID": sessionID, "thisSessionUnits": eachSessionUnits, "imageID": imageID, "sessionTitle": sessionTitle, "dateCreated": date, "topSpeed": topSpeed, "peakAltitude": peakAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime]
+            let savedSession = ["sessionID": sessionID, "thisSessionUnits": eachSessionUnits, "imageID": imageID, "sessionTitle": sessionTitle, "dateCreated": date, "topSpeed": topSpeed, "peakAltitude": peakAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime, "seconds": sessionSeconds, "minutes": sessionMinutes, "hours": sessionHours, "averageSpeedArray": averageSpeedArray]
             
             saveRef.setValue(savedSession)
 
@@ -395,7 +399,7 @@ extension NewSessionViewController {
     }
     
     func tripDuration(){
-        sessionTime.text = "ADVENTURE TIME: \(locationInfo.tripDuration())"
+        sessionTime.text = "ADVENTURE TIME: \(locationInfo.tripDuration().timeString)"
     }
     
     func sessionAppear() {
@@ -412,15 +416,14 @@ extension NewSessionViewController {
             end_btn.hidden = true
             
             //color the text field placeholder text
-            nameTrek_tf.attributedPlaceholder = NSAttributedString(string:"NAME YOUR SESSION",
-                                                                   attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
+            nameTrek_tf.attributedPlaceholder = NSAttributedString(string:"NAME YOUR SESSION", attributes:[NSForegroundColorAttributeName: UIColor.lightTextColor()])
             
             //track the event
             mixpanel.track("Add Session Started", properties: ["Event": "Opened Scene"])
             
         }
             
-            //otherwise hide the editable fields and display the recorded topspeed and peak altitude
+        //otherwise hide the editable fields and display the recorded topspeed and peak altitude
         else{
             
             //hide and unhide things
@@ -428,27 +431,8 @@ extension NewSessionViewController {
             hideUnneeded()
             end_btn.hidden = true
             
-            //pull data from the old session to be displayed in the session view objects
-            titleLabel.text = currentSession!.sessionTitle
-            sessionTime.text  = currentSession!.sessionTime
-            //select the correct image
-            backImage.image = UIImage(named: "detailsbg\(currentSession!.imageID)")
-            
-            //if the current session units are set as imperial...
-            if sessionUnits == false {
-                topSpeed_lb.text = String(currentSession!.topSpeed) + " mph"
-                peakAltitude_lb.text = String(currentSession!.peakAltitude) + " ft"
-                totalDistance_lb.text = String(currentSession!.totalDistance) + " mi"
-                currentSpeed_lb.text = "\(currentSession!.averageSpeed) mph"
-            }
-                
-                //if the current session units are set as metric...
-            else {
-                topSpeed_lb.text = String(currentSession!.topSpeed) + " kph"
-                peakAltitude_lb.text = String(currentSession!.peakAltitude) + " m"
-                totalDistance_lb.text = String(currentSession!.totalDistance) + " km"
-                currentSpeed_lb.text = "\(currentSession!.averageSpeed) kph"
-            }
+            self.setCurrentSessionFields()
+//            print(currentSession!.averageSpeedArray)
             
             //track this event
             mixpanel.track("Old Session", properties: ["Viewing?": "Opened Old Session"])
@@ -456,5 +440,54 @@ extension NewSessionViewController {
         
         //update the different stats every second
         self.startUpdateTimer()
+    }
+    
+    func setCurrentSessionFields() {
+        
+        //pull data from the old session to be displayed in the session view objects
+        titleLabel.text = currentSession!.sessionTitle
+        sessionTime.text  = currentSession!.sessionTime
+        //select the correct image
+        backImage.image = UIImage(named: "detailsbg\(currentSession!.imageID)")
+        
+        //if the current session units are set as imperial...
+        if sessionUnits == false {
+            topSpeed_lb.text = String(currentSession!.topSpeed) + " mph"
+            peakAltitude_lb.text = String(currentSession!.peakAltitude) + " ft"
+            totalDistance_lb.text = String(currentSession!.totalDistance) + " mi"
+            currentSpeed_lb.text = "\(currentSession!.averageSpeed) mph"
+        }
+            
+            //if the current session units are set as metric...
+        else {
+            topSpeed_lb.text = String(currentSession!.topSpeed) + " kph"
+            peakAltitude_lb.text = String(currentSession!.peakAltitude) + " m"
+            totalDistance_lb.text = String(currentSession!.totalDistance) + " km"
+            currentSpeed_lb.text = "\(currentSession!.averageSpeed) kph"
+        }
+    }
+    
+    func passVarsBackForResume() {
+        //pass time stuff
+        locationInfo.seconds = currentSession!.timeSeconds
+        locationInfo.minutes = currentSession!.timeMinutes
+        locationInfo.hours = currentSession!.timeHours
+        
+        //pass topSpeed
+        locationInfo.maxSpeed = currentSession!.topSpeed
+        
+        //pass peakAltitude
+        locationInfo.peakAltitude = currentSession!.peakAltitude
+        
+        //pass total distance after conversion back to CoreLocation units (metric)
+        if sessionUnits == false {
+            locationInfo.totalDistance = currentSession!.totalDistance/locationInfo.imperialConvMi
+        }
+        else {
+            locationInfo.totalDistance = currentSession!.totalDistance/locationInfo.metricConversionKM
+        }
+        
+        //pass recorded average speed to average speed array
+        
     }
 }

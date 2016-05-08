@@ -226,7 +226,7 @@ extension LocationHelper {
     }
     
 
-    func tripDuration() -> String {
+    func tripDuration() -> (timeString: String, seconds: Int, minutes: Int, hours: Int) {
         seconds += 1
         if seconds > 59 {
             seconds = 0
@@ -236,7 +236,7 @@ extension LocationHelper {
             minutes = 0
             hours += 1
         }
-        return adventureTime()
+        return (adventureTime(), seconds, minutes, hours)
     }
     
     func adventureTime() -> String {
