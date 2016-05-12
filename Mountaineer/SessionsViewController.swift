@@ -9,13 +9,13 @@
 import UIKit
 import CoreLocation
 import Firebase
-import Mixpanel
+//import Mixpanel
 
 class SessionsViewController: UIViewController {
 // MARK: - Variables and References
     let RootRef = Firebase(url: "https://mountaineer.firebaseio.com")
 
-    var mixpanel: Mixpanel!
+//    var mixpanel: Mixpanel!
     var locationStuff = LocationHelper()
     var sessionName: String?
     var addingSession: Bool = true
@@ -33,7 +33,7 @@ class SessionsViewController: UIViewController {
     
 // MARK: - Base Functions
     override func viewDidLoad() {
-        mixpanel = Mixpanel.sharedInstance()
+//        mixpanel = Mixpanel.sharedInstance()
         newShredView.hidden = false
         super.viewDidLoad()
 
@@ -67,8 +67,8 @@ class SessionsViewController: UIViewController {
                 print("I take it \(identifier)")
                 
             default:
-                //println("No one loves \(identifier)")
-                mixpanel.track("Add Session Started", properties: ["Recording": "End without data/saving"])
+                print("No one loves \(identifier)")
+//                mixpanel.track("Add Session Started", properties: ["Recording": "End without data/saving"])
             }
             
         }
@@ -84,8 +84,8 @@ class SessionsViewController: UIViewController {
             
         }
         if (segue.identifier == "settings") {
-            
-            mixpanel.track("Settings", properties: ["Options": "Opened"])
+            print("settings")
+//            mixpanel.track("Settings", properties: ["Options": "Opened"])
             
         }
     }
@@ -150,7 +150,7 @@ extension SessionsViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath){        
         if (editingStyle == .Delete) {
-            mixpanel.track("Old Session", properties: ["Viewing?": "Deleted"])
+//            mixpanel.track("Old Session", properties: ["Viewing?": "Deleted"])
             // 1
             let session = sessions[indexPath.row]
             // 2
@@ -164,7 +164,7 @@ extension SessionsViewController: UITableViewDelegate {
         addingSession = false
         
         //track event in mixpanel
-        mixpanel.track("Old Session", properties: ["Viewing?": "Yes"])
+//        mixpanel.track("Old Session", properties: ["Viewing?": "Yes"])
 
         self.performSegueWithIdentifier("showNewSession", sender: self)
         

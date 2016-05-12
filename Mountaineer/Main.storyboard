@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10116" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3jZ-Vl-UjA">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15E65" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="3jZ-Vl-UjA">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -50,7 +50,7 @@
         <!--Login View Controller-->
         <scene sceneID="032-oV-odL">
             <objects>
-                <viewController id="3jZ-Vl-UjA" customClass="LoginViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3jZ-Vl-UjA" customClass="LoginViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WHb-U6-8le"/>
                         <viewControllerLayoutGuide type="bottom" id="c0k-Pn-9yJ"/>
@@ -139,7 +139,7 @@
                                     <action selector="loginWithGoogle_btn:" destination="3jZ-Vl-UjA" eventType="touchUpInside" id="wdL-un-Caj"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yEG-Fd-ulD">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yEG-Fd-ulD">
                                 <rect key="frame" x="290" y="449" width="20" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="jap-qA-822"/>
@@ -183,7 +183,7 @@
                                     <constraint firstAttribute="height" constant="1" id="a4j-cb-X3y"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A6q-OW-S6e" userLabel="OR Right">
+                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A6q-OW-S6e" userLabel="OR Right">
                                 <rect key="frame" x="320" y="459" width="260" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -287,7 +287,7 @@
         <!--AllSessionsView-->
         <scene sceneID="foZ-yC-Akw">
             <objects>
-                <viewController id="JEt-qx-qbK" userLabel="AllSessionsView" customClass="SessionsViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="JEt-qx-qbK" userLabel="AllSessionsView" customClass="SessionsViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8JV-Kx-hMw"/>
                         <viewControllerLayoutGuide type="bottom" id="hhm-dY-a15"/>
@@ -302,7 +302,7 @@
                                 <color key="separatorColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sessionCell" rowHeight="125" id="tgS-NK-Fyq" customClass="SessionTableViewCell" customModule="Mountaineer" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sessionCell" rowHeight="125" id="tgS-NK-Fyq" customClass="SessionTableViewCell" customModule="TrialByFire" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="600" height="125"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tgS-NK-Fyq" id="jaQ-GB-i9f">
@@ -321,7 +321,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vmg-EN-GLX">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vmg-EN-GLX">
                                                     <rect key="frame" x="30" y="70" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="sQc-st-wAz"/>
@@ -419,7 +419,7 @@
                                             <segue destination="FmT-ql-SbE" kind="show" identifier="shredTheGnar" id="aIy-rZ-vXD"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Shredding" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMx-OG-eXA">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Start Shredding" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMx-OG-eXA">
                                         <rect key="frame" x="219" y="241" width="162" height="29"/>
                                         <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -499,7 +499,7 @@
         <!--SettingsViewController-->
         <scene sceneID="WrY-ul-5kv">
             <objects>
-                <viewController id="Emo-d1-rVZ" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Emo-d1-rVZ" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wMd-n9-w8p"/>
                         <viewControllerLayoutGuide type="bottom" id="KuQ-0p-XJL"/>
@@ -643,7 +643,7 @@
         <!--Create Account View Controller-->
         <scene sceneID="crM-Fc-yFN">
             <objects>
-                <viewController id="pa9-vV-hzb" customClass="CreateAccountViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pa9-vV-hzb" customClass="CreateAccountViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QAk-75-RRS"/>
                         <viewControllerLayoutGuide type="bottom" id="rFC-dW-WIf"/>
@@ -655,7 +655,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginBackground" translatesAutoresizingMaskIntoConstraints="NO" id="lJv-j1-9zf">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAVRIK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ok-y5-23W">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="MAVRIK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ok-y5-23W">
                                 <rect key="frame" x="244" y="105" width="112" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="w9y-MG-0DI"/>
@@ -785,7 +785,7 @@
         <!--NewSessionView-->
         <scene sceneID="J2c-DH-spp">
             <objects>
-                <viewController id="FmT-ql-SbE" userLabel="NewSessionView" customClass="NewSessionViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="FmT-ql-SbE" userLabel="NewSessionView" customClass="NewSessionViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Phx-EQ-Nk2"/>
                         <viewControllerLayoutGuide type="bottom" id="D0o-o2-Wvv"/>

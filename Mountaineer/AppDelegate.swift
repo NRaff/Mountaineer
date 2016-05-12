@@ -8,9 +8,7 @@
 
 import UIKit
 import CoreLocation
-//import Realm
-//import RealmSwift
-import Mixpanel
+//import Mixpanel
 import Firebase
 
 @UIApplicationMain
@@ -29,9 +27,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         locationManager = CLLocationManager()
         locationManager?.requestWhenInUseAuthorization()
         
-        Mixpanel.sharedInstanceWithToken("2b92c56c2c74bf244dda6270eea2519d")
-        let mixpanel: Mixpanel = Mixpanel.sharedInstance()
-        mixpanel.track("App launched")
+//        Mixpanel.sharedInstanceWithToken("2b92c56c2c74bf244dda6270eea2519d")
+//        let mixpanel: Mixpanel = Mixpanel.sharedInstance()
+//        mixpanel.track("App launched")
         
         var configureError: NSError?
         GGLContext.sharedInstance().configureWithError(&configureError)
@@ -73,8 +71,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        if saving.isAddSession == true {
 //        saving.saveStuff()
 //        }
-        let mixpanel: Mixpanel = Mixpanel.sharedInstance()
-        mixpanel.track("App Terminated")
+//        let mixpanel: Mixpanel = Mixpanel.sharedInstance()
+//        mixpanel.track("App Terminated")
     }
 
 

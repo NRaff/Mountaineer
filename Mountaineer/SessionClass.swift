@@ -21,14 +21,14 @@ struct Session {
     let topSpeed: Double!
     let peakAltitude: Double!
     let totalDistance: Double!
-    let timeSeconds: Int!
-    let timeMinutes: Int!
-    let timeHours: Int!
+//    let timeSeconds: Int!
+//    let timeMinutes: Int!
+//    let timeHours: Int!
 //    let averageSpeedArray: [CLLocationSpeed]!
     let ref: Firebase?
     
     
-    init(sessionID: String = "", sessionTitle: String, sessionTime: String, thisSessionUnits: Bool, averageSpeed: Double, dateCreated: String, imageID: Int, topSpeed: Double, peakAltitude: Double, totalDistance: Double, timeSeconds: Int, timeMinutes: Int, timeHours: Int/*, averageSpeedArray: [CLLocationSpeed]*/){
+    init(sessionID: String = "", sessionTitle: String, sessionTime: String, thisSessionUnits: Bool, averageSpeed: Double, dateCreated: String, imageID: Int, topSpeed: Double, peakAltitude: Double, totalDistance: Double/*, timeSeconds: Int, timeMinutes: Int, timeHours: Int/*, averageSpeedArray: [CLLocationSpeed]*/*/){
         self.sessionID = sessionID
         self.sessionTitle = sessionTitle
         self.sessionTime = sessionTime
@@ -39,9 +39,9 @@ struct Session {
         self.topSpeed = topSpeed
         self.peakAltitude = peakAltitude
         self.totalDistance = totalDistance
-        self.timeSeconds = timeSeconds
-        self.timeMinutes = timeMinutes
-        self.timeHours = timeHours
+//        self.timeSeconds = timeSeconds
+//        self.timeMinutes = timeMinutes
+//        self.timeHours = timeHours
 //        self.averageSpeedArray = averageSpeedArray
         self.ref = nil
     }
@@ -58,9 +58,9 @@ struct Session {
         peakAltitude = snapshot.value["peakAltitude"] as! Double
         totalDistance = snapshot.value["totalDistance"] as! Double
         ref = snapshot.ref
-        timeSeconds = snapshot.value["seconds"] as! Int
-        timeMinutes = snapshot.value["minutes"] as! Int
-        timeHours = snapshot.value["hours"] as! Int
+//        timeSeconds = snapshot.value["seconds"] as! Int
+//        timeMinutes = snapshot.value["minutes"] as! Int
+//        timeHours = snapshot.value["hours"] as! Int
 //        averageSpeedArray = snapshot.value["averageSpeedArray"] as! [CLLocationSpeed]
     }
     
@@ -77,10 +77,10 @@ struct Session {
             "imageID": imageID,
             "topSpeed": topSpeed,
             "peakAltitude": peakAltitude,
-            "totalDistance": totalDistance,
-            "seconds": timeSeconds,
-            "minutes": timeMinutes,
-            "hours": timeHours
+            "totalDistance": totalDistance
+//            "seconds": timeSeconds,
+//            "minutes": timeMinutes,
+//            "hours": timeHours
         ]
     }
     

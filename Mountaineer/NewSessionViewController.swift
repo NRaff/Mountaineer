@@ -425,6 +425,8 @@ extension NewSessionViewController {
             
         //otherwise hide the editable fields and display the recorded topspeed and peak altitude
         else{
+            //pass stats back to locationHelper
+            self.passVarsBackForResume()
             
             //hide and unhide things
             unhideNeeded()
@@ -468,10 +470,32 @@ extension NewSessionViewController {
     }
     
     func passVarsBackForResume() {
-        //pass time stuff
-        locationInfo.seconds = currentSession!.timeSeconds
-        locationInfo.minutes = currentSession!.timeMinutes
-        locationInfo.hours = currentSession!.timeHours
+        //vars for time stuff
+        var seconds: Int = 0
+        var minutes: Int = 0
+        var hours: Int = 0
+        var averageSpeedArray = [CLLocationSpeed]()
+        
+        //pull in time stuff
+        if RootRef.authData != nil {
+            let sessionRef = currentSession!.ref
+            print(currentSession!.ref)
+            sessionRef!.observeSingleEventOfType(.Value, withBlock: { snapshot in
+                
+                seconds = snapshot.value["seconds"] as! Int
+                minutes = snapshot.value["minutes"] as! Int
+                hours = snapshot.value["hours"] as! Int
+                averageSpeedArray = snapshot.value["averageSpeedArray"] as! [CLLocationSpeed]
+                print("seconds: \(seconds), minutes: \(minutes), hours: \(hours)")
+                print(averageSpeedArray)
+                
+                //pass time and average speed stuff stuff
+                self.locationInfo.seconds = seconds
+                self.locationInfo.minutes = minutes
+                self.locationInfo.hours = hours
+                self.locationInfo.averageSpeedArray = averageSpeedArray
+            })
+        }
         
         //pass topSpeed
         locationInfo.maxSpeed = currentSession!.topSpeed
@@ -486,8 +510,6 @@ extension NewSessionViewController {
         else {
             locationInfo.totalDistance = currentSession!.totalDistance/locationInfo.metricConversionKM
         }
-        
-        //pass recorded average speed to average speed array
         
     }
 }

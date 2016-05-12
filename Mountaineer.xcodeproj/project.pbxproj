@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		79304C781CE44B3100B1E500 /* SessionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793DFED51CBCCEF8003EC7FA /* SessionClass.swift */; };
+		79304C791CE44B3200B1E500 /* SessionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793DFED51CBCCEF8003EC7FA /* SessionClass.swift */; };
 		793DFED61CBCCEF8003EC7FA /* SessionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793DFED51CBCCEF8003EC7FA /* SessionClass.swift */; };
 		796F53381CD08BE800D60D02 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 796F53371CD08BE800D60D02 /* GoogleService-Info.plist */; };
 		796F54431C9F47A400A85613 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 796F54421C9F47A400A85613 /* LoginViewController.swift */; };
@@ -48,8 +50,8 @@
 /* Begin PBXFileReference section */
 		20784A8C35C8162E9318A5D4 /* Pods-MountaineerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerUITests/Pods-MountaineerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6F72CF205B99D2852D75C49B /* Pods-MountaineerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerTests/Pods-MountaineerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		79304C761CE4473600B1E500 /* MountaineerBridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MountaineerBridgingHeader.h; sourceTree = "<group>"; };
 		793DFED51CBCCEF8003EC7FA /* SessionClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionClass.swift; sourceTree = "<group>"; };
-		796F53321CD07D5C00D60D02 /* Mountaineer-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Mountaineer-Bridging-Header.h"; sourceTree = "<group>"; };
 		796F53371CD08BE800D60D02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		796F54421C9F47A400A85613 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		796F54441C9F47BE00A85613 /* CreateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateAccountViewController.swift; sourceTree = "<group>"; };
@@ -159,7 +161,6 @@
 				79AD7D371C9264C30069B58C /* Main.storyboard */,
 				793DFED51CBCCEF8003EC7FA /* SessionClass.swift */,
 				79AD7D3B1C936F590069B58C /* AppDelegate.swift */,
-				796F53321CD07D5C00D60D02 /* Mountaineer-Bridging-Header.h */,
 				79AD7D2B1C9263310069B58C /* LocationHelper.swift */,
 				79AD7D2C1C9263310069B58C /* NewSessionViewController.swift */,
 				79AD7D2E1C9263310069B58C /* SessionsViewController.swift */,
@@ -172,6 +173,7 @@
 				796F53371CD08BE800D60D02 /* GoogleService-Info.plist */,
 				796F54421C9F47A400A85613 /* LoginViewController.swift */,
 				796F54441C9F47BE00A85613 /* CreateAccountViewController.swift */,
+				79304C761CE4473600B1E500 /* MountaineerBridgingHeader.h */,
 			);
 			path = Mountaineer;
 			sourceTree = "<group>";
@@ -481,6 +483,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79AD7D131C925EBA0069B58C /* MountaineerTests.swift in Sources */,
+				79304C781CE44B3100B1E500 /* SessionClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +492,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79AD7D1E1C925EBA0069B58C /* MountaineerUITests.swift in Sources */,
+				79304C791CE44B3200B1E500 /* SessionClass.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -611,11 +615,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Mountaineer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AppRaft.Mountaineer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Mountaineer/Mountaineer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = Mountaineer/MountaineerBridgingHeader.h;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -629,11 +634,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = Mountaineer/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRECOMPS_INCLUDE_HEADERS_FROM_BUILT_PRODUCTS_DIR = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.AppRaft.Mountaineer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SHARED_PRECOMPS_DIR = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "Mountaineer/Mountaineer-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = Mountaineer/MountaineerBridgingHeader.h;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
