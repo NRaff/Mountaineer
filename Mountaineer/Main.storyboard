@@ -35,6 +35,7 @@
             <string>SFUIDisplay-Light</string>
             <string>SFUIDisplay-Light</string>
             <string>SFUIDisplay-Light</string>
+            <string>SFUIDisplay-Light</string>
         </mutableArray>
         <mutableArray key="SF-UI-Display-Regular.otf">
             <string>SFUIDisplay-Regular</string>
@@ -50,7 +51,7 @@
         <!--Login View Controller-->
         <scene sceneID="032-oV-odL">
             <objects>
-                <viewController id="3jZ-Vl-UjA" customClass="LoginViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="3jZ-Vl-UjA" customClass="LoginViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="WHb-U6-8le"/>
                         <viewControllerLayoutGuide type="bottom" id="c0k-Pn-9yJ"/>
@@ -139,7 +140,7 @@
                                     <action selector="loginWithGoogle_btn:" destination="3jZ-Vl-UjA" eventType="touchUpInside" id="wdL-un-Caj"/>
                                 </connections>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yEG-Fd-ulD">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yEG-Fd-ulD">
                                 <rect key="frame" x="290" y="449" width="20" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="jap-qA-822"/>
@@ -183,7 +184,7 @@
                                     <constraint firstAttribute="height" constant="1" id="a4j-cb-X3y"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="A6q-OW-S6e" userLabel="OR Right">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A6q-OW-S6e" userLabel="OR Right">
                                 <rect key="frame" x="320" y="459" width="260" height="1"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -287,7 +288,7 @@
         <!--AllSessionsView-->
         <scene sceneID="foZ-yC-Akw">
             <objects>
-                <viewController id="JEt-qx-qbK" userLabel="AllSessionsView" customClass="SessionsViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="JEt-qx-qbK" userLabel="AllSessionsView" customClass="SessionsViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8JV-Kx-hMw"/>
                         <viewControllerLayoutGuide type="bottom" id="hhm-dY-a15"/>
@@ -302,7 +303,7 @@
                                 <color key="separatorColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="sectionIndexBackgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
-                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sessionCell" rowHeight="125" id="tgS-NK-Fyq" customClass="SessionTableViewCell" customModule="TrialByFire" customModuleProvider="target">
+                                    <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="sessionCell" rowHeight="125" id="tgS-NK-Fyq" customClass="SessionTableViewCell" customModule="Mountaineer" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="22" width="600" height="125"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="tgS-NK-Fyq" id="jaQ-GB-i9f">
@@ -321,7 +322,7 @@
                                                     <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vmg-EN-GLX">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Date" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Vmg-EN-GLX">
                                                     <rect key="frame" x="30" y="70" width="35" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="21" id="sQc-st-wAz"/>
@@ -419,7 +420,7 @@
                                             <segue destination="FmT-ql-SbE" kind="show" identifier="shredTheGnar" id="aIy-rZ-vXD"/>
                                         </connections>
                                     </button>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Start Shredding" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMx-OG-eXA">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Start Shredding" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YMx-OG-eXA">
                                         <rect key="frame" x="219" y="241" width="162" height="29"/>
                                         <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="24"/>
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -499,7 +500,7 @@
         <!--SettingsViewController-->
         <scene sceneID="WrY-ul-5kv">
             <objects>
-                <viewController id="Emo-d1-rVZ" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Emo-d1-rVZ" userLabel="SettingsViewController" customClass="SettingsViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="wMd-n9-w8p"/>
                         <viewControllerLayoutGuide type="bottom" id="KuQ-0p-XJL"/>
@@ -643,7 +644,7 @@
         <!--Create Account View Controller-->
         <scene sceneID="crM-Fc-yFN">
             <objects>
-                <viewController id="pa9-vV-hzb" customClass="CreateAccountViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="pa9-vV-hzb" customClass="CreateAccountViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="QAk-75-RRS"/>
                         <viewControllerLayoutGuide type="bottom" id="rFC-dW-WIf"/>
@@ -655,7 +656,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="LoginBackground" translatesAutoresizingMaskIntoConstraints="NO" id="lJv-j1-9zf">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="MAVRIK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ok-y5-23W">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAVRIK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8Ok-y5-23W">
                                 <rect key="frame" x="244" y="105" width="112" height="32"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="32" id="w9y-MG-0DI"/>
@@ -785,7 +786,7 @@
         <!--NewSessionView-->
         <scene sceneID="J2c-DH-spp">
             <objects>
-                <viewController id="FmT-ql-SbE" userLabel="NewSessionView" customClass="NewSessionViewController" customModule="TrialByFire" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="FmT-ql-SbE" userLabel="NewSessionView" customClass="NewSessionViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Phx-EQ-Nk2"/>
                         <viewControllerLayoutGuide type="bottom" id="D0o-o2-Wvv"/>
@@ -800,6 +801,20 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CW6-P4-u7v" userLabel="sessionView">
                                 <rect key="frame" x="0.0" y="20" width="600" height="70"/>
                                 <subviews>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X3Y-wN-dqO">
+                                        <rect key="frame" x="520" y="20" width="60" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="60" id="oTC-Jo-A9j"/>
+                                            <constraint firstAttribute="height" constant="30" id="qx1-XD-WgQ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SFUIDisplay-Light" family="SF UI Display" pointSize="15"/>
+                                        <state key="normal" title="Resume">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="resumeButton:" destination="FmT-ql-SbE" eventType="touchUpInside" id="pnp-ae-r6E"/>
+                                        </connections>
+                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="udF-5s-IB2">
                                         <rect key="frame" x="532" y="5" width="44" height="60"/>
                                         <constraints>
@@ -884,12 +899,14 @@
                                     <constraint firstAttribute="height" constant="96" id="8xa-bB-Uq0"/>
                                     <constraint firstItem="W4P-el-egw" firstAttribute="top" secondItem="4kz-oB-2wb" secondAttribute="bottom" constant="3" id="A3V-Rb-4ww"/>
                                     <constraint firstItem="W4P-el-egw" firstAttribute="top" secondItem="CW6-P4-u7v" secondAttribute="top" constant="40" id="IiC-CU-2K0"/>
+                                    <constraint firstItem="udF-5s-IB2" firstAttribute="leading" secondItem="X3Y-wN-dqO" secondAttribute="trailing" id="Ik4-9G-eoN"/>
                                     <constraint firstAttribute="bottom" secondItem="t4a-4y-YcF" secondAttribute="bottom" constant="28" id="KIc-TT-OLB"/>
                                     <constraint firstItem="t4a-4y-YcF" firstAttribute="top" secondItem="CW6-P4-u7v" secondAttribute="top" constant="38" id="LxZ-D4-vMJ"/>
                                     <constraint firstAttribute="trailing" secondItem="udF-5s-IB2" secondAttribute="trailing" constant="24" id="OAv-FG-VY1"/>
                                     <constraint firstItem="4kz-oB-2wb" firstAttribute="top" secondItem="CW6-P4-u7v" secondAttribute="top" constant="25" id="Ol3-Nm-FTY"/>
                                     <constraint firstAttribute="centerX" secondItem="W4P-el-egw" secondAttribute="centerX" id="QV3-E5-rZZ"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="96" id="T9Y-3q-YUB"/>
+                                    <constraint firstItem="X3Y-wN-dqO" firstAttribute="top" secondItem="CW6-P4-u7v" secondAttribute="top" constant="20" id="TN9-eQ-nIf"/>
                                     <constraint firstAttribute="centerY" secondItem="t4a-4y-YcF" secondAttribute="centerY" id="XUq-bw-oKV"/>
                                     <constraint firstAttribute="trailing" secondItem="udF-5s-IB2" secondAttribute="trailing" constant="24" id="a2o-gr-Z8g"/>
                                     <constraint firstAttribute="height" constant="70" id="b0F-8C-rd6"/>
@@ -902,6 +919,7 @@
                                     <constraint firstAttribute="centerY" secondItem="udF-5s-IB2" secondAttribute="centerY" id="ow4-5a-eD1"/>
                                     <constraint firstItem="udF-5s-IB2" firstAttribute="top" secondItem="CW6-P4-u7v" secondAttribute="top" constant="38" id="scp-FS-iVN"/>
                                     <constraint firstAttribute="centerX" secondItem="4kz-oB-2wb" secondAttribute="centerX" id="v47-eD-oZL"/>
+                                    <constraint firstAttribute="trailing" secondItem="X3Y-wN-dqO" secondAttribute="trailing" constant="20" id="xHJ-Q8-Gvz"/>
                                     <constraint firstItem="t4a-4y-YcF" firstAttribute="leading" secondItem="CW6-P4-u7v" secondAttribute="leading" constant="24" id="zyI-43-h7p"/>
                                 </constraints>
                                 <variation key="default">
@@ -917,6 +935,7 @@
                                         <exclude reference="8Qk-AA-BDy"/>
                                         <exclude reference="A3V-Rb-4ww"/>
                                         <exclude reference="nOb-EU-JWg"/>
+                                        <exclude reference="Ik4-9G-eoN"/>
                                         <exclude reference="OAv-FG-VY1"/>
                                         <exclude reference="m7A-ZD-Pva"/>
                                         <exclude reference="scp-FS-iVN"/>
@@ -1351,6 +1370,7 @@
                         <outlet property="end_btn" destination="udF-5s-IB2" id="ZfY-rn-GrM"/>
                         <outlet property="nameTrek_tf" destination="Rye-eH-rFe" id="qf9-wo-K7Q"/>
                         <outlet property="peakAltitude_lb" destination="dIh-9g-08U" id="gwl-iw-Hfm"/>
+                        <outlet property="resume_btn" destination="X3Y-wN-dqO" id="8GX-We-5yH"/>
                         <outlet property="sessionTime" destination="W4P-el-egw" id="pPb-5g-LbV"/>
                         <outlet property="startNew_btn" destination="cDu-mi-LQb" id="11P-OY-1tg"/>
                         <outlet property="titleLabel" destination="4kz-oB-2wb" id="jBE-Bm-ZOc"/>

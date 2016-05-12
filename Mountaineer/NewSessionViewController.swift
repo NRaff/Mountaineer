@@ -62,6 +62,9 @@ class NewSessionViewController: UIViewController {
     
     @IBOutlet weak var editView: UIView!
     
+    @IBOutlet weak var resume_btn: UIButton!
+    
+    
 // MARK: - Base Functions
     override func viewDidLoad() {
         formatter.dateStyle = NSDateFormatterStyle.FullStyle
@@ -141,6 +144,11 @@ class NewSessionViewController: UIViewController {
         mixpanel.track("Back/Cancel Alert", properties: ["Options": "Saved with End"])
     }
     
+    @IBAction func resumeButton(sender: AnyObject) {
+        self.startResumeTimer()
+        
+    }
+    
 // MARK: - Navigation
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -214,6 +222,11 @@ extension NewSessionViewController {
     func startUpdateTimer() {
     self.statsTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(NewSessionViewController.updateCurrentStats), userInfo: nil, repeats: true)
     }
+    
+    func startResumeTimer() {
+        self.statsTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(NewSessionViewController.getStatsToLabels), userInfo: nil, repeats: true)
+    }
+
 }
 
 // MARK: - Text Field Delegate
@@ -325,39 +338,7 @@ extension NewSessionViewController {
         //if the session is NOT an old session...
         if isAddSession == true {
             //if units are imperial system...
-            if sessionUnits == false {
-                //if the CLLocation.Location is not nil
-                if locationInfo.locationManager.location != nil {
-                    if locationInfo.locationManager.location!.altitude >= 0 {
-                        currentAltitude_lb.text = String(round(locationInfo.locationManager.location!.altitude * imperialConvFt * 1000)/1000) + " ft"
-                    }
-                    else{
-                        currentAltitude_lb.text = "0.0 ft"
-                    }
-                    topSpeed_lb.text = "\(locationInfo.getTopSpeed()) mph"
-                    peakAltitude_lb.text = "\(locationInfo.getPeakAltitude()) ft"
-                    totalDistance_lb.text = "\(locationInfo.getTotalDistance()) mi"
-                }
-                else {
-                  currentAltitude_lb.text = "- - - -"
-                }
-            }
-            else {
-                if locationInfo.locationManager.location != nil {
-                    if locationInfo.locationManager.location!.altitude >= 0 {
-                        currentAltitude_lb.text = String(round(locationInfo.locationManager.location!.altitude * 100)/100) + " m"
-                    }
-                    else{
-                        currentAltitude_lb.text = "0.0 m"
-                    }
-                    topSpeed_lb.text = "\(locationInfo.getTopSpeed()) kph"
-                    peakAltitude_lb.text = "\(locationInfo.getPeakAltitude()) m"
-                    totalDistance_lb.text = "\(locationInfo.getTotalDistance()) km"
-                }
-                else {
-                   currentAltitude_lb.text = "- - - -"
-                }
-            }
+            self.getStatsToLabels()
         }
         else {
             if locationInfo.locationManager.location != nil {
@@ -427,7 +408,7 @@ extension NewSessionViewController {
         else{
             //pass stats back to locationHelper
             self.passVarsBackForResume()
-            
+            resume_btn.hidden = false
             //hide and unhide things
             unhideNeeded()
             hideUnneeded()
@@ -511,5 +492,41 @@ extension NewSessionViewController {
             locationInfo.totalDistance = currentSession!.totalDistance/locationInfo.metricConversionKM
         }
         
+    }
+    
+    func getStatsToLabels() {
+        if sessionUnits == false {
+            //if the CLLocation.Location is not nil
+            if locationInfo.locationManager.location != nil {
+                if locationInfo.locationManager.location!.altitude >= 0 {
+                    currentAltitude_lb.text = String(round(locationInfo.locationManager.location!.altitude * imperialConvFt * 1000)/1000) + " ft"
+                }
+                else{
+                    currentAltitude_lb.text = "0.0 ft"
+                }
+                topSpeed_lb.text = "\(locationInfo.getTopSpeed()) mph"
+                peakAltitude_lb.text = "\(locationInfo.getPeakAltitude()) ft"
+                totalDistance_lb.text = "\(locationInfo.getTotalDistance()) mi"
+            }
+            else {
+                currentAltitude_lb.text = "- - - -"
+            }
+        }
+        else {
+            if locationInfo.locationManager.location != nil {
+                if locationInfo.locationManager.location!.altitude >= 0 {
+                    currentAltitude_lb.text = String(round(locationInfo.locationManager.location!.altitude * 100)/100) + " m"
+                }
+                else{
+                    currentAltitude_lb.text = "0.0 m"
+                }
+                topSpeed_lb.text = "\(locationInfo.getTopSpeed()) kph"
+                peakAltitude_lb.text = "\(locationInfo.getPeakAltitude()) m"
+                totalDistance_lb.text = "\(locationInfo.getTotalDistance()) km"
+            }
+            else {
+                currentAltitude_lb.text = "- - - -"
+            }
+        }
     }
 }
