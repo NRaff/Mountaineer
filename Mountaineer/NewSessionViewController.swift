@@ -15,6 +15,7 @@ class NewSessionViewController: UIViewController {
 // MARK: - References
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
     let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
+    var updateRef: Firebase?
     
 // MARK: - Variables
     var locationInfo = LocationHelper()
@@ -25,6 +26,7 @@ class NewSessionViewController: UIViewController {
     var statsTimer: NSTimer?
     var sessionDuration: NSTimer?
     var aveVelocity: NSTimer?
+    var resumeTimer: NSTimer?
     var metricConversionKPH = 3.6
     var metricConversionKM = 0.001
     var imperialConvMPH = 2.23694
@@ -32,6 +34,7 @@ class NewSessionViewController: UIViewController {
     var imperialConvFt = 3.28084
     var backImageID: Int = 0
     let formatter = NSDateFormatter()
+    var resumedSession = false
     
 // MARK: - IBOutlets
     @IBOutlet weak var end_btn: UIButton!
@@ -101,8 +104,14 @@ class NewSessionViewController: UIViewController {
             
         //if the user is viewing an old session then just segue back to the AllSessions view instead of pushing an alert
         else {
-            self.performSegueWithIdentifier("segueToAlert", sender: nil)
-            mixpanel.track("Old Session", properties: ["Viewing?": "No - Left Session"])
+            //if the ser resumed a session
+            if resume_btn.hidden == true {
+                presentViewController(self.resumeBackAlert(), animated: true, completion: nil)
+            }
+            else {
+                self.performSegueWithIdentifier("segueToAlert", sender: nil)
+                mixpanel.track("Old Session", properties: ["Viewing?": "No - Left Session"])
+            }
         }
     }
     
@@ -146,6 +155,9 @@ class NewSessionViewController: UIViewController {
     
     @IBAction func resumeButton(sender: AnyObject) {
         self.startResumeTimer()
+        self.startDurationTimer()
+        resume_btn.hidden = true
+        resumedSession = true
         
     }
     
@@ -164,6 +176,8 @@ class NewSessionViewController: UIViewController {
         statsTimer?.invalidate()
         sessionDuration?.invalidate()
         aveVelocity?.invalidate()
+        resumeTimer?.invalidate()
+        
     }
 
 }
@@ -197,6 +211,23 @@ extension NewSessionViewController {
         return alert
     }
     
+    func resumeBackAlert() -> UIAlertController {
+        let alert = UIAlertController(title: "End Session?", message: "Don't worry you can resume at any time.", preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Save & Exit", style: .Default, handler: { (action: UIAlertAction) in
+            //if save and exit is chosen then save the data, track the event, then go back to AllSessions
+            self.saveStuff()
+            self.mixpanel.track("Back/Cancel Alert", properties: ["Options": "Save Session (Alert)"])
+            self.performSegueWithIdentifier("segueToAlert", sender: nil)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Keep Shredding!", style: .Default, handler: { (action: UIAlertAction) in
+            //if 'keep shredding' is chosen then don't do anything and continue the session
+            self.mixpanel.track("Back/Cancel Alert", properties: ["Options": "Continue Session (Alert)"])
+        }))
+        
+        return alert
+    }
+    
     func unhideNeeded(){
        back_btn.hidden = false
        titleLabel.hidden = false
@@ -224,7 +255,7 @@ extension NewSessionViewController {
     }
     
     func startResumeTimer() {
-        self.statsTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(NewSessionViewController.getStatsToLabels), userInfo: nil, repeats: true)
+        self.resumeTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(NewSessionViewController.getStatsToLabels), userInfo: nil, repeats: true)
     }
 
 }
@@ -277,7 +308,7 @@ extension NewSessionViewController {
     func saveStuff(){
         
         //if the user is creating a new session and it does have a name
-        if isAddSession == true && cancel_btn.hidden == true {
+        //if isAddSession == true && cancel_btn.hidden == true {
             //init all temp variables
             var sessionID: String
             var imageID: Int
@@ -294,6 +325,11 @@ extension NewSessionViewController {
 
             //save the general identification of the session
             let saveRef = RootRef.childByAppendingPath("\(RootRef.authData.uid)/sessions").childByAutoId()
+            
+            //set the update reference for resume session
+            if isAddSession == false {
+            updateRef = currentSession!.ref
+            }
 
             sessionID = saveRef.key
             imageID = backImageID
@@ -326,10 +362,18 @@ extension NewSessionViewController {
             
             //save it all to firebase
             let savedSession = ["sessionID": sessionID, "thisSessionUnits": eachSessionUnits, "imageID": imageID, "sessionTitle": sessionTitle, "dateCreated": date, "topSpeed": topSpeed, "peakAltitude": peakAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime, "seconds": sessionSeconds, "minutes": sessionMinutes, "hours": sessionHours, "averageSpeedArray": averageSpeedArray]
+        
+            let updatedSession = ["topSpeed": topSpeed, "peakAltitude": peakAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime, "seconds": sessionSeconds, "minutes": sessionMinutes, "hours": sessionHours, "averageSpeedArray": averageSpeedArray]
             
+            if resumedSession == false {
             saveRef.setValue(savedSession)
+            }
+            else {
+            updateRef!.updateChildValues(updatedSession as [NSObject : AnyObject])
+            }
+            
 
-        }
+       // }
     }
     
     
@@ -491,6 +535,7 @@ extension NewSessionViewController {
         else {
             locationInfo.totalDistance = currentSession!.totalDistance/locationInfo.metricConversionKM
         }
+        print("\(locationInfo.maxSpeed), \(locationInfo.peakAltitude)")
         
     }
     
