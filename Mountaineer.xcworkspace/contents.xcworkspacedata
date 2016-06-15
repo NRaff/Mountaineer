@@ -2,15 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:SF-UI-Display-Bold.otf">
-   </FileRef>
-   <FileRef
-      location = "group:SF-UI-Display-Light.otf">
-   </FileRef>
-   <FileRef
-      location = "group:SF-UI-Display-Regular.otf">
-   </FileRef>
-   <FileRef
       location = "group:Mountaineer.xcodeproj">
    </FileRef>
    <FileRef

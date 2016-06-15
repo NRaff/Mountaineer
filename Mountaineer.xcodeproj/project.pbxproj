@@ -25,6 +25,9 @@
 		79AD7D3A1C9266ED0069B58C /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 79AD7D391C9266ED0069B58C /* Images.xcassets */; };
 		79AD7D3C1C936F590069B58C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AD7D3B1C936F590069B58C /* AppDelegate.swift */; };
 		79DFCD7B1CD8481900A6C0DB /* FirebaseHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DFCD7A1CD8481900A6C0DB /* FirebaseHelper.swift */; };
+		79F143ED1D1206B30073220B /* SF-UI-Display-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 79F143EA1D1206B30073220B /* SF-UI-Display-Bold.otf */; };
+		79F143EE1D1206B30073220B /* SF-UI-Display-Light.otf in Resources */ = {isa = PBXBuildFile; fileRef = 79F143EB1D1206B30073220B /* SF-UI-Display-Light.otf */; };
+		79F143EF1D1206B30073220B /* SF-UI-Display-Regular.otf in Resources */ = {isa = PBXBuildFile; fileRef = 79F143EC1D1206B30073220B /* SF-UI-Display-Regular.otf */; };
 		A88289A92D5AB2C591D21141 /* Pods_MountaineerUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B668806A79694206325D09F6 /* Pods_MountaineerUITests.framework */; };
 		D01180A8DDAD6E1A0973508A /* Pods_MountaineerTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D24F37C553FD6FBAE7810270 /* Pods_MountaineerTests.framework */; };
 		F320F48D6EBF40F3B4374E93 /* Pods_Mountaineer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C250AB471D1F5A610730D690 /* Pods_Mountaineer.framework */; };
@@ -73,6 +76,9 @@
 		79AD7D391C9266ED0069B58C /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		79AD7D3B1C936F590069B58C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		79DFCD7A1CD8481900A6C0DB /* FirebaseHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FirebaseHelper.swift; sourceTree = "<group>"; };
+		79F143EA1D1206B30073220B /* SF-UI-Display-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Display-Bold.otf"; sourceTree = "<group>"; };
+		79F143EB1D1206B30073220B /* SF-UI-Display-Light.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Display-Light.otf"; sourceTree = "<group>"; };
+		79F143EC1D1206B30073220B /* SF-UI-Display-Regular.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-UI-Display-Regular.otf"; sourceTree = "<group>"; };
 		9C9B3AF32D0391597A385B62 /* Pods-MountaineerTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerTests/Pods-MountaineerTests.release.xcconfig"; sourceTree = "<group>"; };
 		AC628A0B45127C8EA84B49C9 /* Pods-MountaineerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerUITests/Pods-MountaineerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		B668806A79694206325D09F6 /* Pods_MountaineerUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_MountaineerUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -136,6 +142,9 @@
 		79AD7CF11C925EBA0069B58C = {
 			isa = PBXGroup;
 			children = (
+				79F143EA1D1206B30073220B /* SF-UI-Display-Bold.otf */,
+				79F143EB1D1206B30073220B /* SF-UI-Display-Light.otf */,
+				79F143EC1D1206B30073220B /* SF-UI-Display-Regular.otf */,
 				79AD7CFC1C925EBA0069B58C /* Mountaineer */,
 				79AD7D111C925EBA0069B58C /* MountaineerTests */,
 				79AD7D1C1C925EBA0069B58C /* MountaineerUITests */,
@@ -314,7 +323,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79F143EF1D1206B30073220B /* SF-UI-Display-Regular.otf in Resources */,
 				79AD7D381C9264C30069B58C /* Main.storyboard in Resources */,
+				79F143ED1D1206B30073220B /* SF-UI-Display-Bold.otf in Resources */,
+				79F143EE1D1206B30073220B /* SF-UI-Display-Light.otf in Resources */,
 				796F53381CD08BE800D60D02 /* GoogleService-Info.plist in Resources */,
 				79AD7D3A1C9266ED0069B58C /* Images.xcassets in Resources */,
 				79AD7D081C925EBA0069B58C /* LaunchScreen.storyboard in Resources */,
