@@ -16,6 +16,7 @@ class NewSessionViewController: UIViewController {
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
     let RootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
     var updateRef: Firebase?
+    var fetchedResumeStats: Bool = false
     
 // MARK: - Variables
     var locationInfo = LocationHelper()
@@ -154,8 +155,14 @@ class NewSessionViewController: UIViewController {
     }
     
     @IBAction func resumeButton(sender: AnyObject) {
-        self.startResumeTimer()
-        self.startDurationTimer()
+        self.passVarsBackForResume()
+//        repeat {
+//            if self.fetchedResumeStats {
+//                self.startResumeTimer()
+//                self.aveVelocityTimer()
+//                self.startDurationTimer()
+//            }
+//        } while self.fetchedResumeStats == false
         resume_btn.hidden = true
         resumedSession = true
         
@@ -256,6 +263,7 @@ extension NewSessionViewController {
     
     func startResumeTimer() {
         self.resumeTimer = NSTimer.scheduledTimerWithTimeInterval(1, target: self, selector: #selector(NewSessionViewController.getStatsToLabels), userInfo: nil, repeats: true)
+        
     }
 
 }
@@ -317,10 +325,10 @@ extension NewSessionViewController {
             
             var eachSessionUnits: Bool
             var topSpeed: Double
-            var peakAltitude: Double
+            var highAltitude: Double
             var totalDistance: Double
             var averageSpeed: Double
-            
+        
             var sessionTime: String
 
             //save the general identification of the session
@@ -340,30 +348,34 @@ extension NewSessionViewController {
             if sessionUnits == false {
                 eachSessionUnits = false
                 topSpeed = locationInfo.getTopSpeed()
-                peakAltitude = locationInfo.getPeakAltitude()
+                highAltitude = locationInfo.getPeakAltitude()
                 totalDistance = locationInfo.getTotalDistance()
-                averageSpeed = locationInfo.getAverageSpeed()
+                averageSpeed = locationInfo.NewAverageSpeed()
             }
             //if the user sets units as metric
             else
             {
                 eachSessionUnits = true
                 topSpeed = locationInfo.getTopSpeed()
-                peakAltitude = locationInfo.getPeakAltitude()
+                highAltitude = locationInfo.getPeakAltitude()
                 totalDistance = locationInfo.getTotalDistance()
-                averageSpeed = locationInfo.getAverageSpeed()
+                averageSpeed = locationInfo.NewAverageSpeed()
             }
             //set the sessionTime string to be the ending timer time
             sessionTime = "TIME ADVENTURING: \(locationInfo.tripDuration().timeString)"
             let sessionSeconds = locationInfo.tripDuration().seconds
             let sessionMinutes = locationInfo.tripDuration().minutes
             let sessionHours = locationInfo.tripDuration().hours
-            let averageSpeedArray = locationInfo.averageSpeedArray
+            let sumSpeeds = locationInfo.sumSpeeds
+            let averageSpeedCount = locationInfo.averageSpeedCount
+            let maxSpeed = locationInfo.maxSpeed!
+            let peakAltitude = locationInfo.peakAltitude!
+        
             
             //save it all to firebase
-            let savedSession = ["sessionID": sessionID, "thisSessionUnits": eachSessionUnits, "imageID": imageID, "sessionTitle": sessionTitle, "dateCreated": date, "topSpeed": topSpeed, "peakAltitude": peakAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime, "seconds": sessionSeconds, "minutes": sessionMinutes, "hours": sessionHours, "averageSpeedArray": averageSpeedArray]
+            let savedSession = ["sessionID": sessionID, "thisSessionUnits": eachSessionUnits, "imageID": imageID, "sessionTitle": sessionTitle, "dateCreated": date, "topSpeed": topSpeed, "highAltitude": highAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime, "seconds": sessionSeconds, "minutes": sessionMinutes, "hours": sessionHours, "sumSpeeds": sumSpeeds, "averageSpeedCount": averageSpeedCount, "maxSpeed": maxSpeed, "peakAltitude": peakAltitude]
         
-            let updatedSession = ["topSpeed": topSpeed, "peakAltitude": peakAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime, "seconds": sessionSeconds, "minutes": sessionMinutes, "hours": sessionHours, "averageSpeedArray": averageSpeedArray]
+            let updatedSession = ["topSpeed": topSpeed, "highAltitude": highAltitude, "totalDistance": totalDistance, "averageSpeed": averageSpeed, "sessionTime": sessionTime, "seconds": sessionSeconds, "minutes": sessionMinutes, "hours": sessionHours, "sumSpeeds": sumSpeeds, "averageSpeedCount": averageSpeedCount, "maxSpeed": maxSpeed, "peakAltitude": peakAltitude]
             
             if resumedSession == false {
             saveRef.setValue(savedSession)
@@ -406,13 +418,12 @@ extension NewSessionViewController {
         }
     }
     
-    
     func getAverageSpeed(){
         if sessionUnits == false {
-        currentSpeed_lb.text = "\(locationInfo.getAverageSpeed()) mph"
+        currentSpeed_lb.text = "\(locationInfo.NewAverageSpeed()) mph"
         }
         else {
-        currentSpeed_lb.text = "\(locationInfo.getAverageSpeed()) kph"
+        currentSpeed_lb.text = "\(locationInfo.NewAverageSpeed()) kph"
         }
     }
     
@@ -451,7 +462,7 @@ extension NewSessionViewController {
         //otherwise hide the editable fields and display the recorded topspeed and peak altitude
         else{
             //pass stats back to locationHelper
-            self.passVarsBackForResume()
+//            self.passVarsBackForResume()
             resume_btn.hidden = false
             //hide and unhide things
             unhideNeeded()
@@ -499,44 +510,51 @@ extension NewSessionViewController {
         var seconds: Int = 0
         var minutes: Int = 0
         var hours: Int = 0
-        var averageSpeedArray = [CLLocationSpeed]()
+        var sumSpeeds = 0.0
+        var averageSpeedCount = 0.0
+        var maxSpeed = 0.0
+        var peakAltitude = 0.0
         
-        //pull in time stuff
+        //pass all vars
         if RootRef.authData != nil {
-            let sessionRef = currentSession!.ref
-            print(currentSession!.ref)
-            sessionRef!.observeSingleEventOfType(.Value, withBlock: { snapshot in
-                
+            
+            currentSession!.ref?.observeSingleEventOfType(.Value, withBlock: {snapshot in
                 seconds = snapshot.value["seconds"] as! Int
                 minutes = snapshot.value["minutes"] as! Int
                 hours = snapshot.value["hours"] as! Int
-                averageSpeedArray = snapshot.value["averageSpeedArray"] as! [CLLocationSpeed]
-                print("seconds: \(seconds), minutes: \(minutes), hours: \(hours)")
-                print(averageSpeedArray)
-                
+                sumSpeeds = snapshot.value["sumSpeeds"] as! Double
+                averageSpeedCount = snapshot.value["averageSpeedCount"] as! Double
+                maxSpeed = snapshot.value["maxSpeed"] as! Double
+                peakAltitude = snapshot.value["peakAltitude"] as! Double
                 //pass time and average speed stuff stuff
                 self.locationInfo.seconds = seconds
                 self.locationInfo.minutes = minutes
                 self.locationInfo.hours = hours
-                self.locationInfo.averageSpeedArray = averageSpeedArray
+                self.locationInfo.sumSpeeds = sumSpeeds
+                self.locationInfo.averageSpeedCount = averageSpeedCount
+                
+                
+                //pass topSpeed
+                self.locationInfo.maxSpeed = maxSpeed
+                
+                //pass peakAltitude
+                self.locationInfo.peakAltitude = peakAltitude
+                
+                //pass total distance after conversion back to CoreLocation units (metric)
+                if self.sessionUnits == false {
+                    self.locationInfo.totalDistance = self.currentSession!.totalDistance/self.locationInfo.imperialConvMi
+                }
+                else {
+                    self.locationInfo.totalDistance = self.currentSession!.totalDistance/self.locationInfo.metricConversionKM
+                }
+                self.fetchedResumeStats = true
+                if self.fetchedResumeStats {
+                    self.startResumeTimer()
+                    self.aveVelocityTimer()
+                    self.startDurationTimer()
+                }
             })
         }
-        
-        //pass topSpeed
-        locationInfo.maxSpeed = currentSession!.topSpeed
-        
-        //pass peakAltitude
-        locationInfo.peakAltitude = currentSession!.peakAltitude
-        
-        //pass total distance after conversion back to CoreLocation units (metric)
-        if sessionUnits == false {
-            locationInfo.totalDistance = currentSession!.totalDistance/locationInfo.imperialConvMi
-        }
-        else {
-            locationInfo.totalDistance = currentSession!.totalDistance/locationInfo.metricConversionKM
-        }
-        print("\(locationInfo.maxSpeed), \(locationInfo.peakAltitude)")
-        
     }
     
     func getStatsToLabels() {

@@ -20,6 +20,7 @@ class LocationHelper: NSObject {
     
     var timer = NSTimer()
     var startTime = NSTimeInterval()
+    
 
 // MARK: - Location Variables
     var speed: CLLocationSpeed?
@@ -36,6 +37,7 @@ class LocationHelper: NSObject {
     var startLocation: CLLocation?
     var nextLocation: CLLocation?
     var totalDistance: CLLocationDistance = 0
+    var averageSpeedCount: Double = 0
     
 // MARK: - Time Variables
     var seconds: Int = 0
@@ -65,14 +67,13 @@ extension LocationHelper {
         RootRef.childByAppendingPath("users/\(RootRef.authData.uid)").observeSingleEventOfType(.Value, withBlock: { snapshot in
             self.unitsSetting = snapshot.value["sessionUnits"] as! Bool
         })
-        
+
         if (CLLocationManager.locationServicesEnabled()) {
             locationManager.delegate = self
             locationManager.desiredAccuracy = kCLLocationAccuracyBest
             locationManager.requestWhenInUseAuthorization()
             locationManager.allowsBackgroundLocationUpdates = true
             locationManager.startUpdatingLocation()
-            
             
         } else {
             print("Location services are not enabled");
@@ -87,6 +88,15 @@ extension LocationHelper {
                     //find the maxSpeed
                     if newSpeed > maxSpeed {
                         maxSpeed = newSpeed
+                        if unitsSetting == false {
+                            finalTopSpeed = (round(maxSpeed! * imperialConvMPH * 100)/100)
+                        }
+                        else{
+                            finalTopSpeed = (round(maxSpeed! * metricConversionKPH * 100)/100)
+                        }
+                    }
+                    else
+                    {
                         if unitsSetting == false {
                             finalTopSpeed = (round(maxSpeed! * imperialConvMPH * 100)/100)
                         }
@@ -122,6 +132,7 @@ extension LocationHelper {
         return finalTopSpeed
     }
 
+
     func getPeakAltitude() -> Double{
         if locationManager.location != nil {
             if locationManager.location!.altitude >= 0 {
@@ -131,6 +142,15 @@ extension LocationHelper {
                         peakAltitude = newAltitude
                         if unitsSetting == false {
                            highAltitude = round(peakAltitude! * imperialConvFt * 100)/100
+                        }
+                        else {
+                            highAltitude = round(peakAltitude! * 100)/100
+                        }
+                    }
+                    else
+                    {
+                        if unitsSetting == false {
+                            highAltitude = round(peakAltitude! * imperialConvFt * 100)/100
                         }
                         else {
                             highAltitude = round(peakAltitude! * 100)/100
@@ -189,23 +209,17 @@ extension LocationHelper {
         return finalDistance
     }
     
-    func getAverageSpeed() -> Double{
+    func NewAverageSpeed() -> Double {
         if locationManager.location != nil {
+            averageSpeedCount += 1
             if locationManager.location!.speed >= 0 {
-                averageSpeedArray.append(locationManager.location!.speed)
+                sumSpeeds += locationManager.location!.speed
             }
             else {
-                averageSpeedArray.append(0.0)
+                sumSpeeds += 0.0
             }
             
-            if averageSpeedArray.count < 2 {
-                averageSpeed = Double(averageSpeedArray[0])
-                sumSpeeds = averageSpeedArray[0]
-            }
-            else {
-                sumSpeeds += averageSpeedArray.last!
-                averageSpeed = Double(sumSpeeds)/Double(averageSpeedArray.count)
-            }
+            averageSpeed = sumSpeeds/averageSpeedCount
             
             if unitsSetting == false {
                 finalAveSpeed = round(averageSpeed * imperialConvMPH * 100)/100
