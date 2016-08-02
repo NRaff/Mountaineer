@@ -14,6 +14,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
     let rootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
     let unitsSetting = false
     
+    
 // MARK: IBOutlets
     @IBOutlet weak var emailText: UITextField!
     
