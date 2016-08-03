@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		790B72A61D529BB3001BA8A4 /* WaitingIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 790B72A51D529BB3001BA8A4 /* WaitingIndicatorView.swift */; };
 		79304C781CE44B3100B1E500 /* SessionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793DFED51CBCCEF8003EC7FA /* SessionClass.swift */; };
 		79304C791CE44B3200B1E500 /* SessionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793DFED51CBCCEF8003EC7FA /* SessionClass.swift */; };
 		793DFED61CBCCEF8003EC7FA /* SessionClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793DFED51CBCCEF8003EC7FA /* SessionClass.swift */; };
@@ -53,6 +54,7 @@
 /* Begin PBXFileReference section */
 		20784A8C35C8162E9318A5D4 /* Pods-MountaineerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerUITests/Pods-MountaineerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6F72CF205B99D2852D75C49B /* Pods-MountaineerTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-MountaineerTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-MountaineerTests/Pods-MountaineerTests.debug.xcconfig"; sourceTree = "<group>"; };
+		790B72A51D529BB3001BA8A4 /* WaitingIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WaitingIndicatorView.swift; sourceTree = "<group>"; };
 		79304C761CE4473600B1E500 /* MountaineerBridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MountaineerBridgingHeader.h; sourceTree = "<group>"; };
 		793DFED51CBCCEF8003EC7FA /* SessionClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionClass.swift; sourceTree = "<group>"; };
 		796F53371CD08BE800D60D02 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
@@ -169,6 +171,7 @@
 			children = (
 				79AD7D371C9264C30069B58C /* Main.storyboard */,
 				793DFED51CBCCEF8003EC7FA /* SessionClass.swift */,
+				790B72A51D529BB3001BA8A4 /* WaitingIndicatorView.swift */,
 				79AD7D3B1C936F590069B58C /* AppDelegate.swift */,
 				79AD7D2B1C9263310069B58C /* LocationHelper.swift */,
 				79AD7D2C1C9263310069B58C /* NewSessionViewController.swift */,
@@ -478,6 +481,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				79AD7D351C9263310069B58C /* SessionTableViewCell.swift in Sources */,
+				790B72A61D529BB3001BA8A4 /* WaitingIndicatorView.swift in Sources */,
 				796F54451C9F47BE00A85613 /* CreateAccountViewController.swift in Sources */,
 				79AD7D341C9263310069B58C /* SessionsViewController.swift in Sources */,
 				79AD7D3C1C936F590069B58C /* AppDelegate.swift in Sources */,

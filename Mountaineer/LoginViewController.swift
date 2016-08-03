@@ -25,6 +25,8 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
     
     @IBOutlet weak var loginGoogle_btn: UIButton!
     
+    var activityIndicatorView: WaitingIndicatorView!
+    
 // MARK: Base Functions
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,11 +53,21 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
     }
 
     @IBAction func createAccount_btn(sender: AnyObject) {
+        self.activityIndicatorView = WaitingIndicatorView(title: "Just a second...", center: self.view.center)
+        self.view.addSubview(self.activityIndicatorView.getViewActivityIndicator())
+        
+        self.activityIndicatorView.startAnimating()
         self.createFirebaseAccount()
+        self.activityIndicatorView.stopAnimating()
     }
 
     @IBAction func loginWithGoogle_btn(sender: AnyObject) {
-       authenticateWithGoogle(loginGoogle_btn)
+        self.activityIndicatorView = WaitingIndicatorView(title: "Just a second...", center: self.view.center)
+        self.view.addSubview(self.activityIndicatorView.getViewActivityIndicator())
+        
+        self.activityIndicatorView.startAnimating()
+        authenticateWithGoogle(loginGoogle_btn)
+        self.activityIndicatorView.stopAnimating()
     }
 
 // MARK: Unwind Segues

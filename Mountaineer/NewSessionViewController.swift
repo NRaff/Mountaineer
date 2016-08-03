@@ -68,6 +68,7 @@ class NewSessionViewController: UIViewController {
     
     @IBOutlet weak var resume_btn: UIButton!
     
+    var activityIndicatorView: WaitingIndicatorView!
     
 // MARK: - Base Functions
     override func viewDidLoad() {
@@ -75,6 +76,7 @@ class NewSessionViewController: UIViewController {
         formatter.timeStyle = .ShortStyle
         super.viewDidLoad()
         nameTrek_tf.delegate = self
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -155,23 +157,26 @@ class NewSessionViewController: UIViewController {
     
     @IBAction func endButton(sender: AnyObject) {
         //when 'end' is clicked save all data and segue to AllSessions
+        self.activityIndicatorView = WaitingIndicatorView(title: "Just a second...", center: self.view.center)
+        self.view.addSubview(self.activityIndicatorView.getViewActivityIndicator())
+        self.activityIndicatorView.startAnimating()
         self.saveStuff()
+        self.activityIndicatorView.stopAnimating()
         self.performSegueWithIdentifier("segueOnEnd", sender: nil)
         mixpanel.track("Back/Cancel Alert", properties: ["Options": "Saved with End"])
     }
     
     @IBAction func resumeButton(sender: AnyObject) {
-        self.passVarsBackForResume()
-//        repeat {
-//            if self.fetchedResumeStats {
-//                self.startResumeTimer()
-//                self.aveVelocityTimer()
-//                self.startDurationTimer()
-//            }
-//        } while self.fetchedResumeStats == false
+        
+        self.activityIndicatorView = WaitingIndicatorView(title: "Just a second...", center: self.view.center)
+        self.view.addSubview(self.activityIndicatorView.getViewActivityIndicator())
+        
         resume_btn.hidden = true
         resumedSession = true
         
+        self.activityIndicatorView.startAnimating()
+        self.passVarsBackForResume()
+        self.activityIndicatorView.stopAnimating()
     }
     
 // MARK: - Navigation
@@ -202,7 +207,14 @@ extension NewSessionViewController {
         
         cancelAlert.addAction(UIAlertAction(title: "Save & Exit", style: .Default, handler: { (action: UIAlertAction) in
             //if save and exit is chosen then save the data, track the event, then go back to AllSessions
+            
+            self.activityIndicatorView = WaitingIndicatorView(title: "Just a second...", center: self.view.center)
+            self.view.addSubview(self.activityIndicatorView.getViewActivityIndicator())
+            
+            self.activityIndicatorView.startAnimating()
             self.saveStuff()
+            self.activityIndicatorView.stopAnimating()
+            
             self.mixpanel.track("Back/Cancel Alert", properties: ["Options": "Save Session (Alert)"])
             self.performSegueWithIdentifier("segueToAlert", sender: nil)
         }))
@@ -228,7 +240,14 @@ extension NewSessionViewController {
         let alert = UIAlertController(title: "End Session?", message: "Don't worry you can resume at any time.", preferredStyle: UIAlertControllerStyle.Alert)
         alert.addAction(UIAlertAction(title: "Save & Exit", style: .Default, handler: { (action: UIAlertAction) in
             //if save and exit is chosen then save the data, track the event, then go back to AllSessions
+            
+            self.activityIndicatorView = WaitingIndicatorView(title: "Just a second...", center: self.view.center)
+            self.view.addSubview(self.activityIndicatorView.getViewActivityIndicator())
+            
+            self.activityIndicatorView.startAnimating()
             self.saveStuff()
+            self.activityIndicatorView.stopAnimating()
+            
             self.mixpanel.track("Back/Cancel Alert", properties: ["Options": "Save Session (Alert)"])
             self.performSegueWithIdentifier("segueToAlert", sender: nil)
         }))
@@ -375,7 +394,7 @@ extension NewSessionViewController {
             let sumSpeeds = locationInfo.sumSpeeds
             let averageSpeedCount = locationInfo.averageSpeedCount
             let maxSpeed = locationInfo.maxSpeed!
-            let peakAltitude = locationInfo.peakAltitude!
+            let peakAltitude = locationInfo.getPeakAltitude()
         
             
             //save it all to firebase

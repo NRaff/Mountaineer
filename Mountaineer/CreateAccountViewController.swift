@@ -16,6 +16,8 @@ class CreateAccountViewController: UIViewController {
     var passwordAlertField: UITextField?
     var oldPasswordAlertField: UITextField?
     
+    var activityIndicatorView: WaitingIndicatorView!
+    
     let rootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
 
     @IBOutlet weak var emailText: UITextField!
@@ -35,7 +37,12 @@ class CreateAccountViewController: UIViewController {
     }
     
     @IBAction func createAccount_btn(sender: AnyObject) {
+        self.activityIndicatorView = WaitingIndicatorView(title: "Just a second...", center: self.view.center)
+        self.view.addSubview(self.activityIndicatorView.getViewActivityIndicator())
+        
+        self.activityIndicatorView.startAnimating()
         self.loginToFirebase()
+        self.activityIndicatorView.stopAnimating()
     }
     
     @IBAction func resetPassword_btn(sender: AnyObject) {
@@ -158,7 +165,13 @@ extension CreateAccountViewController: UITextFieldDelegate {
         else
         {
             textField.resignFirstResponder()
+            
+            self.activityIndicatorView = WaitingIndicatorView(title: "Just a second...", center: self.view.center)
+            self.view.addSubview(self.activityIndicatorView.getViewActivityIndicator())
+            
+            self.activityIndicatorView.startAnimating()
             self.loginToFirebase()
+            self.activityIndicatorView.stopAnimating()
         }
         
         return true

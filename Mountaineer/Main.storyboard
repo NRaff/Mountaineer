@@ -442,8 +442,8 @@
                                     </mask>
                                 </variation>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MAVRIK" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h7h-G9-bDU">
-                                <rect key="frame" x="225" y="37" width="150" height="35"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="MOUNTAINEER" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="12" translatesAutoresizingMaskIntoConstraints="NO" id="h7h-G9-bDU">
+                                <rect key="frame" x="60" y="37" width="480" height="35"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="35" id="EHG-xv-XCP"/>
                                     <constraint firstAttribute="width" constant="150" id="KlL-Tz-x7K"/>
@@ -451,6 +451,11 @@
                                 <fontDescription key="fontDescription" name="SFUIDisplay-Bold" family="SF UI Display" pointSize="23"/>
                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="KlL-Tz-x7K"/>
+                                    </mask>
+                                </variation>
                             </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -460,6 +465,8 @@
                             <constraint firstAttribute="centerX" secondItem="h7h-G9-bDU" secondAttribute="centerX" id="AGX-CG-HBI"/>
                             <constraint firstItem="8kG-uQ-b9a" firstAttribute="trailing" secondItem="64h-Lc-8BW" secondAttribute="trailing" id="EPn-LS-4fz"/>
                             <constraint firstItem="8kG-uQ-b9a" firstAttribute="top" secondItem="VD6-PM-KUL" secondAttribute="bottom" id="HbP-qM-zDO"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="h7h-G9-bDU" secondAttribute="trailing" constant="40" id="Lok-6T-ovu"/>
+                            <constraint firstItem="h7h-G9-bDU" firstAttribute="leading" secondItem="64h-Lc-8BW" secondAttribute="leadingMargin" constant="40" id="Mtf-yj-PuI"/>
                             <constraint firstAttribute="trailing" secondItem="VD6-PM-KUL" secondAttribute="trailing" id="Nyy-FE-QOK"/>
                             <constraint firstItem="RQ3-DM-8uC" firstAttribute="leading" secondItem="64h-Lc-8BW" secondAttribute="leading" id="OII-jc-5S1"/>
                             <constraint firstAttribute="centerX" secondItem="VD6-PM-KUL" secondAttribute="centerX" id="VZS-Yo-f4v"/>
@@ -517,7 +524,7 @@
                                         <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                                     </imageView>
                                     <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="G1G-il-eqo">
-                                        <rect key="frame" x="218" y="259" width="164" height="83"/>
+                                        <rect key="frame" x="215" y="257" width="171" height="87"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="G1G-il-eqo" secondAttribute="height" multiplier="4:2" id="Cti-qC-5sv"/>
                                         </constraints>
@@ -615,6 +622,7 @@
                                 <variation key="default">
                                     <mask key="constraints">
                                         <exclude reference="g4c-Xt-9MJ"/>
+                                        <exclude reference="oCT-jK-VCg"/>
                                     </mask>
                                 </variation>
                             </view>
