@@ -65,7 +65,13 @@ extension LocationHelper {
     func startedLocation(){
         
         RootRef.childByAppendingPath("users/\(RootRef.authData.uid)").observeSingleEventOfType(.Value, withBlock: { snapshot in
-            self.unitsSetting = snapshot.value["sessionUnits"] as! Bool
+            if let units = snapshot.value["sessionUnits"] as? Bool {
+            self.unitsSetting = units
+            }
+            else
+            {
+            self.unitsSetting = false
+            }
         })
 
         if (CLLocationManager.locationServicesEnabled()) {

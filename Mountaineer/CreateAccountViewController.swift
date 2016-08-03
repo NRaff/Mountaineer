@@ -11,6 +11,11 @@ import Firebase
 import FirebaseUI
 
 class CreateAccountViewController: UIViewController {
+    
+    var emailAlertField: UITextField?
+    var passwordAlertField: UITextField?
+    var oldPasswordAlertField: UITextField?
+    
     let rootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
 
     @IBOutlet weak var emailText: UITextField!
@@ -35,11 +40,42 @@ class CreateAccountViewController: UIViewController {
     
     @IBAction func resetPassword_btn(sender: AnyObject) {
         self.resetPassword()
+//        self.presentViewController(self.resetPasswordAlert(), animated: true, completion: nil)
+//        print("button pressed")
     }
 }
 
 //MARK: - UIHelper Extension
 extension CreateAccountViewController {
+    
+    func resetPasswordAlert() -> UIAlertController {
+        let resetAlert = UIAlertController(title: "Reset Password", message: "Please enter your email and password.", preferredStyle: UIAlertControllerStyle.Alert)
+        resetAlert.addTextFieldWithConfigurationHandler { textField -> Void in
+            self.emailAlertField = textField
+            self.emailAlertField?.placeholder = "Email"
+        }
+        
+        resetAlert.addTextFieldWithConfigurationHandler { textField -> Void in
+            self.oldPasswordAlertField = textField
+            self.oldPasswordAlertField?.placeholder = "Old Password"
+        }
+        
+        resetAlert.addTextFieldWithConfigurationHandler{ textField -> Void in
+            self.passwordAlertField = textField
+            self.passwordAlertField?.placeholder = "New Password"
+        }
+        
+        
+        resetAlert.addAction(UIAlertAction(title: "Go", style: UIAlertActionStyle.Default, handler: { action -> Void in
+            let email = self.emailAlertField!.text!
+            let oldPass = self.oldPasswordAlertField!.text!
+            let newPass = self.passwordAlertField!.text!
+            
+            self.rootRef.changePasswordForUser(email, fromOld: oldPass, toNew: newPass, withCompletionBlock: nil)
+        }))
+        
+        return resetAlert
+    }
     
     func placeholderUI() {
         emailText.attributedPlaceholder = NSAttributedString(string:"EMAIL", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])

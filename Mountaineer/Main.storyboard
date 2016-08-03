@@ -24,7 +24,6 @@
             <string>SFUIDisplay-Bold</string>
             <string>SFUIDisplay-Bold</string>
             <string>SFUIDisplay-Bold</string>
-            <string>SFUIDisplay-Bold</string>
         </mutableArray>
         <mutableArray key="SF-UI-Display-Light.otf">
             <string>SFUIDisplay-Light</string>
@@ -594,24 +593,6 @@
                                             <segue destination="kEG-1s-opF" kind="unwind" identifier="logoutSegue" unwindAction="unwindToLoginViewController:" id="Wv0-Cz-BSs"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xYW-dr-y1N">
-                                        <rect key="frame" x="210" y="533" width="180" height="30"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="180" id="9Xo-mv-7ME"/>
-                                            <constraint firstAttribute="height" constant="30" id="jDj-ia-VD4"/>
-                                            <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="30" id="nCy-ii-RAR"/>
-                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="180" id="p4W-wC-hmJ"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="SFUIDisplay-Bold" family="SF UI Display" pointSize="15"/>
-                                        <state key="normal" title="Reset Password">
-                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="changePassword_btn:" destination="Emo-d1-rVZ" eventType="touchUpInside" id="7S9-vr-LYm"/>
-                                            <action selector="changePassword_btn:" destination="pa9-vV-hzb" eventType="touchUpInside" id="IcJ-Fw-Wv3"/>
-                                            <action selector="resetPassword_btn:" destination="pa9-vV-hzb" eventType="touchUpInside" id="Pa0-gf-EFL"/>
-                                        </connections>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -622,14 +603,12 @@
                                     <constraint firstItem="i4S-Fw-PGk" firstAttribute="centerX" secondItem="eql-n5-3NZ" secondAttribute="centerX" id="9B3-Ts-fTc"/>
                                     <constraint firstItem="dRZ-Pj-i2o" firstAttribute="leading" secondItem="TIl-rL-nyU" secondAttribute="leading" id="CRV-f0-KhK"/>
                                     <constraint firstAttribute="trailing" secondItem="dRZ-Pj-i2o" secondAttribute="trailing" id="FoY-0l-3jz"/>
-                                    <constraint firstItem="xYW-dr-y1N" firstAttribute="centerX" secondItem="eql-n5-3NZ" secondAttribute="centerX" id="cSJ-R8-btD"/>
                                     <constraint firstItem="dRZ-Pj-i2o" firstAttribute="top" secondItem="TIl-rL-nyU" secondAttribute="top" id="g4c-Xt-9MJ"/>
                                     <constraint firstAttribute="centerX" secondItem="G1G-il-eqo" secondAttribute="centerX" id="iWj-pv-6T9"/>
                                     <constraint firstItem="eql-n5-3NZ" firstAttribute="leading" secondItem="TIl-rL-nyU" secondAttribute="leadingMargin" id="krT-jq-y6V"/>
                                     <constraint firstAttribute="centerX" secondItem="eql-n5-3NZ" secondAttribute="centerX" id="nUK-Zc-s37"/>
                                     <constraint firstAttribute="bottom" secondItem="dRZ-Pj-i2o" secondAttribute="bottom" id="o5Z-Rl-08q"/>
                                     <constraint firstItem="i4S-Fw-PGk" firstAttribute="top" secondItem="G1G-il-eqo" secondAttribute="bottom" constant="99" id="oCT-jK-VCg"/>
-                                    <constraint firstItem="eql-n5-3NZ" firstAttribute="top" secondItem="xYW-dr-y1N" secondAttribute="bottom" constant="8" symbolic="YES" id="omk-Gg-1Jb"/>
                                     <constraint firstAttribute="centerX" secondItem="iVQ-ir-hvo" secondAttribute="centerX" id="rEZ-zW-gAj"/>
                                     <constraint firstItem="AnU-4s-kV1" firstAttribute="leading" secondItem="TIl-rL-nyU" secondAttribute="leading" id="rZF-ci-8py"/>
                                 </constraints>

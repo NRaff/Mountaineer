@@ -14,7 +14,6 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
     let rootRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com")
     let unitsSetting = false
     
-    
 // MARK: IBOutlets
     @IBOutlet weak var emailText: UITextField!
     
@@ -46,6 +45,7 @@ class LoginViewController: UIViewController, GIDSignInDelegate, GIDSignInUIDeleg
     }
     
 // MARK: IBActions
+    
     @IBAction func login_btn(sender: AnyObject) {
         self.performSegueWithIdentifier("createAccountSegue", sender: nil)
     }

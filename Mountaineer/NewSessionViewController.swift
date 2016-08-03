@@ -84,8 +84,14 @@ class NewSessionViewController: UIViewController {
     
     override func viewWillAppear(animated: Bool) {
         locationInfo.startedLocation()
-        RootRef.childByAppendingPath(RootRef.authData.uid).observeSingleEventOfType(.Value, withBlock: { snapshot in
-            self.sessionUnits = snapshot.value["sessionUnits"] as! Bool
+         RootRef.childByAppendingPath(RootRef.authData.uid).observeSingleEventOfType(.Value, withBlock: { snapshot in
+            if let units = snapshot.value["sessionUnits"] as? Bool {
+            self.sessionUnits = units
+            }
+            else
+            {
+            self.sessionUnits = false
+            }
         })
             //if user is adding a session then display the add fields
             self.sessionAppear()

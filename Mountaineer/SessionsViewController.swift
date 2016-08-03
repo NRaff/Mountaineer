@@ -38,6 +38,8 @@ class SessionsViewController: UIViewController {
         super.viewDidLoad()
 
         myNavBar.setTitleVerticalPositionAdjustment(-8, forBarMetrics: .Default)
+        
+        
     }
     
     override func viewWillAppear(animated: Bool) {
