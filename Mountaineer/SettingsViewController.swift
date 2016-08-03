@@ -17,6 +17,10 @@ class SettingsViewController: UIViewController {
     let usersRef: Firebase = Firebase(url: "https://mountaineer.firebaseio.com/users")
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
     var metric: Bool = false
+    
+    var emailAlertField: UITextField?
+    var passwordAlertField: UITextField?
+    var oldPasswordAlertField: UITextField?
 
 // MARK: IBOutlets
     @IBOutlet weak var measureSwitch: UISegmentedControl!
@@ -26,6 +30,10 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var doneItem: UIBarButtonItem!
 
 // MARK: IBActions
+    @IBAction func changePassword_btn(sender: AnyObject) {
+        self.presentViewController(self.resetPasswordAlert(), animated: true, completion: nil)
+    }
+    
     @IBAction func logout_btn(sender: AnyObject) {
         
     }
@@ -40,6 +48,40 @@ class SettingsViewController: UIViewController {
             mixpanel.track("Settings", properties: ["Options": "Imperial is Selected"])
         }
         print("\(metric) idk")
+    }
+    
+    func resetPasswordAlert() -> UIAlertController {
+        let resetAlert = UIAlertController(title: "Reset Password", message: "Please enter your email and password.", preferredStyle: UIAlertControllerStyle.Alert)
+        resetAlert.addTextFieldWithConfigurationHandler { textField -> Void in
+            self.emailAlertField = textField
+            self.emailAlertField?.placeholder = "Email"
+        }
+        
+        resetAlert.addTextFieldWithConfigurationHandler { textField -> Void in
+            self.oldPasswordAlertField = textField
+            self.oldPasswordAlertField?.placeholder = "Old Password"
+        }
+        
+        resetAlert.addTextFieldWithConfigurationHandler{ textField -> Void in
+            self.passwordAlertField = textField
+            self.passwordAlertField?.placeholder = "New Password"
+        }
+        
+        
+        resetAlert.addAction(UIAlertAction(title: "Go", style: .Default, handler: {(action: UIAlertAction) in
+            self.updatePassword()
+        }))
+        
+        return resetAlert
+    }
+    
+    func updatePassword(){
+        
+        let emailTextField = resetPasswordAlert().textFields![0]
+        let oldPassField = resetPasswordAlert().textFields![1]
+        let newPassField = resetPasswordAlert().textFields![2]
+        
+        RootRef.changePasswordForUser(emailTextField.text, fromOld: oldPassField.text, toNew: newPassField.text, withCompletionBlock: nil)
     }
     
     override func preferredStatusBarStyle() -> UIStatusBarStyle {

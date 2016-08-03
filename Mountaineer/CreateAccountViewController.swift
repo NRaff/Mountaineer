@@ -33,6 +33,9 @@ class CreateAccountViewController: UIViewController {
         self.loginToFirebase()
     }
     
+    @IBAction func resetPassword_btn(sender: AnyObject) {
+        self.resetPassword()
+    }
 }
 
 //MARK: - UIHelper Extension
@@ -60,6 +63,9 @@ extension CreateAccountViewController {
         
         return connectionAlert
     }
+    //configure text fields for reset password alert
+
+    
 }
 
 //MARK: - Firebase Extension
@@ -88,6 +94,21 @@ extension CreateAccountViewController {
             print("Need to enter login info")
         }
     }
+    
+    func resetPassword() {
+        let email = emailText.text
+        rootRef.resetPasswordForUser(email, withCompletionBlock: {(error) -> Void in
+            if error != nil
+            {
+                print("reset password error")
+            }
+            else
+            {
+               print("successful password reset")
+            }
+        })
+    }
+    
 }
 
 // MARK: - Text Field Delegate
