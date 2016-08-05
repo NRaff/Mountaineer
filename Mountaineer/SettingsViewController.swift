@@ -97,9 +97,18 @@ class SettingsViewController: UIViewController {
         
     }
     
+    func PassChangeErrorAlert() -> UIAlertController {
+        let errorAlert = UIAlertController(title: "Oops...", message: "There was an error changing your password. Make sure you entered the correct email and old password, then try again.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        errorAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        
+        return errorAlert
+    }
+    
     func changePassword(email: String, oldPass: String, newPass: String){
         self.RootRef.changePasswordForUser(email, fromOld: oldPass, toNew: newPass) { (ErrorType) -> Void in
             if ErrorType != nil {
+                self.presentViewController(self.PassChangeErrorAlert(), animated: true, completion: nil)
                 print("there was an error")
             }
             else {
