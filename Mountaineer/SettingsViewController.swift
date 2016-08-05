@@ -67,11 +67,13 @@ class SettingsViewController: UIViewController {
         resetAlert.addTextFieldWithConfigurationHandler { textField -> Void in
             self.oldPasswordAlertField = textField
             self.oldPasswordAlertField?.placeholder = "Old Password"
+            self.oldPasswordAlertField?.secureTextEntry = true
         }
         
         resetAlert.addTextFieldWithConfigurationHandler{ textField -> Void in
             self.passwordAlertField = textField
             self.passwordAlertField?.placeholder = "New Password"
+            self.passwordAlertField?.secureTextEntry = true
         }
         
         
@@ -80,10 +82,31 @@ class SettingsViewController: UIViewController {
             let oldPass = self.oldPasswordAlertField!.text!
             let newPass = self.passwordAlertField!.text!
             
-            self.RootRef.changePasswordForUser(email, fromOld: oldPass, toNew: newPass, withCompletionBlock: nil)
+            self.changePassword(email, oldPass: oldPass, newPass: newPass)
         }))
         
         return resetAlert
+    }
+    
+    func PassChangeSuccessAlert() -> UIAlertController {
+        let successAlert = UIAlertController(title: "Success!", message: "You've successfully changed your password.", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        successAlert.addAction(UIAlertAction(title: "OK", style: .Default, handler: nil))
+        
+        return successAlert
+        
+    }
+    
+    func changePassword(email: String, oldPass: String, newPass: String){
+        self.RootRef.changePasswordForUser(email, fromOld: oldPass, toNew: newPass) { (ErrorType) -> Void in
+            if ErrorType != nil {
+                print("there was an error")
+            }
+            else {
+                self.presentViewController(self.PassChangeSuccessAlert(), animated: true, completion: nil)
+                print("Password changed successfully")
+            }
+        }
     }
     
 // MARK: Base Functions
