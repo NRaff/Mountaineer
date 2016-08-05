@@ -18,6 +18,10 @@ class SettingsViewController: UIViewController {
     let mixpanel: Mixpanel = Mixpanel.sharedInstance()
     var metric: Bool = false
     
+    var emailAlertField: UITextField?
+    var passwordAlertField: UITextField?
+    var oldPasswordAlertField: UITextField?
+    
 
 // MARK: IBOutlets
     @IBOutlet weak var measureSwitch: UISegmentedControl!
@@ -45,8 +49,41 @@ class SettingsViewController: UIViewController {
         print("\(metric) idk")
     }
     
+    @IBAction func changePassword_btn(sender: AnyObject) {
+        self.presentViewController(self.resetPasswordAlert(), animated: true, completion: nil)
+        
+    }
     override func preferredStatusBarStyle() -> UIStatusBarStyle {
         return UIStatusBarStyle.LightContent
+    }
+    
+    func resetPasswordAlert() -> UIAlertController {
+        let resetAlert = UIAlertController(title: "Reset Password", message: "Please enter your email and password.", preferredStyle: UIAlertControllerStyle.Alert)
+        resetAlert.addTextFieldWithConfigurationHandler { textField -> Void in
+            self.emailAlertField = textField
+            self.emailAlertField?.placeholder = "Email"
+        }
+        
+        resetAlert.addTextFieldWithConfigurationHandler { textField -> Void in
+            self.oldPasswordAlertField = textField
+            self.oldPasswordAlertField?.placeholder = "Old Password"
+        }
+        
+        resetAlert.addTextFieldWithConfigurationHandler{ textField -> Void in
+            self.passwordAlertField = textField
+            self.passwordAlertField?.placeholder = "New Password"
+        }
+        
+        
+        resetAlert.addAction(UIAlertAction(title: "Go", style: UIAlertActionStyle.Default, handler: { action -> Void in
+            let email = self.emailAlertField!.text!
+            let oldPass = self.oldPasswordAlertField!.text!
+            let newPass = self.passwordAlertField!.text!
+            
+            self.RootRef.changePasswordForUser(email, fromOld: oldPass, toNew: newPass, withCompletionBlock: nil)
+        }))
+        
+        return resetAlert
     }
     
 // MARK: Base Functions

@@ -46,6 +46,7 @@
             <string>SFUIDisplay-Regular</string>
             <string>SFUIDisplay-Regular</string>
             <string>SFUIDisplay-Regular</string>
+            <string>SFUIDisplay-Regular</string>
         </mutableArray>
     </customFonts>
     <scenes>
@@ -600,6 +601,21 @@
                                             <segue destination="kEG-1s-opF" kind="unwind" identifier="logoutSegue" unwindAction="unwindToLoginViewController:" id="Wv0-Cz-BSs"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9Z6-Mf-i2x">
+                                        <rect key="frame" x="230" y="509" width="142" height="34"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="142" id="6US-L4-eih"/>
+                                            <constraint firstAttribute="height" constant="34" id="gPI-vx-oSZ"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="18"/>
+                                        <state key="normal" title="Change Password">
+                                            <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="changePassword_btn:" destination="Emo-d1-rVZ" eventType="touchUpInside" id="V5v-mJ-AHt"/>
+                                            <action selector="logout_btn:" destination="Emo-d1-rVZ" eventType="touchUpInside" id="Tr2-t0-Zdl"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -610,12 +626,14 @@
                                     <constraint firstItem="i4S-Fw-PGk" firstAttribute="centerX" secondItem="eql-n5-3NZ" secondAttribute="centerX" id="9B3-Ts-fTc"/>
                                     <constraint firstItem="dRZ-Pj-i2o" firstAttribute="leading" secondItem="TIl-rL-nyU" secondAttribute="leading" id="CRV-f0-KhK"/>
                                     <constraint firstAttribute="trailing" secondItem="dRZ-Pj-i2o" secondAttribute="trailing" id="FoY-0l-3jz"/>
+                                    <constraint firstItem="eql-n5-3NZ" firstAttribute="top" secondItem="9Z6-Mf-i2x" secondAttribute="bottom" constant="28" id="Omx-LS-y3D"/>
                                     <constraint firstItem="dRZ-Pj-i2o" firstAttribute="top" secondItem="TIl-rL-nyU" secondAttribute="top" id="g4c-Xt-9MJ"/>
                                     <constraint firstAttribute="centerX" secondItem="G1G-il-eqo" secondAttribute="centerX" id="iWj-pv-6T9"/>
                                     <constraint firstItem="eql-n5-3NZ" firstAttribute="leading" secondItem="TIl-rL-nyU" secondAttribute="leadingMargin" id="krT-jq-y6V"/>
                                     <constraint firstAttribute="centerX" secondItem="eql-n5-3NZ" secondAttribute="centerX" id="nUK-Zc-s37"/>
                                     <constraint firstAttribute="bottom" secondItem="dRZ-Pj-i2o" secondAttribute="bottom" id="o5Z-Rl-08q"/>
                                     <constraint firstItem="i4S-Fw-PGk" firstAttribute="top" secondItem="G1G-il-eqo" secondAttribute="bottom" constant="99" id="oCT-jK-VCg"/>
+                                    <constraint firstItem="9Z6-Mf-i2x" firstAttribute="centerX" secondItem="i4S-Fw-PGk" secondAttribute="centerX" id="odg-Dl-T0t"/>
                                     <constraint firstAttribute="centerX" secondItem="iVQ-ir-hvo" secondAttribute="centerX" id="rEZ-zW-gAj"/>
                                     <constraint firstItem="AnU-4s-kV1" firstAttribute="leading" secondItem="TIl-rL-nyU" secondAttribute="leading" id="rZF-ci-8py"/>
                                 </constraints>
@@ -733,7 +751,7 @@
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="resetPassword_btn:" destination="pa9-vV-hzb" eventType="touchUpInside" id="1yp-xO-yur"/>
+                                    <action selector="forgotPassword_btn:" destination="pa9-vV-hzb" eventType="touchUpInside" id="H93-oi-1ko"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fe3-fK-Etr" userLabel="Password Underline">

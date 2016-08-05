@@ -12,9 +12,7 @@ import FirebaseUI
 
 class CreateAccountViewController: UIViewController {
     
-    var emailAlertField: UITextField?
-    var passwordAlertField: UITextField?
-    var oldPasswordAlertField: UITextField?
+    var tempEmail: UITextField?
     
     var activityIndicatorView: WaitingIndicatorView!
     
@@ -45,44 +43,32 @@ class CreateAccountViewController: UIViewController {
         self.activityIndicatorView.stopAnimating()
     }
     
-    @IBAction func resetPassword_btn(sender: AnyObject) {
-        self.resetPassword()
-//        self.presentViewController(self.resetPasswordAlert(), animated: true, completion: nil)
-//        print("button pressed")
+    @IBAction func forgotPassword_btn(sender: AnyObject) {
+        self.presentViewController(self.sendTempPasswordAlert(), animated: true, completion: nil)
     }
 }
 
 //MARK: - UIHelper Extension
 extension CreateAccountViewController {
     
-    func resetPasswordAlert() -> UIAlertController {
-        let resetAlert = UIAlertController(title: "Reset Password", message: "Please enter your email and password.", preferredStyle: UIAlertControllerStyle.Alert)
-        resetAlert.addTextFieldWithConfigurationHandler { textField -> Void in
-            self.emailAlertField = textField
-            self.emailAlertField?.placeholder = "Email"
+    func sendTempPasswordAlert() -> UIAlertController {
+        let sendTemp = UIAlertController(title: "Send Temporary Password", message: "Enter your email and we'll send you a temporary password.", preferredStyle: UIAlertControllerStyle.Alert)
+        sendTemp.addTextFieldWithConfigurationHandler { textField -> Void in
+            self.tempEmail = textField
+            self.tempEmail?.placeholder = "Email"
         }
         
-        resetAlert.addTextFieldWithConfigurationHandler { textField -> Void in
-            self.oldPasswordAlertField = textField
-            self.oldPasswordAlertField?.placeholder = "Old Password"
-        }
-        
-        resetAlert.addTextFieldWithConfigurationHandler{ textField -> Void in
-            self.passwordAlertField = textField
-            self.passwordAlertField?.placeholder = "New Password"
-        }
-        
-        
-        resetAlert.addAction(UIAlertAction(title: "Go", style: UIAlertActionStyle.Default, handler: { action -> Void in
-            let email = self.emailAlertField!.text!
-            let oldPass = self.oldPasswordAlertField!.text!
-            let newPass = self.passwordAlertField!.text!
-            
-            self.rootRef.changePasswordForUser(email, fromOld: oldPass, toNew: newPass, withCompletionBlock: nil)
+        sendTemp.addAction(UIAlertAction(title: "Go", style: UIAlertActionStyle.Default, handler: { action -> Void in
+            let email = self.tempEmail!.text!
+            self.resetPassword(email)
         }))
         
-        return resetAlert
+        sendTemp.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
+        
+        return sendTemp
     }
+    
+
     
     func placeholderUI() {
         emailText.attributedPlaceholder = NSAttributedString(string:"EMAIL", attributes:[NSForegroundColorAttributeName: UIColor.whiteColor()])
@@ -138,8 +124,8 @@ extension CreateAccountViewController {
         }
     }
     
-    func resetPassword() {
-        let email = emailText.text
+    func resetPassword(email: String) {
+        let email = email
         rootRef.resetPasswordForUser(email, withCompletionBlock: {(error) -> Void in
             if error != nil
             {
