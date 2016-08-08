@@ -301,7 +301,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 79AD7CF51C925EBA0069B58C /* Build configuration list for PBXProject "Mountaineer" */;
+			buildConfigurationList = 79AD7CF51C925EBA0069B58C /* Build configuration list for PBXProject "Mavrik" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -717,7 +717,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		79AD7CF51C925EBA0069B58C /* Build configuration list for PBXProject "Mountaineer" */ = {
+		79AD7CF51C925EBA0069B58C /* Build configuration list for PBXProject "Mavrik" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				79AD7D201C925EBA0069B58C /* Debug */,

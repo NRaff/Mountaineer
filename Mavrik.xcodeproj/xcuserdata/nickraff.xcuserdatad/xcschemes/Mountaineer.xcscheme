@@ -55,7 +55,7 @@
             BlueprintIdentifier = "79AD7CF91C925EBA0069B58C"
             BuildableName = "Mountaineer.app"
             BlueprintName = "Mountaineer"
-            ReferencedContainer = "container:Mountaineer.xcodeproj">
+            ReferencedContainer = "container:Mavrik.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -78,7 +78,7 @@
             BlueprintIdentifier = "79AD7CF91C925EBA0069B58C"
             BuildableName = "Mountaineer.app"
             BlueprintName = "Mountaineer"
-            ReferencedContainer = "container:Mountaineer.xcodeproj">
+            ReferencedContainer = "container:Mavrik.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
