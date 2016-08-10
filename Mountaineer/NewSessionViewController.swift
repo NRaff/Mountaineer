@@ -387,14 +387,14 @@ extension NewSessionViewController {
                 averageSpeed = locationInfo.NewAverageSpeed()
             }
             //set the sessionTime string to be the ending timer time
-            sessionTime = "TIME ADVENTURING: \(locationInfo.tripDuration().timeString)"
+            sessionTime = "ACTIVE SESSION: \(locationInfo.tripDuration().timeString)"
             let sessionSeconds = locationInfo.tripDuration().seconds
             let sessionMinutes = locationInfo.tripDuration().minutes
             let sessionHours = locationInfo.tripDuration().hours
             let sumSpeeds = locationInfo.sumSpeeds
             let averageSpeedCount = locationInfo.averageSpeedCount
             let maxSpeed = locationInfo.maxSpeed!
-            let peakAltitude = locationInfo.getPeakAltitude()
+            let peakAltitude = locationInfo.peakAltitude!
         
             
             //save it all to firebase
@@ -460,7 +460,7 @@ extension NewSessionViewController {
     }
     
     func tripDuration(){
-        sessionTime.text = "ADVENTURE TIME: \(locationInfo.tripDuration().timeString)"
+        sessionTime.text = "ACTIVE SESSION: \(locationInfo.tripDuration().timeString)"
     }
     
     func sessionAppear() {

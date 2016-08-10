@@ -55,7 +55,7 @@ struct Session {
         dateCreated = snapshot.value["dateCreated"] as! String
         imageID = snapshot.value["imageID"] as! Int
         topSpeed = snapshot.value["topSpeed"] as! Double
-        peakAltitude = snapshot.value["peakAltitude"] as! Double
+        peakAltitude = snapshot.value["highAltitude"] as! Double
         totalDistance = snapshot.value["totalDistance"] as! Double
         ref = snapshot.ref
 //        timeSeconds = snapshot.value["seconds"] as! Int

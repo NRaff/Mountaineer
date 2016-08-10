@@ -156,8 +156,6 @@ extension LoginViewController {
         else
         {
             //create alert presentation
-            
-            
             self.presentViewController(self.createUserAlert(), animated: true, completion: nil)
             print("A field was not filled out")
         }

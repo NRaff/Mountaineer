@@ -19,11 +19,6 @@
             <string>SFUIDisplay-Bold</string>
             <string>SFUIDisplay-Bold</string>
             <string>SFUIDisplay-Bold</string>
-            <string>SFUIDisplay-Bold</string>
-            <string>SFUIDisplay-Bold</string>
-            <string>SFUIDisplay-Bold</string>
-            <string>SFUIDisplay-Bold</string>
-            <string>SFUIDisplay-Bold</string>
         </mutableArray>
         <mutableArray key="SF-UI-Display-Light.otf">
             <string>SFUIDisplay-Light</string>
@@ -35,6 +30,11 @@
             <string>SFUIDisplay-Light</string>
         </mutableArray>
         <mutableArray key="SF-UI-Display-Regular.otf">
+            <string>SFUIDisplay-Regular</string>
+            <string>SFUIDisplay-Regular</string>
+            <string>SFUIDisplay-Regular</string>
+            <string>SFUIDisplay-Regular</string>
+            <string>SFUIDisplay-Regular</string>
             <string>SFUIDisplay-Regular</string>
             <string>SFUIDisplay-Regular</string>
             <string>SFUIDisplay-Regular</string>
@@ -290,7 +290,7 @@
         <!--AllSessionsView-->
         <scene sceneID="foZ-yC-Akw">
             <objects>
-                <viewController id="JEt-qx-qbK" userLabel="AllSessionsView" customClass="SessionsViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="settings" id="JEt-qx-qbK" userLabel="AllSessionsView" customClass="SessionsViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="8JV-Kx-hMw"/>
                         <viewControllerLayoutGuide type="bottom" id="hhm-dY-a15"/>
@@ -831,7 +831,7 @@
         <!--NewSessionView-->
         <scene sceneID="J2c-DH-spp">
             <objects>
-                <viewController id="FmT-ql-SbE" userLabel="NewSessionView" customClass="NewSessionViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="NewSession" id="FmT-ql-SbE" userLabel="NewSessionView" customClass="NewSessionViewController" customModule="Mountaineer" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="Phx-EQ-Nk2"/>
                         <viewControllerLayoutGuide type="bottom" id="D0o-o2-Wvv"/>
@@ -1128,7 +1128,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="150" id="ucB-DK-MXu"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="SFUIDisplay-Bold" family="SF UI Display" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1183,7 +1183,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="150" id="9E7-aZ-u3d"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="SFUIDisplay-Bold" family="SF UI Display" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1251,7 +1251,7 @@
                                                 <constraints>
                                                     <constraint firstAttribute="width" constant="150" id="QMf-1A-l4M"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="SFUIDisplay-Bold" family="SF UI Display" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1321,7 +1321,7 @@
                                                     <constraint firstAttribute="width" constant="150" id="S7H-zS-S2T"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="r6W-xB-R9C"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="SFUIDisplay-Bold" family="SF UI Display" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
@@ -1397,7 +1397,7 @@
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="150" id="3Rc-Vk-R4K"/>
                                                     <constraint firstAttribute="width" constant="150" id="ws1-h4-KE9"/>
                                                 </constraints>
-                                                <fontDescription key="fontDescription" name="SFUIDisplay-Bold" family="SF UI Display" pointSize="14"/>
+                                                <fontDescription key="fontDescription" name="SFUIDisplay-Regular" family="SF UI Display" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <nil key="highlightedColor"/>
                                             </label>

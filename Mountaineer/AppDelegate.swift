@@ -75,6 +75,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        mixpanel.track("App Terminated")
     }
 
+    
+//    func application(application: UIApplication, performActionForShortcutItem shortcutItem: UIApplicationShortcutItem, completionHandler: (Bool) -> Void) {
+//        if shortcutItem.type == "com.Mountaineer.StartNew" {
+//            let sb = UIStoryboard(name: "Main", bundle: nil)
+//            let startNewVC = sb.instantiateViewControllerWithIdentifier("NewSession") as! NewSessionViewController
+//            let root = UIApplication.sharedApplication().keyWindow?.rootViewController
+//            
+//            root?.presentViewController(startNewVC, animated: false, completion: { () -> Void in
+//                completionHandler(true)
+//            })
+//            
+//        }
+//    }
 
 }
 
